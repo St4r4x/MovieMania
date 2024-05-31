@@ -49,3 +49,7 @@ Semaine 1-2: Recherche et analyse
 Semaine 3-4: Conception
 Semaine 5-8: Développement
 Semaine 9-10: Tests et déploiement
+
+## MLD
+
+https://www.dbdiagram.io/d/6659fbb7b65d933879340213
