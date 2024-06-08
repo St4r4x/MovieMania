@@ -7,9 +7,6 @@ from sqlalchemy.orm import Session
 
 from . import database, models, schemas
 
-app = FastAPI()
-
-
 # Initialize FastAPI app
 app = FastAPI()
 
