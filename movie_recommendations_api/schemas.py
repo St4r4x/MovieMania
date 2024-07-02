@@ -2,14 +2,14 @@ from datetime import date
 from typing import List, Optional
 from pydantic import BaseModel
 
-class Config:
-    orm_mode = True
-    from_attributes = True
-
 class UserBase(BaseModel):
     email: str
     username: str
     birthday: date
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
 
 class UserCreate(UserBase):
     pass
@@ -31,11 +31,15 @@ class MovieBase(BaseModel):
     vote_count: Optional[int] = None
     tagline: Optional[str] = None
 
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
 class MovieCreate(MovieBase):
     pass
 
 class Movie(MovieBase):
-    id: int
+    movie_id: int
 
     class Config:
         orm_mode = True
