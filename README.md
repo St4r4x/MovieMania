@@ -2,9 +2,9 @@
 
 ## Membres du projet:
 
-Jean Marie
-Heloisa
-Benjamin
+Jean Marie\
+Heloisa\
+Benjamin\
 Arnaud
 
 ## Objectif du projet:
