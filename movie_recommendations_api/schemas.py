@@ -1,44 +1,18 @@
 from datetime import date
-from typing import List
-
+from typing import List, Optional
 from pydantic import BaseModel
 
-
-class MovieBase(BaseModel):
-    title: str
-    release_date: date
-    press_notation: float
-    people_notation: float
-
-    class Config:
-        from_attributes = True
-
-
-class MovieCreate(MovieBase):
-    pass
-
-
-class Movie(MovieBase):
-    id: int
-    types: List[str]
-
-    class Config:
-        orm_mode = True
-        from_attributes = True
-
+class Config:
+    orm_mode = True
+    from_attributes = True
 
 class UserBase(BaseModel):
     email: str
     username: str
     birthday: date
 
-    class Config:
-        from_attributes = True
-
-
 class UserCreate(UserBase):
     pass
-
 
 class User(UserBase):
     id: int
@@ -47,6 +21,25 @@ class User(UserBase):
         orm_mode = True
         from_attributes = True
 
+class MovieBase(BaseModel):
+    title: str
+    release_date: Optional[date] = None
+    budget: Optional[float] = None
+    revenue: Optional[float] = None
+    runtime: Optional[int] = None
+    vote_average: Optional[float] = None
+    vote_count: Optional[int] = None
+    tagline: Optional[str] = None
+
+class MovieCreate(MovieBase):
+    pass
+
+class Movie(MovieBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
 
 class Recommendation(BaseModel):
     movie_id: int
@@ -54,4 +47,5 @@ class Recommendation(BaseModel):
     genre: str
 
     class Config:
+        orm_mode = True
         from_attributes = True
