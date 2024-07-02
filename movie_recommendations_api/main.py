@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 from typing import Any, Dict
-from movie_recommendations_api import models, schemas, database
+from movie_recommendations_api import models, database
 from movie_recommendations_api.recommendations import GenreBasedRecommendationFetcher, TrendingRecommendationFetcher, MovieBasedRecommendationFetcher
 
 app = FastAPI()
