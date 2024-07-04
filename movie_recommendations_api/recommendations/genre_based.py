@@ -1,10 +1,14 @@
-from typing import Dict, List
-from sqlalchemy.orm import Session, joinedload
-from sqlalchemy.exc import NoResultFound
-from .base import RecommendationFetcher
-from .. import models, schemas
 from datetime import datetime
+from typing import Dict, List
+
 from sqlalchemy import select
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy.orm import Session, joinedload
+
+from .. import models, schemas
+from .base import RecommendationFetcher
+from .config import (CARROUSSEL_LENGTH, WEIGHT_REVENUE, WEIGHT_VOTE_AVERAGE,
+                     WEIGHT_VOTE_COUNT)
 
 
 class GenreBasedRecommendationFetcher(RecommendationFetcher):
@@ -51,11 +55,13 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
                     models.Genres.name == genre,
                     models.Movies.release_date <= datetime.now(),
                     ~models.Movies.movie_id.in_(
-                        select(models.MovieUsers.movie_id).filter(models.MovieUsers.user_id == user_id)
+                        select(models.MovieUsers.movie_id).filter(
+                            models.MovieUsers.user_id == user_id)
                     )
                 ).order_by(
-                    (models.Movies.vote_average * 0.5 + models.Movies.revenue * 0.3 + models.Movies.vote_count * 0.2).desc()
-                ).limit(10).all()
+                    (models.Movies.vote_average * WEIGHT_VOTE_AVERAGE + models.Movies.revenue *
+                     WEIGHT_REVENUE + models.Movies.vote_count * WEIGHT_VOTE_COUNT).desc()
+                ).limit(CARROUSSEL_LENGTH).all()
 
                 if movies:
                     # Ensure diversity by picking the top movie from each sub-category, if possible
@@ -65,7 +71,7 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
                     ]
 
             return recommendations if recommendations else {"message": "No recommendations available."}
-        
+
         except NoResultFound:
             return {"message": "User not found."}
         except Exception as e:
@@ -91,6 +97,6 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
             if not seen_sub_genres & sub_genres:
                 unique_movies.append(movie)
                 seen_sub_genres.update(sub_genres)
-            if len(unique_movies) >= 10:
+            if len(unique_movies) >= CARROUSSEL_LENGTH:
                 break
         return unique_movies
