@@ -26,7 +26,6 @@ Cette API fournit des recommandations de films personnalisées aux utilisateurs 
 - **Paramètres :** `user_id=[integer]`
 - **Réponse :** Liste de films recommandés pour l'utilisateur.
 
-
 ## Contribution
 
 Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter des changements proposés ou soumettre une pull request.
