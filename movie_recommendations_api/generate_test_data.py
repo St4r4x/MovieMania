@@ -1,13 +1,17 @@
-from models import Movies, Genres, Castings, Crews, Users, MovieGenres, MovieUsers, UserGenre
-from database import SessionLocal
 import random
+from datetime import date, datetime, timedelta
+
+from database import SessionLocal
 from faker import Faker
+from models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
+                    UserGenre, Users)
 
 fake = Faker()
 
+
 def generate_test_data():
     db = SessionLocal()
-    
+
     try:
         # Générer des genres
         genres = []
@@ -38,7 +42,8 @@ def generate_test_data():
         # Associer des genres aux films
         for movie in movies:
             for genre in random.sample(genres, k=random.randint(1, 3)):
-                movie_genre = MovieGenres(movie_id=movie.movie_id, genre_id=genre.genre_id)
+                movie_genre = MovieGenres(
+                    movie_id=movie.movie_id, genre_id=genre.genre_id)
                 db.add(movie_genre)
         db.commit()
 
@@ -51,7 +56,7 @@ def generate_test_data():
                     movie_id=movie.movie_id
                 )
                 db.add(casting)
-                
+
                 crew = Crews(
                     person_name=fake.name(),
                     role=fake.job(),
@@ -66,7 +71,7 @@ def generate_test_data():
             user = Users(
                 nom=fake.last_name(),
                 prenom=fake.first_name(),
-                age=random.randint(18, 80),
+                birthday=fake.date(),
                 sexe=random.choice(['M', 'F']),
                 password=fake.password(),
                 email=fake.email()
@@ -78,14 +83,17 @@ def generate_test_data():
         # Associer des genres aux utilisateurs
         for user in users:
             for genre in random.sample(genres, k=random.randint(1, 3)):
-                user_genre = UserGenre(user_id=user.user_id, genre_id=genre.genre_id)
+                user_genre = UserGenre(
+                    user_id=user.user_id, genre_id=genre.genre_id)
                 db.add(user_genre)
         db.commit()
 
         # Associer des films aux utilisateurs
         for user in users:
             for movie in random.sample(movies, k=random.randint(1, 5)):
-                movie_user = MovieUsers(user_id=user.user_id, movie_id=movie.movie_id, note=fake.sentence(nb_words=5))
+                movie_user = MovieUsers(
+                    user_id=user.user_id, movie_id=movie.movie_id, note=random.randint(
+                        1, 5))
                 db.add(movie_user)
         db.commit()
 
@@ -95,6 +103,7 @@ def generate_test_data():
         print(f"An error occurred: {e}")
     finally:
         db.close()
+
 
 if __name__ == "__main__":
     generate_test_data()
