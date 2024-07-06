@@ -32,4 +32,4 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter d
 
 ## Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier `LICENCE` pour plus de détails.
