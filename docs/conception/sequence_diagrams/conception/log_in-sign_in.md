@@ -1,20 +1,21 @@
 ```mermaid
 sequenceDiagram
     actor Utilisateur
-    participant Systeme as Système
+    participant Navigateur
+    participant Controleur as Backend
+    participant Entite as Base de données
 
     alt Connexion
-        Utilisateur ->> Systeme: Renseigner ses identifiants
-        Systeme ->> Systeme: Envoie des données
-        Systeme ->> Systeme: Enregistrement des données
-        Systeme ->> Systeme: Confirmation
-        Systeme ->> Systeme: Redirige vers sa dashboard
+        Utilisateur ->> Navigateur: Renseigner ses identifiants
+        Navigateur ->> Controleur: Envoie des données
+        Controleur ->> Entite: Enregistrement des données
+        Entite ->> Controleur: Confirmation
+        Controleur ->> Navigateur: Redirige vers sa dashboard
     else Inscription
-        Utilisateur ->> Systeme: Renseigner ses coordonnées
-        Systeme ->> Systeme: Envoie des données
-        Systeme ->> Systeme: Enregistrement des données
-        Systeme ->> Systeme: Confirmation
-        Systeme ->> Systeme: Redirige vers sa dashboard
+        Utilisateur ->> Navigateur: Renseigner ses coordonnées
+        Navigateur ->> Controleur: Envoie des données
+        Controleur ->> Entite: Enregistrement des données
+        Entite ->> Controleur: Confirmation
+        Controleur ->> Navigateur: Redirige vers sa dashboard
     end
-
 ```
