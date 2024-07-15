@@ -66,14 +66,12 @@ class UsersOut(SQLModel):
 # Shared properties
 class MovieUserBase(SQLModel):
     movie_id: int
-    user_id: int | None = None
     note: int | None = None
 
 
 # Properties to receive on item creation
 class MovieUserCreate(MovieUserBase):
     movie_id: int
-    user_id: int | None = None
     note: int | None = None
 
 
