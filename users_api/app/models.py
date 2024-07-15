@@ -6,7 +6,6 @@ from datetime import date
 # TODO replace email str with EmailStr when sqlmodel supports it
 class UserBase(SQLModel):
     email: str = Field(unique=True, index=True)
-    password: str
     nom: str | None = None
     prenom: str | None = None
     birthday: date | None = None
@@ -49,6 +48,7 @@ class UpdatePassword(SQLModel):
 
 # Database model, database table inferred from class name
 class User(UserBase, table=True):
+    __tablename__ = "User"
     user_id: int | None = Field(default=None, primary_key=True)
     password: str
 
@@ -79,9 +79,10 @@ class MovieUserCreate(MovieUserBase):
 
 # Database model, database table inferred from class name
 class MovieUser(MovieUserBase, table=True):
+    __tablename__ = "MovieUser"
     movie_id: int | None = Field(default=None, primary_key=True)
     user_id: int | None = Field(
-        default=None, foreign_key="user.user_id", nullable=False
+        default=None, foreign_key="User.user_id", nullable=False
     )
     note: int | None = None
 
@@ -93,7 +94,7 @@ class MovieUserOut(MovieUserBase):
     note: int | None = None
 
 
-class MediaLikesOut(SQLModel):
+class MovieUsersOut(SQLModel):
     data: list[MovieUserOut]
     count: int
 
