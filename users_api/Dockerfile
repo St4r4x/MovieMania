@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 ARG CONFIG
 
-ARG APP_NAME="api-users"
+ARG APP_NAME="users_api"
 ENV PYTHONPATH="/opt/$APP_NAME"
 
 RUN mkdir -p /opt/$APP_NAME /var/log/$APP_NAME

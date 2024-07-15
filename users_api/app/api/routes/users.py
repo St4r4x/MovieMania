@@ -46,14 +46,17 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
 
     # Fonction pour convertir les résultats de la requête en objets UserOut
     def convert_users_to_userout(users: List[tuple]) -> List[UserOut]:
-        return [UserOut(
-            is_active=user[0].is_active,
-            is_superuser=user[0].is_superuser,
-            email=user[0].email,
-            full_name=user[0].full_name,
-            id=user[0].id
-        ) for user in users]
-    
+        return [
+            UserOut(
+                is_active=user[0].is_active,
+                is_superuser=user[0].is_superuser,
+                email=user[0].email,
+                full_name=user[0].full_name,
+                id=user[0].id,
+            )
+            for user in users
+        ]
+
     users_out = convert_users_to_userout(users)
 
     return UsersOut(data=users_out, count=count)
@@ -186,7 +189,6 @@ def read_user_by_id(
     dependencies=[Depends(get_current_active_superuser)],
     response_model=UserOut,
 )
-
 def update_user(
     *,
     session: SessionDep,
@@ -204,9 +206,11 @@ def update_user(
             detail="The user with this id does not exist in the system",
         )
     if user_in.email:
-        existing_user_tuple = crud.get_user_by_email(session=session, email=user_in.email)
+        existing_user_tuple = crud.get_user_by_email(
+            session=session, email=user_in.email
+        )
         if existing_user_tuple:
-            existing_user, = existing_user_tuple
+            (existing_user,) = existing_user_tuple
             if existing_user.id != user_id:
                 raise HTTPException(
                     status_code=409, detail="User with this email already exists"

@@ -6,6 +6,7 @@ from app.models import User, UserCreate
 
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI))
 
+
 def init_db(session: Session) -> None:
     user = session.exec(
         select(User).where(User.email == settings.FIRST_SUPERUSER)

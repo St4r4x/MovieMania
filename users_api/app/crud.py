@@ -52,7 +52,9 @@ def authenticate(*, session: Session, email: str, password: str) -> User | None:
     return user
 
 
-def create_medialike(*, session: Session, medialike_in: MediaLikeCreate, owner_id: int) -> MediaLike:
+def create_medialike(
+    *, session: Session, medialike_in: MediaLikeCreate, owner_id: int
+) -> MediaLike:
     db_item = MediaLike.model_validate(medialike_in, update={"owner_id": owner_id})
     session.add(db_item)
     session.commit()
