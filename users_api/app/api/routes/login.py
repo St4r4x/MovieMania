@@ -38,7 +38,7 @@ def login_access_token(
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     return Token(
         access_token=security.create_access_token(
-            user.id, expires_delta=access_token_expires
+            user.user_id, expires_delta=access_token_expires
         )
     )
 
@@ -94,7 +94,7 @@ def reset_password(session: SessionDep, body: NewPassword) -> Message:
     if not user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     hashed_password = get_password_hash(password=body.new_password)
-    user.hashed_password = hashed_password
+    user.password = hashed_password
     session.add(user)
     session.commit()
     return Message(message="Password updated successfully")

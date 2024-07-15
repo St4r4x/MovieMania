@@ -3,12 +3,12 @@ from typing import Any
 from sqlmodel import Session, select
 
 from app.core.security import get_password_hash, verify_password
-from app.models import MediaLike, MediaLikeCreate, User, UserCreate, UserUpdate
+from app.models import MovieUser, MovieUserCreate, User, UserCreate, UserUpdate
 
 
 def create_user(*, session: Session, user_create: UserCreate) -> User:
     db_obj = User.model_validate(
-        user_create, update={"hashed_password": get_password_hash(user_create.password)}
+        user_create, update={"password": get_password_hash(user_create.password)}
     )
     session.add(db_obj)
     session.commit()
@@ -22,7 +22,7 @@ def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:
     if "password" in user_data:
         password = user_data["password"]
         hashed_password = get_password_hash(password)
-        extra_data["hashed_password"] = hashed_password
+        extra_data["password"] = hashed_password
     db_user.sqlmodel_update(user_data, update=extra_data)
     session.add(db_user)
     session.commit()
@@ -37,7 +37,7 @@ def get_user_by_email(*, session: Session, email: str) -> User | None:
 
 
 def get_user_by_id(*, session: Session, id: str) -> User | None:
-    statement = select(User).where(User.id == id)
+    statement = select(User).where(User.user_id == id)
     session_user = session.execute(statement).first()
     return session_user
 
@@ -47,15 +47,15 @@ def authenticate(*, session: Session, email: str, password: str) -> User | None:
     if not db_user or not db_user[0]:
         return None
     user = db_user[0]
-    if not verify_password(password, user.hashed_password):
+    if not verify_password(password, user.password):
         return None
     return user
 
 
-def create_medialike(
-    *, session: Session, medialike_in: MediaLikeCreate, owner_id: int
-) -> MediaLike:
-    db_item = MediaLike.model_validate(medialike_in, update={"owner_id": owner_id})
+def create_movieuser(
+    *, session: Session, movieuser_in: MovieUserCreate, user_id: int
+) -> MovieUser:
+    db_item = MovieUser.model_validate(movieuser_in, update={"user_id": user_id})
     session.add(db_item)
     session.commit()
     session.refresh(db_item)
