@@ -1,12 +1,12 @@
 version: "3.5"
 
 services:
-    backend:
+    users_api:
         restart: "no"
         ports:
             - "8888:8888"
         volumes:
-            - ./:/opt/backend
+            - ./:/opt/users_api
         build:
             context: .
             args:

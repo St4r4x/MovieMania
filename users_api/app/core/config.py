@@ -43,9 +43,9 @@ class Settings(BaseSettings):
             return f"http://{self.DOMAIN}"
         return f"https://{self.DOMAIN}"
 
-    BACKEND_CORS_ORIGINS: Annotated[
-        list[AnyUrl] | str, BeforeValidator(parse_cors)
-    ] = []
+    BACKEND_CORS_ORIGINS: Annotated[list[AnyUrl] | str, BeforeValidator(parse_cors)] = (
+        []
+    )
 
     PROJECT_NAME: str
     MYSQL_SERVER: str
@@ -65,7 +65,7 @@ class Settings(BaseSettings):
             port=self.MYSQL_PORT,
             path=self.MYSQL_DATABASE,
         )
-    
+
     print(f"SQLALCHEMY URI: {SQLALCHEMY_DATABASE_URI}")
 
     SMTP_TLS: bool = True
@@ -118,5 +118,6 @@ class Settings(BaseSettings):
         )
 
         return self
+
 
 settings = Settings()  # type: ignore

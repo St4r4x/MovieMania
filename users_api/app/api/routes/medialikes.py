@@ -37,12 +37,17 @@ def read_medialikes(
         )
         medialikes_tuple = session.execute(statement).all()
 
-        def convert_users_to_medialikesout(medialikes: List[tuple]) -> List[MediaLikesOut]:
-            return [MediaLikesOut(
-                id=medialike[0].id,
-                owner_id=medialike[0].owner_id,
-            ) for medialike in medialikes]
-    
+        def convert_users_to_medialikesout(
+            medialikes: List[tuple],
+        ) -> List[MediaLikesOut]:
+            return [
+                MediaLikesOut(
+                    id=medialike[0].id,
+                    owner_id=medialike[0].owner_id,
+                )
+                for medialike in medialikes
+            ]
+
         medialikes_out = convert_users_to_medialikesout(medialikes_tuple)
         print(count)
 
@@ -69,7 +74,9 @@ def create_medialike(
     """
     Create new medialike.
     """
-    medialike = MediaLike.model_validate(medialike_in, update={"owner_id": current_user.id})
+    medialike = MediaLike.model_validate(
+        medialike_in, update={"owner_id": current_user.id}
+    )
     session.add(medialike)
     session.commit()
     session.refresh(medialike)
@@ -77,7 +84,9 @@ def create_medialike(
 
 
 @router.delete("/{id}")
-def delete_medialike(session: SessionDep, current_user: CurrentUser, id: int) -> Message:
+def delete_medialike(
+    session: SessionDep, current_user: CurrentUser, id: int
+) -> Message:
     """
     Delete an medialike.
     """
