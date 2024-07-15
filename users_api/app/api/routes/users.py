@@ -12,7 +12,7 @@ from app.api.deps import (
 from app.core.config import settings
 from app.core.security import get_password_hash, verify_password
 from app.models import (
-    MediaLike,
+    MovieUser,
     Message,
     UpdatePassword,
     User,
@@ -96,14 +96,16 @@ def update_user_me(
     """
     Update own user.
     """
-
     if user_in.email:
-        existing_user = crud.get_user_by_email(session=session, email=user_in.email)
-        if existing_user and existing_user.id != current_user.id:
-            raise HTTPException(
-                status_code=409, detail="User with this email already exists"
-            )
+        existing_user_tuple = crud.get_user_by_email(session=session, email=user_in.email)
+        if existing_user_tuple:
+            (existing_user,) = existing_user_tuple
+            if existing_user.user_id != current_user.user_id:
+                raise HTTPException(
+                    status_code=409, detail="User with this email already exists"
+                )
     user_data = user_in.model_dump(exclude_unset=True)
+    print(user_data)
     current_user.sqlmodel_update(user_data)
     session.add(current_user)
     session.commit()
@@ -118,14 +120,14 @@ def update_password_me(
     """
     Update own password.
     """
-    if not verify_password(body.current_password, current_user.hashed_password):
+    if not verify_password(body.current_password, current_user.password):
         raise HTTPException(status_code=400, detail="Incorrect password")
     if body.current_password == body.new_password:
         raise HTTPException(
             status_code=400, detail="New password cannot be the same as the current one"
         )
     hashed_password = get_password_hash(body.new_password)
-    current_user.hashed_password = hashed_password
+    current_user.password = hashed_password
     session.add(current_user)
     session.commit()
     return Message(message="Password updated successfully")
@@ -144,7 +146,6 @@ def create_user_open(session: SessionDep, user_in: UserCreateOpen) -> Any:
     """
     Create new user without the need to be logged in.
     """
-    print("Signup process")
     if not settings.USERS_OPEN_REGISTRATION:
         raise HTTPException(
             status_code=403,
@@ -239,7 +240,7 @@ def delete_user(
             status_code=403, detail="Super users are not allowed to delete themselves"
         )
 
-    statement = delete(MediaLike).where(col(MediaLike.owner_id) == user_id)
+    statement = delete(MovieUser).where(col(MovieUser.user_id) == user_id)
     session.execute(statement)  # type: ignore
     session.delete(user)
     session.commit()

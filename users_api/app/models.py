@@ -1,13 +1,18 @@
 from sqlmodel import Field, Relationship, SQLModel
+from datetime import date
 
 
 # Shared properties
 # TODO replace email str with EmailStr when sqlmodel supports it
 class UserBase(SQLModel):
     email: str = Field(unique=True, index=True)
+    password: str
+    nom: str | None = None
+    prenom: str | None = None
+    birthday: date | None = None
+    sexe: str | None = None
     is_active: bool = True
     is_superuser: bool = False
-    full_name: str | None = None
 
 
 # Properties to receive via API on creation
@@ -19,7 +24,6 @@ class UserCreate(UserBase):
 class UserCreateOpen(SQLModel):
     email: str
     password: str
-    full_name: str | None = None
 
 
 # Properties to receive via API on update, all are optional
@@ -31,7 +35,10 @@ class UserUpdate(UserBase):
 
 # TODO replace email str with EmailStr when sqlmodel supports it
 class UserUpdateMe(SQLModel):
-    full_name: str | None = None
+    nom: str | None = None
+    prenom: str | None = None
+    birthday: date | None = None
+    sexe: str | None = None
     email: str | None = None
 
 
@@ -42,14 +49,13 @@ class UpdatePassword(SQLModel):
 
 # Database model, database table inferred from class name
 class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    hashed_password: str
-    medialikes: list["MediaLike"] = Relationship(back_populates="owner")
+    user_id: int | None = Field(default=None, primary_key=True)
+    password: str
 
 
 # Properties to return via API, id is always required
 class UserOut(UserBase):
-    id: int
+    user_id: int
 
 
 class UsersOut(SQLModel):
@@ -58,32 +64,37 @@ class UsersOut(SQLModel):
 
 
 # Shared properties
-class MediaLikeBase(SQLModel):
-    media_id: str
-    media_type: str | None = None
+class MovieUserBase(SQLModel):
+    movie_id: int
+    user_id: int | None = None
+    note: int | None = None
 
 
 # Properties to receive on item creation
-class MediaLikeCreate(MediaLikeBase):
-    media_id: str
-    media_type: str | None = None
+class MovieUserCreate(MovieUserBase):
+    movie_id: int
+    user_id: int | None = None
+    note: int | None = None
 
 
 # Database model, database table inferred from class name
-class MediaLike(MediaLikeBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    owner_id: int | None = Field(default=None, foreign_key="user.id", nullable=False)
-    owner: User | None = Relationship(back_populates="medialikes")
+class MovieUser(MovieUserBase, table=True):
+    movie_id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(
+        default=None, foreign_key="user.user_id", nullable=False
+    )
+    note: int | None = None
 
 
 # Properties to return via API, id is always required
-class MediaLikeOut(MediaLikeBase):
-    id: int
-    owner_id: int
+class MovieUserOut(MovieUserBase):
+    movie_id: int
+    user_id: int
+    note: int | None = None
 
 
 class MediaLikesOut(SQLModel):
-    data: list[MediaLikeOut]
+    data: list[MovieUserOut]
     count: int
 
 
