@@ -21,7 +21,7 @@ def read_movieusers(
         count_statement = select(func.count()).select_from(MovieUser)
         count = session.execute(count_statement).one()
         statement = select(MovieUser).offset(skip).limit(limit)
-        movieusers = session.execute(statement).all()
+        movieusers_tuple = session.execute(statement).all()
     else:
         count_statement = (
             select(func.count())
@@ -37,19 +37,19 @@ def read_movieusers(
         )
         movieusers_tuple = session.execute(statement).all()
 
-        def convert_users_to_medialikesout(
-            movieusers: List[tuple],
-        ) -> List[MovieUserOut]:
-            return [
-                MovieUserOut(
-                    movie_id=movieuser[0].movie_id,
-                    user_id=movieuser[0].user_id,
-                )
-                for movieuser in movieusers
-            ]
+    def convert_users_to_medialikesout(
+        movieusers: List[tuple],
+    ) -> List[MovieUserOut]:
+        return [
+            MovieUserOut(
+                movie_id=movieuser[0].movie_id,
+                user_id=movieuser[0].user_id,
+            )
+            for movieuser in movieusers
+        ]
 
-        movieusers_out = convert_users_to_medialikesout(movieusers_tuple)
-        print(count)
+    movieusers_out = convert_users_to_medialikesout(movieusers_tuple)
+    print(count)
 
     return MovieUserOut(data=movieusers_out, count=count)
 
