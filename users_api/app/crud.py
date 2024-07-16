@@ -32,24 +32,23 @@ def update_user(*, session: Session, db_user: User, user_in: UserUpdate) -> Any:
 
 def get_user_by_email(*, session: Session, email: str) -> User | None:
     statement = select(User).where(User.email == email)
-    session_user = session.execute(statement).first()
+    session_user = session.execute(statement).scalars().first()
     return session_user
 
 
 def get_user_by_id(*, session: Session, id: str) -> User | None:
     statement = select(User).where(User.user_id == id)
-    session_user = session.execute(statement).first()
+    session_user = session.execute(statement).scalars().first()
     return session_user
 
 
 def authenticate(*, session: Session, email: str, password: str) -> User | None:
     db_user = get_user_by_email(session=session, email=email)
-    if not db_user or not db_user[0]:
+    if not db_user:
         return None
-    user = db_user[0]
-    if not verify_password(password, user.password):
+    if not verify_password(password, db_user.password):
         return None
-    return user
+    return db_user
 
 
 def create_movieuser(
