@@ -51,8 +51,9 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
                 is_active=user[0].is_active,
                 is_superuser=user[0].is_superuser,
                 email=user[0].email,
-                full_name=user[0].full_name,
-                id=user[0].id,
+                nom=user[0].nom,
+                prenom=user[0].prenom,
+                user_id=user[0].user_id,
             )
             for user in users
         ]
