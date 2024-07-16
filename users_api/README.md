@@ -13,6 +13,11 @@ The users API allows for managing users and the content related to their profile
 - 🔑 JWT token authentication.
 
 ## Usage
+Build the docker for users_api/ : 
+    - `cd users_api/`
+    - `docker-compose up -d`
+Import the database with backup
+
 Method POST only available with valid token in headers (Authentication = Bearer) on `http://localhost:8888/`.
 
 - URL availables:
