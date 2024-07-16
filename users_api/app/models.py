@@ -87,8 +87,7 @@ class MovieUser(MovieUserBase, table=True):
 
 # Properties to return via API, id is always required
 class MovieUserOut(MovieUserBase):
-    movie_id: int
-    user_id: int
+    movie_id: int | None = None
     note: int | None = None
 
 
