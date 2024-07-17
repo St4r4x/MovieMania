@@ -38,29 +38,12 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     """
 
     count_statement = select(func.count()).select_from(User)
-    count = session.execute(count_statement).one()
-    count = count[0]
+    count = session.execute(count_statement).scalar()
 
     statement = select(User).offset(skip).limit(limit)
-    users = session.execute(statement).all()
+    users = session.execute(statement).scalars().all()
 
-    # Fonction pour convertir les résultats de la requête en objets UserOut
-    def convert_users_to_userout(users: List[tuple]) -> List[UserOut]:
-        return [
-            UserOut(
-                is_active=user[0].is_active,
-                is_superuser=user[0].is_superuser,
-                email=user[0].email,
-                nom=user[0].nom,
-                prenom=user[0].prenom,
-                user_id=user[0].user_id,
-            )
-            for user in users
-        ]
-
-    users_out = convert_users_to_userout(users)
-
-    return UsersOut(data=users_out, count=count)
+    return UsersOut(data=users, count=count)
 
 
 @router.post(
@@ -98,19 +81,17 @@ def update_user_me(
     Update own user.
     """
     if user_in.email:
-        existing_user_tuple = crud.get_user_by_email(session=session, email=user_in.email)
-        if existing_user_tuple:
-            (existing_user,) = existing_user_tuple
-            if existing_user.user_id != current_user.user_id:
-                raise HTTPException(
-                    status_code=409, detail="User with this email already exists"
-                )
+        existing_user = crud.get_user_by_email(session=session, email=user_in.email)
+        if existing_user and existing_user.user_id != current_user.user_id:
+            raise HTTPException(
+                status_code=409, detail="User with this email already exists"
+            )
     user_data = user_in.model_dump(exclude_unset=True)
-    print(user_data)
     current_user.sqlmodel_update(user_data)
     session.add(current_user)
     session.commit()
     session.refresh(current_user)
+
     return current_user
 
 
@@ -208,15 +189,13 @@ def update_user(
             detail="The user with this id does not exist in the system",
         )
     if user_in.email:
-        existing_user_tuple = crud.get_user_by_email(
+        existing_user = crud.get_user_by_email(
             session=session, email=user_in.email
         )
-        if existing_user_tuple:
-            (existing_user,) = existing_user_tuple
-            if existing_user.id != user_id:
-                raise HTTPException(
-                    status_code=409, detail="User with this email already exists"
-                )
+        if existing_user and existing_user.user_id != user_id:
+            raise HTTPException(
+                status_code=409, detail="User with this email already exists"
+            )
 
     db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)
     return db_user
