@@ -1,11 +1,11 @@
 from sqlmodel import Field, Relationship, SQLModel
+from pydantic import EmailStr
 from datetime import date
 
 
 # Shared properties
-# TODO replace email str with EmailStr when sqlmodel supports it
 class UserBase(SQLModel):
-    email: str = Field(unique=True, index=True)
+    email: EmailStr = Field(unique=True, index=True)
     nom: str | None = None
     prenom: str | None = None
     birthday: date | None = None
@@ -19,26 +19,23 @@ class UserCreate(UserBase):
     password: str
 
 
-# TODO replace email str with EmailStr when sqlmodel supports it
 class UserCreateOpen(SQLModel):
-    email: str
+    email: EmailStr
     password: str
 
 
 # Properties to receive via API on update, all are optional
-# TODO replace email str with EmailStr when sqlmodel supports it
 class UserUpdate(UserBase):
-    email: str | None = None  # type: ignore
+    email: EmailStr | None = None  # type: ignore
     password: str | None = None
 
 
-# TODO replace email str with EmailStr when sqlmodel supports it
 class UserUpdateMe(SQLModel):
     nom: str | None = None
     prenom: str | None = None
     birthday: date | None = None
     sexe: str | None = None
-    email: str | None = None
+    email: EmailStr | None = None
 
 
 class UpdatePassword(SQLModel):
