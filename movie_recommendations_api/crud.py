@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import Movies, Users, Castings, Crews, Genres, MovieGenres, MoviesMovies, MovieUsers, UserGenre
+from models import Movies, Users
 
 # Fonction pour récupérer un film par son ID
 def get_movie(db: Session, movie_id: int):

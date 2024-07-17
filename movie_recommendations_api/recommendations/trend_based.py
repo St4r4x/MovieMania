@@ -1,8 +1,6 @@
-from datetime import datetime
 from typing import Dict, List
 
 from sqlalchemy import select
-from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session, joinedload
 
 from movie_recommendations_api import models, schemas
