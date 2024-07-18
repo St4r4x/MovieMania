@@ -1,5 +1,4 @@
 import random
-from datetime import date, datetime, timedelta
 
 from database import SessionLocal
 from faker import Faker
