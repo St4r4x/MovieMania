@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: username
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "port_extern:port_intern"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: port_intern
+    ports:
+      - "port_extern:port_intern"
+    depends_on:
+      - mariadb
+
+  fastapi-app:
+    image: myfastapiapp  # Utilisez l'image que vous avez importée
+    container_name: fastapi-app
+    ports:
+      - "port_extern:port_intern"
+    environment:
+      - DATABASE_URL=mysql+pymysql://user:password@mariadb:port/MovieDatabase
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb_data:
