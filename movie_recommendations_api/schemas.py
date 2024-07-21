@@ -2,26 +2,8 @@ from datetime import date
 from typing import  Optional
 from pydantic import BaseModel
 
-class UserBase(BaseModel):
-    email: str
-    username: str
-    birthday: date
-
-    class Config:
-        orm_mode = True
-        from_attributes = True
-
-class UserCreate(UserBase):
-    pass
-
-class User(UserBase):
-    id: int
-
-    class Config:
-        orm_mode = True
-        from_attributes = True
-
-class MovieBase(BaseModel):
+class Movie(BaseModel):
+    movie_id: int
     title: str
     release_date: Optional[date] = None
     budget: Optional[float] = None
@@ -39,15 +21,6 @@ class MovieBase(BaseModel):
         orm_mode = True
         from_attributes = True
 
-class MovieCreate(MovieBase):
-    pass
-
-class Movie(MovieBase):
-    movie_id: int
-
-    class Config:
-        orm_mode = True
-        from_attributes = True
 
 class Recommendation(BaseModel):
     movie_id: int
