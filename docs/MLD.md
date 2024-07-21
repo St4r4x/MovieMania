@@ -67,7 +67,7 @@ erDiagram
     MovieGenres }o--|| Genres: "many to 1"
     Peoples }o--|| Credits : "1 to many"
     Jobs }o--|| Credits : "1 to many"
-    Movies }o--|| Credits : "1 to many"
+    Movies ||--|| Credits : "1 to 1"
     MovieUsers }o--|| Movies: "many to 1"
     MovieUsers }o--|| Users: "many to 1"
     Users ||--o{ UserGenre: "1 to many"
