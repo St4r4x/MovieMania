@@ -1,7 +1,7 @@
 from datetime import date
 from typing import List, Optional
 
-from sqlalchemy import Date, Float, ForeignKey, Integer, String
+from sqlalchemy import Date, Float, ForeignKey, Integer, String, BLOB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -26,6 +26,7 @@ class Movies(Base):
     vote_average: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     vote_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    embeddings: Mapped[Optional[bytes]] = mapped_column(BLOB, nullable=True)
 
     castings: Mapped[List["Castings"]] = relationship(
         "Castings", back_populates="movie")

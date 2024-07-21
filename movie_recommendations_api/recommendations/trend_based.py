@@ -1,7 +1,6 @@
 from typing import Dict, List
 
-from sqlalchemy import select
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session
 
 from movie_recommendations_api import models, schemas
 
@@ -12,13 +11,12 @@ from .config import CARROUSSEL_LENGTH
 class TrendingRecommendationFetcher(RecommendationFetcher):
     """Fetches trending recommendations."""
 
-    def fetch(self, db: Session, user_id: int) -> Dict[str, List[schemas.Movie]]:
+    def fetch(self, db: Session, not_seen_movie_ids:List) -> Dict[str, List[schemas.Movie]]:
         """
         Recommends trending movies based on release date, number of votes, and average vote.
 
         This method fetches movies from the database that are trending based on their
-        release date, vote count, and average vote. It ranks these movies and returns
-        the top 10 trending movies.
+        release date, vote count, and average vote. 
 
         Args:
             user_id (int): The ID of the user for whom recommendations are being made.
@@ -29,13 +27,8 @@ class TrendingRecommendationFetcher(RecommendationFetcher):
             If an error occurs, returns a message with the error description.
         """
         try:
-            trending_movies = db.query(models.Movies).options(
-                joinedload(models.Movies.genres)
-            ).filter(
-                ~models.Movies.movie_id.in_(
-                    select(models.MovieUsers.movie_id).filter(
-                        models.MovieUsers.user_id == user_id)
-                )
+            trending_movies = db.query(models.Movies).filter(
+                models.Movies.movie_id.in_(not_seen_movie_ids)
             ).order_by(
                 models.Movies.release_date.desc(),
                 models.Movies.vote_count.desc(),
