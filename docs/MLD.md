@@ -4,7 +4,6 @@ title: MovieMania Database
 theme: forest
 ---
 
-
 erDiagram
     Movies {
         int movie_id PK
@@ -41,7 +40,7 @@ erDiagram
         int genre_id PK
         string name
     }
-    MovieGenres {
+    MovieGenreAssociations {
         int movie_id FK
         int genre_id FK
     }
@@ -56,23 +55,23 @@ erDiagram
         bool is_active
         bool is_superuser
     }
-    MovieUsers {
+    UserMovieRatings {
         int movie_id PK
         int user_id PK
         int note
     }
-    UserGenre {
+    UserGenrePreferences {
         int genre_id PK
         int user_id PK
     }
 
-    Movies 1--many(1) MovieGenres : "has"
-    MovieGenres many(1)--1 Genres : "includes"
+    Movies 1--many(1) MovieGenreAssociations : "has"
+    MovieGenreAssociations many(1)--1 Genres : "includes"
     Peoples many(1)--1 Credits : "appears in"
     Jobs many(1)--1 Credits : "assigned to"
     Movies 1--many(1) Credits : "has"
-    MovieUsers many(1)--1 Movies : "rated"
-    MovieUsers many(1)--1 Users : "rated by"
-    Users 1--many(1) UserGenre : "prefers"
-    UserGenre many(1)--1 Genres : "preferred by"
+    UserMovieRatings many(1)--1 Movies : "rated"
+    UserMovieRatings many(1)--1 Users : "rated by"
+    Users 1--many(1) UserGenrePreferences : "prefers"
+    UserGenrePreferences many(1)--1 Genres : "preferred by"
 ```
