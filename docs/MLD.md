@@ -1,7 +1,6 @@
 ```mermaid
 ---
 title: MovieMania Database
-theme: forest
 ---
 
 erDiagram
