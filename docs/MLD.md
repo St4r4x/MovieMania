@@ -1,4 +1,9 @@
 ```mermaid
+---
+title: MovieMania Database
+theme: forest
+---
+
 
 erDiagram
     Movies {
@@ -15,7 +20,6 @@ erDiagram
         int vote_count
         string tagline
         blob embeddings
-
     }
     Peoples {
         int people_id PK
@@ -25,20 +29,21 @@ erDiagram
         int job_id PK
         string name
     }
-    Credits{
+    Credits {
+        int credit_id PK
         int people_id FK
         int job_id FK
         int movie_id FK
         int order
-        str character_name
+        string character_name
     }
     Genres {
         int genre_id PK
         string name
     }
     MovieGenres {
-        int movie_id PK
-        int genre_id PK
+        int movie_id FK
+        int genre_id FK
     }
     Users {
         int user_id PK
@@ -50,7 +55,6 @@ erDiagram
         string email
         bool is_active
         bool is_superuser
-
     }
     MovieUsers {
         int movie_id PK
@@ -62,16 +66,13 @@ erDiagram
         int user_id PK
     }
 
-
-    Movies ||--o{ MovieGenres: "1 to many"
-    MovieGenres }o--|| Genres: "many to 1"
-    Peoples }o--|| Credits : "1 to many"
-    Jobs }o--|| Credits : "1 to many"
-    Movies ||--|| Credits : "1 to 1"
-    MovieUsers }o--|| Movies: "many to 1"
-    MovieUsers }o--|| Users: "many to 1"
-    Users ||--o{ UserGenre: "1 to many"
-    UserGenre }o--|| Genres: "many to 1"
-    UserGenre }o--|| Users: "many to 1"
-    Movies ||--o{ MovieUsers: "1 to many"
+    Movies 1--many(1) MovieGenres : "has"
+    MovieGenres many(1)--1 Genres : "includes"
+    Peoples many(1)--1 Credits : "appears in"
+    Jobs many(1)--1 Credits : "assigned to"
+    Movies 1--many(1) Credits : "has"
+    MovieUsers many(1)--1 Movies : "rated"
+    MovieUsers many(1)--1 Users : "rated by"
+    Users 1--many(1) UserGenre : "prefers"
+    UserGenre many(1)--1 Genres : "preferred by"
 ```
