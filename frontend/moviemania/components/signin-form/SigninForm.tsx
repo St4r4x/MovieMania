@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import axios from "axios";
@@ -38,10 +38,11 @@ const SigninForm = () => {
 	return (
 		<div className={cn("grid gap-6")}>
 			<form onSubmit={handleFormSubmit}>
-				<div className="grid gap-2">
+				<div className="grid gap-4">
 					<div className="grid gap-1">
 						<div className="sr-only">Email</div>
 						<input
+							className="p-3 border border-gray-300 rounded-md"
 							id="email"
 							placeholder="name@example.com"
 							type="email"
@@ -62,7 +63,7 @@ const SigninForm = () => {
 					<span className="w-full border-t" />
 				</div>
 				<div className="relative flex justify-center text-xs uppercase">
-					<span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+					<span className="px-2 text-muted-foreground text-white bg-black">Or continue with</span>
 				</div>
 			</div>
 			<Button
@@ -70,10 +71,10 @@ const SigninForm = () => {
 				type="button"
 				disabled={isLoading}
 			>
-				{isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.google className="mr-2 h-4 w-4" />} Google
+				{isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.google className="mr-5 h-4 w-4" />} Google
 			</Button>
 		</div>
 	);
-}
+};
 
 export default SigninForm;
