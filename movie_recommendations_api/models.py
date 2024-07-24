@@ -1,7 +1,11 @@
 from datetime import date
 from typing import List, Optional
 
+<<<<<<< HEAD
 from sqlalchemy import Date, Float, ForeignKey, Integer, String
+=======
+from sqlalchemy import Date, Float, ForeignKey, Integer, String, BLOB
+>>>>>>> origin/datacrawler
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -26,6 +30,10 @@ class Movies(Base):
     vote_average: Mapped[Optional[float]] = mapped_column(Float, nullable=True)
     vote_count: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+<<<<<<< HEAD
+=======
+    embeddings: Mapped[Optional[bytes]] = mapped_column(BLOB, nullable=True)
+>>>>>>> origin/datacrawler
 
     castings: Mapped[List["Castings"]] = relationship(
         "Castings", back_populates="movie")
