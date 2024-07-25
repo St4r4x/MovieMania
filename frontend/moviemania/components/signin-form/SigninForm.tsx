@@ -44,10 +44,23 @@ const SigninForm = () => {
 						<input
 							className="p-3 border border-gray-300 rounded-md"
 							id="email"
-							placeholder="name@example.com"
+							name="email"
+							placeholder="email@example.com"
 							type="email"
 							autoCapitalize="none"
 							autoComplete="email"
+							autoCorrect="off"
+							disabled={isLoading}
+						/>
+					</div>
+					<div className="grid gap-1">
+						<div className="sr-only">Password</div>
+						<input
+							className="p-3 border border-gray-300 rounded-md"
+							id="password"
+							name="password"
+							placeholder="password"
+							type="password"
 							autoCorrect="off"
 							disabled={isLoading}
 						/>
