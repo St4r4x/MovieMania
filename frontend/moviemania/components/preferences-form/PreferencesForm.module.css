@@ -1,0 +1,33 @@
+.cat {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.cat label {
+    line-height: 3em;
+    width: 8em;
+    height: 3em;
+}
+
+.cat label span {
+    text-align: center;
+    padding: 3px 0;
+    display: block;
+}
+
+.cat label input {
+    position: absolute;
+    display: none;
+    color: #fff !important;
+}
+/* selects all of the text within the input element and changes the color of the text */
+.cat label input + span {
+    color: #fff;
+}
+
+/* This will declare how a selected input will look giving generic properties */
+.cat input:checked + span {
+    color: #ffffff;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
