@@ -2,6 +2,8 @@ import React from "react";
 import SigninForm from "@/components/signin-form/SigninForm";
 import Link from "next/link";
 import { Metadata } from "next";
+import Image from "next/image";
+import Logo from "@/public/logo.png";
 
 export const metadata: Metadata = {
 	title: "Create an account",
@@ -10,8 +12,9 @@ export const metadata: Metadata = {
 
 const SigninPage = () => {
 	return (
-		<main className="flex items-center justify-center min-h-screen w-full">
-			<div className="w-auto p-10 rounded-3xl" style={{backgroundImage: 'linear-gradient(180deg, rgba(66,242,247,0.1) 0%, rgba(255,255,255,0.1) 100%)'}}>
+		<main className="flex flex-col items-center justify-center min-h-screen w-full gap-7">
+			<Image src={Logo} alt="logo" width="300" height="300"></Image>
+			<div className="w-auto p-10 rounded-3xl bg-none sm:bg-gradient-to-b sm:from-[rgba(66,242,247,0.1)] sm:to-[rgba(255,255,255,0.1)]">
 				<div className="mx-auto flex w-full flex-col justify-center space-y-6">
 					<div className="flex flex-col space-y-2 text-center">
 						<h1 className="text-2xl font-semibold text-white">Create an account</h1>
@@ -26,7 +29,7 @@ const SigninPage = () => {
 							Login
 						</Link>
 					</p>
-					<p className="px-8 text-center text-sm text-muted-foreground text-white">
+					<p className="text-center text-sm text-muted-foreground text-white">
 						By clicking continue, you agree to our{" "}
 						<Link
 							href="/terms"
