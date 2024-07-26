@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./PreferencesForm.module.css";
 import { Button } from "@/components/ui/button";
 import { StaticImageData } from "next/image";
 import Chevron from "@/public/chevron-right.png";
@@ -58,7 +57,7 @@ export default function PreferencesForm() {
 					{Object.entries(genresTable).map(([genre, id]) => (
 						<div
 							key={id}
-							className={`${styles.cat} rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transition-transform transform hover:scale-105 flex justify-center items-center`}
+							className={`rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transition-transform transform hover:scale-105 flex justify-center items-center`}
 							style={{ backgroundImage: `url(${genreImages[genre]?.src})` }}
 						>
 							<label className="cursor-pointer flex flex-col items-center">
