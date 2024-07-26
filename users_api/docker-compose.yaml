@@ -1,4 +1,6 @@
-version: "3.5"
+version: "3.8"
+
+name: moviemania-stack
 
 services:
   mariadb:
@@ -15,6 +17,8 @@ services:
         - "2356:3306"
       volumes:
         - mariadb_data:/home/moviemania/db
+      networks:
+        - moviemania
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -26,6 +30,8 @@ services:
       - "8080:80"
     depends_on:
       - mariadb
+    networks:
+      - moviemania
 
   users_api:
     container_name: users_api
@@ -38,7 +44,7 @@ services:
     platform: linux/amd64 # Patch for M1 Mac
     restart: always
     networks:
-      - default
+      - moviemania
     depends_on:
       - mariadb
     env_file:
@@ -64,3 +70,8 @@ services:
 
 volumes:
   mariadb_data:
+
+networks:
+  moviemania:
+    name: moviemania
+    driver: bridge
