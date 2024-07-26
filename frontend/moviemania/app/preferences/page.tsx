@@ -5,9 +5,9 @@ import PreferencesForm from "@/components/preferences-form/PreferencesForm";
 
 export default function PreferencesPage() {
 	return (
-		<main className="flex flex-col items-center justify-center min-h-screen w-full">
-			<div className="">
-				<div className="flex flex-row gap-5 items-center justify-center">
+		<main className="flex flex-col items-center justify-center min-h-screen w-full p-5">
+			<div className="flex flex-col gap-4">
+				<div className="flex flex-row gap-5 items-center">
 					<div className="rounded-full bg-white w-11 h-11 relative">
 						<Image
 							className="absolute start-1 top-1"
@@ -18,8 +18,8 @@ export default function PreferencesPage() {
 						></Image>
 					</div>
 					<div className="items-center justify-center text-white">
-						<h2 className="text-xl">Quels genres de films préférez-vous ?</h2>
-						<h4 className="text-md italic">Sélectionnez vos préférences</h4>
+						<h2 className="md:text-xl">Quels genres de films préférez-vous ?</h2>
+						<h4 className="md:text-md italic">Sélectionnez vos préférences</h4>
 					</div>
 				</div>
 				<PreferencesForm />
