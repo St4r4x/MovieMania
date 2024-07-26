@@ -1,43 +1,29 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
+import { useFormState } from "react-dom";
+import { registerUserAction } from "@/data/actions/auth-actions";
+
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons/icons";
 import { Button } from "@/components/ui/button";
+import { ZodErrors } from "@/components/custom/ZodErrors";
 
-const SigninForm = () => {
-	const router = useRouter();
+const INITIAL_STATE = {
+	data: null,
+	zodErrors: null,
+	message: null,
+};
+
+export function SigninForm() {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
 
-	async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		const formData = new FormData(e.currentTarget);
+	console.log(formState, "client");
 
-		try {
-			const response = await axios({
-				url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/open`,
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				data: JSON.stringify({
-					email: formData.get("email"),
-					password: formData.get("password"),
-				}),
-			});
-			if (response.status === 200) {
-				router.push("/login");
-			}
-		} catch (error) {
-			NextResponse.json({ error });
-		}
-	}
 	return (
 		<div className={cn("grid gap-6")}>
-			<form onSubmit={handleFormSubmit}>
+			<form action={formAction}>
 				<div className="grid gap-4">
 					<div className="grid gap-1">
 						<div className="sr-only">Email</div>
@@ -52,6 +38,7 @@ const SigninForm = () => {
 							autoCorrect="off"
 							disabled={isLoading}
 						/>
+						<ZodErrors error={formState?.zodErrors?.email} />
 					</div>
 					<div className="grid gap-1">
 						<div className="sr-only">Password</div>
@@ -64,6 +51,7 @@ const SigninForm = () => {
 							autoCorrect="off"
 							disabled={isLoading}
 						/>
+						<ZodErrors error={formState?.zodErrors?.password} />
 					</div>
 					<Button disabled={isLoading}>
 						{isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
@@ -88,6 +76,4 @@ const SigninForm = () => {
 			</Button>
 		</div>
 	);
-};
-
-export default SigninForm;
+}
