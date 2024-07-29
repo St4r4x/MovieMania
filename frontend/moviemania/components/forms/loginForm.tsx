@@ -15,7 +15,7 @@ const INITIAL_STATE = {
    message: null,
 };
 
-export function SigninForm() {
+export function LoginForm() {
    const [isLoading, setIsLoading] = React.useState<boolean>(false);
    const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
 
@@ -31,7 +31,7 @@ export function SigninForm() {
                      className="p-3 border border-gray-300 rounded-md"
                      id="email"
                      name="email"
-                     placeholder="email@example.com"
+                     placeholder="Email"
                      type="email"
                      autoCapitalize="none"
                      autoComplete="email"
@@ -46,22 +46,22 @@ export function SigninForm() {
                      className="p-3 border border-gray-300 rounded-md"
                      id="password"
                      name="password"
-                     placeholder="password"
+                     placeholder="Mot de passe"
                      type="password"
                      autoCorrect="off"
                      disabled={isLoading}
                   />
                   <ZodErrors error={formState?.zodErrors?.password} />
                </div>
-               <Button disabled={isLoading}>
+               <Button variant="default" disabled={isLoading}>
                   {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-                  Sign In with Email
+                  VALIDER
                </Button>
             </div>
          </form>
          <div className="relative flex items-center">
             <div className="flex-grow border-t border-gray-300"></div>
-            <span className="mx-4 text-xs uppercase text-muted-foreground text-white">Or continue with</span>
+            <span className="mx-4 text-xs uppercase text-muted-foreground text-white">Ou continuez avec</span>
             <div className="flex-grow border-t border-gray-300"></div>
          </div>
          <Button variant="outline" type="button" disabled={isLoading}>

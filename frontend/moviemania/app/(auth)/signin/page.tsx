@@ -22,7 +22,7 @@ const SigninPage = () => {
 			<div className="w-auto p-10 rounded-3xl bg-none sm:bg-gradient-to-b sm:from-[rgba(66,242,247,0.1)] sm:to-[rgba(255,255,255,0.1)]">
 				<div className="mx-auto flex w-full flex-col justify-center space-y-6">
 					<div className="flex flex-col space-y-2 text-center">
-						<h1 className="text-2xl font-semibold text-white">Create an account</h1>
+						<h1 className="text-2xl font-semibold text-white">Créer un compte</h1>
 						<p className="text-sm text-muted-foreground text-white">Enter your email below to create your account</p>
 					</div>
 					<SigninForm />
