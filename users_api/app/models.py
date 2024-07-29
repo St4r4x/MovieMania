@@ -93,23 +93,39 @@ class MovieUsersOut(SQLModel):
     data: list[MovieUserOut]
     count: int
 
+
+class GenresBase(SQLModel, table=True):
+    __tablename__ = "Genres"
+    genre_id: int = Field(default=None, primary_key=True)
+    name: str
+
+
 class GenreUserBase(SQLModel):
     genre_id: int
+
 
 # Properties to receive on item creation
 class GenreUserCreate(GenreUserBase):
     genre_id: List[int]
 
+
 class GenreUserUpdate(GenreUserBase):
     genre_ids: List[int]
 
+
 # Database model, database table inferred from class name
 class GenreUser(GenreUserBase, table=True):
-    __tablename__ = "UserGenre"
-    genre_id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(
-        default=None, foreign_key="Users.user_id", nullable=False
+    __tablename__ = "UserGenrePreferences"
+    genre_id: int | None = Field(
+        primary_key=True,
+        default=None,
+        foreign_key="Genres.genre_id",
+        nullable=False,
     )
+    user_id: int | None = Field(
+        default=None, foreign_key="Users.user_id", nullable=False, primary_key=True
+    )
+
 
 # Properties to return via API, id is always required
 class GenreUserOut(GenreUserBase):
@@ -120,6 +136,7 @@ class GenreUserOut(GenreUserBase):
 class GenreUsersOut(SQLModel):
     data: list[GenreUserOut]
     count: int
+
 
 # Generic message
 class Message(SQLModel):

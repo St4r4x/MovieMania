@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import os
 
 from app import models
-from app.api.recommendations import (
+from app.recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher
 )
