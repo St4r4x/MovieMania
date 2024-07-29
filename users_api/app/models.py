@@ -1,6 +1,7 @@
 from sqlmodel import Field, Relationship, SQLModel
 from pydantic import EmailStr
 from datetime import date
+from typing import List
 
 
 # Shared properties
@@ -45,7 +46,7 @@ class UpdatePassword(SQLModel):
 
 # Database model, database table inferred from class name
 class User(UserBase, table=True):
-    __tablename__ = "User"
+    __tablename__ = "Users"
     user_id: int | None = Field(default=None, primary_key=True)
     password: str
 
@@ -74,10 +75,10 @@ class MovieUserCreate(MovieUserBase):
 
 # Database model, database table inferred from class name
 class MovieUser(MovieUserBase, table=True):
-    __tablename__ = "MovieUser"
+    __tablename__ = "MovieUsers"
     movie_id: int | None = Field(default=None, primary_key=True)
     user_id: int | None = Field(
-        default=None, foreign_key="User.user_id", nullable=False
+        default=None, foreign_key="Users.user_id", nullable=False
     )
     note: int | None = None
 
@@ -92,6 +93,33 @@ class MovieUsersOut(SQLModel):
     data: list[MovieUserOut]
     count: int
 
+class GenreUserBase(SQLModel):
+    genre_id: int
+
+# Properties to receive on item creation
+class GenreUserCreate(GenreUserBase):
+    genre_id: List[int]
+
+class GenreUserUpdate(GenreUserBase):
+    genre_ids: List[int]
+
+# Database model, database table inferred from class name
+class GenreUser(GenreUserBase, table=True):
+    __tablename__ = "UserGenre"
+    genre_id: int | None = Field(default=None, primary_key=True)
+    user_id: int | None = Field(
+        default=None, foreign_key="Users.user_id", nullable=False
+    )
+
+# Properties to return via API, id is always required
+class GenreUserOut(GenreUserBase):
+    genre_id: int
+    user_id: int
+
+
+class GenreUsersOut(SQLModel):
+    data: list[GenreUserOut]
+    count: int
 
 # Generic message
 class Message(SQLModel):
