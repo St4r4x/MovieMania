@@ -1,7 +1,9 @@
 from typing import Dict, List
 from sqlalchemy.orm import Session
+
+from . import models
 from .base import RecommendationFetcher
-from .. import models, schemas
+from . import schemas
 from .config import CARROUSSEL_LENGTH
 import numpy as np
 import pickle

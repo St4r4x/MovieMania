@@ -2,7 +2,7 @@ import random
 
 from database import SessionLocal
 from faker import Faker
-from models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
+from recommendations.models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
                     UserGenre, Users)
 
 fake = Faker()
