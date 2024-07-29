@@ -84,3 +84,5 @@ def delete_movieuser(
     session.delete(movieuser)
     session.commit()
     return Message(message="movieuser deleted successfully")
+
+    #! creer une route PATCH avec l'id du film et l'id user

@@ -65,12 +65,15 @@ class UsersOut(SQLModel):
 class MovieUserBase(SQLModel):
     movie_id: int
     note: int | None = None
+    #! ajouter favorits bool
 
 
 # Properties to receive on item creation
 class MovieUserCreate(MovieUserBase):
     movie_id: int
     note: int | None = None
+    #! ajouter favorits bool 
+
 
 
 # Database model, database table inferred from class name
@@ -81,12 +84,16 @@ class MovieUser(MovieUserBase, table=True):
         default=None, foreign_key="User.user_id", nullable=False
     )
     note: int | None = None
+    #! ajouter favorits bool
+
 
 
 # Properties to return via API, id is always required
 class MovieUserOut(MovieUserBase):
     movie_id: int | None = None
     note: int | None = None
+    #! ajouter favorits bool
+
 
 
 class MovieUsersOut(SQLModel):
