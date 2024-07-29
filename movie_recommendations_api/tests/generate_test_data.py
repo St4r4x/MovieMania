@@ -1,6 +1,6 @@
 import random
 
-from database import SessionLocal
+from movie_recommendations_api.app.core.database import SessionLocal
 from faker import Faker
 from models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
                     UserGenre, Users)

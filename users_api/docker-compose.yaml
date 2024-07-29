@@ -71,6 +71,18 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
 
+  recos_api:
+    build:
+      context: ../movie_recommendations_api
+      dockerfile: Dockerfile
+    container_name: recos_api
+    environment:
+      - DATABASE_URL=mysql+pymysql://moviemania:4E60ek9gBpJnWy9@mariadb:3306/MovieDatabase
+    depends_on:
+      - mariadb
+    networks:
+      - moviemania
+
 volumes:
   mariadb_data:
 

@@ -11,3 +11,11 @@ services:
             context: .
             args:
                 INSTALL_DEV: ${INSTALL_DEV-true}
+    recos_api:
+        restart: "no"
+        ports:
+            - "8880:8880"
+        volumes:
+            - ./:/opt/movie_recommendations_api
+        build:
+            context: ../movie_recommendations_api

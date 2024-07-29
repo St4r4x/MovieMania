@@ -1,4 +1,4 @@
-from database import SessionLocal
+from movie_recommendations_api.app.core.database import SessionLocal
 from models import Movies, Genres, Castings, Crews, Users, MovieGenres, MovieUsers, UserGenre
 
 def delete_test_data():

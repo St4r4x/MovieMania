@@ -4,10 +4,10 @@ from typing import Dict, List
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.orm import Session, joinedload
 
-from movie_recommendations_api import models, schemas
+from app import models, schemas
 
 from .base import RecommendationFetcher
-from .config import (CARROUSSEL_LENGTH, WEIGHT_REVENUE, WEIGHT_VOTE_AVERAGE,
+from ...core.config import (CARROUSSEL_LENGTH, WEIGHT_REVENUE, WEIGHT_VOTE_AVERAGE,
                      WEIGHT_VOTE_COUNT)
 
 

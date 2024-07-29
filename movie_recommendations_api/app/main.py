@@ -1,13 +1,14 @@
 from typing import Any, Dict, List, Optional
 from fastapi import Depends, FastAPI, HTTPException, Request,Query
+from app.core import database
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 
-from movie_recommendations_api import database, models
-from movie_recommendations_api.recommendations import (
+from app import models
+from app.api.recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher
 )

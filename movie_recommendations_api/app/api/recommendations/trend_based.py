@@ -2,10 +2,10 @@ from typing import Dict, List
 
 from sqlalchemy.orm import Session
 
-from movie_recommendations_api import models, schemas
+from app import models, schemas
 
 from .base import RecommendationFetcher
-from .config import CARROUSSEL_LENGTH
+from app.core.config import CARROUSSEL_LENGTH
 
 
 class TrendingRecommendationFetcher(RecommendationFetcher):

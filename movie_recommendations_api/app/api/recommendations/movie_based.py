@@ -1,8 +1,8 @@
 from typing import Dict, List
 from sqlalchemy.orm import Session
 from .base import RecommendationFetcher
-from .. import models, schemas
-from .config import CARROUSSEL_LENGTH
+from app import models, schemas
+from app.core.config import CARROUSSEL_LENGTH
 import numpy as np
 import pickle
 from sqlalchemy.exc import NoResultFound
