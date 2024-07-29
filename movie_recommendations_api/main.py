@@ -138,25 +138,40 @@ async def get_all_genres(db: Session = Depends(database.get_db)):
     return [{"id": genre.id, "name": genre.name} for genre in genres]
 
 @app.get("/movies/search/", response_model=List[Dict[str, Any]])
-async def search_movies(title: Optional[str] = Query(None, min_length=1), db: Session = Depends(database.get_db)):
+async def search_movies(
+    title: Optional[str] = Query(None, min_length=1),
+    release_date: Optional[str] = Query(None),
+    genre: Optional[str] = Query(None),
+    skip: int = 0,
+    limit: int = 10,
+    db: Session = Depends(database.get_db)
+):
     """
-    Search for movies by title.
+    Search for movies by title, release date, and genre with pagination.
 
     Args:
         title (str, optional): The title of the movie to search for. Defaults to None.
+        release_date (str, optional): The release date of the movie to search for. Defaults to None.
+        genre (str, optional): The genre of the movie to search for. Defaults to None.
+        skip (int, optional): The number of records to skip for pagination. Defaults to 0.
+        limit (int, optional): The maximum number of records to return. Defaults to 10.
         db (Session, optional): The database session. Defaults to Depends(database.get_db).
 
     Returns:
         List[Dict[str, Any]]: A list of dictionaries containing the details of each matching movie.
     """
-    if not title:
-        raise HTTPException(status_code=400, detail="Title parameter is required")
+    query = db.query(models.Movies)
     
-    movies = db.query(models.Movies).filter(models.Movies.title.ilike(f"%{title}%")).all()
+    if title:
+        query = query.filter(models.Movies.title.ilike(f"%{title}%"))
+    if release_date:
+        query = query.filter(models.Movies.release_date == release_date)
+    if genre:
+        query = query.join(models.MovieGenresAssociations).join(models.Genre).filter(models.Genre.name.ilike(f"%{genre}%"))
+    
+    movies = query.offset(skip).limit(limit).all()
+    
     if not movies:
-        raise HTTPException(status_code=404, detail="No movies found with the given title")
+        raise HTTPException(status_code=404, detail="No movies found with the given criteria")
     
-    return [
-        movie_to_dict(movie)
-        for movie in movies
-    ]
+    return [movie_to_dict(movie) for movie in movies]
