@@ -30,3 +30,21 @@ class Recommendation(BaseModel):
     class Config:
         orm_mode = True
         from_attributes = True
+
+class GenreSchema(BaseModel):
+    genre_id: int
+    name: str
+
+    class Config:
+        orm_mode = True
+        from_attributes = True
+
+class CreditSchema(BaseModel):
+    credit_id: int
+    movie_id: int
+    people_id: int
+    role: Optional[str]
+
+    class Config:
+        orm_mode = True
+        from_attributes = True

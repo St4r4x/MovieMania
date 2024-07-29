@@ -1,16 +1,16 @@
 from typing import Any, Dict, List, Optional
 from fastapi import Depends, FastAPI, HTTPException, Request,Query
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
-
-from movie_recommendations_api import database, models
-from movie_recommendations_api.recommendations import (
+import database
+from recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
-    TrendingRecommendationFetcher
+    TrendingRecommendationFetcher, models
 )
+from recommendations.schemas import CreditSchema, GenreSchema
 
 load_dotenv() 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -34,8 +34,8 @@ def movie_to_dict(movie: models.Movies) -> Dict[str, Any]:
         "vote_average": movie.vote_average,
         "vote_count": movie.vote_count,
         "tagline": movie.tagline,
-        "genres": [genre.genre.name for genre in movie.genres],
-        "credits": [{"person_name": credit.person_name, "role": credit.role} for credit in movie.credits]
+        #"genres": [genre.genre_name for genre in movie.genres],
+        #"credits": [{"person_name": credit.people.person_name, "role": credit.role} for credit in movie.credits]
     }
 
 class TokenData(BaseModel):
@@ -123,19 +123,21 @@ async def get_movie_details(movie_id: int, db: Session = Depends(database.get_db
         raise HTTPException(status_code=404, detail="Movie not found")
     return movie_to_dict(movie)
 
-@app.get("/genres/", response_model=List[Dict[str, Any]])
-async def get_all_genres(db: Session = Depends(database.get_db)):
-    """
-    Retrieve all genres from the database.
+@app.get("/genres", response_model=List[GenreSchema])
+def read_genres(skip: int = 0, limit: int = 10, db: Session = Depends(database.get_db)):
+    genres = db.query(models.Genres).offset(skip).limit(limit).all()
+    return genres
 
-    Args:
-        db (Session, optional): The database session. Defaults to Depends(database.get_db).
+@app.get("/movies/{movie_id}/credits", response_model=Dict[str, Any])
+def read_credits(movie_id: int, db: Session = Depends(database.get_db)):
+    movie = db.query(models.Movies).options(
+        joinedload(models.Movies.credits).joinedload(models.Credits.people),
+        joinedload(models.Movies.credits).joinedload(models.Credits.job),
+    ).filter(models.Movies.movie_id == movie_id).first()
+    if not movie:
+        raise HTTPException(status_code=404, detail="Movie not found")
+    return movie_to_dict(movie)
 
-    Returns:
-        List[Dict[str, Any]]: A list of dictionaries containing the details of each genre.
-    """
-    genres = db.query(models.Genre).all()
-    return [{"id": genre.id, "name": genre.name} for genre in genres]
 
 @app.get("/movies/search/", response_model=List[Dict[str, Any]])
 async def search_movies(

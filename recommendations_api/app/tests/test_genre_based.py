@@ -3,7 +3,9 @@ from unittest.mock import Mock
 
 from sqlalchemy.orm import Session
 
-from .. import models, schemas
+from ..recommendations import models
+
+from ..recommendations import schemas
 from ..recommendations.genre_based import GenreBasedRecommendationFetcher
 
 
