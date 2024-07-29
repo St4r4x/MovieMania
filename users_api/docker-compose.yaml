@@ -26,6 +26,9 @@ services:
     environment:
       PMA_HOST: mariadb
       PMA_PORT: 3306
+      UPLOAD_LIMIT: 1000M
+      POST_MAX_SIZE: 1000M
+      MEMORY_LIMIT: 1000M
     ports:
       - "8080:80"
     depends_on:
