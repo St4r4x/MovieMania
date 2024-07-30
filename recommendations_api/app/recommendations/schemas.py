@@ -41,8 +41,10 @@ class GenreSchema(BaseModel):
 
 class CreditSchema(BaseModel):
     credit_id: int
-    movie_id: int
-    people_id: int
+    id_movie: int
+    id_people: int
+    id_job: int
+    character_name: Optional[str]  # Add this line
     role: Optional[str]
 
     class Config:

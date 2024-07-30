@@ -124,19 +124,17 @@ async def get_movie_details(movie_id: int, db: Session = Depends(database.get_db
     return movie_to_dict(movie)
 
 @app.get("/genres", response_model=List[GenreSchema])
-def read_genres(skip: int = 0, limit: int = 10, db: Session = Depends(database.get_db)):
+def read_genres(skip: int = 0, limit: int = 20, db: Session = Depends(database.get_db)):
     genres = db.query(models.Genres).offset(skip).limit(limit).all()
     return genres
 
-@app.get("/movies/{movie_id}/credits", response_model=Dict[str, Any])
+@app.get("/movies/{movie_id}/credits", response_model=List[CreditSchema])
 def read_credits(movie_id: int, db: Session = Depends(database.get_db)):
-    movie = db.query(models.Movies).options(
-        joinedload(models.Movies.credits).joinedload(models.Credits.people),
-        joinedload(models.Movies.credits).joinedload(models.Credits.job),
-    ).filter(models.Movies.movie_id == movie_id).first()
-    if not movie:
-        raise HTTPException(status_code=404, detail="Movie not found")
-    return movie_to_dict(movie)
+    return db.query(models.Credits).options(
+        joinedload(models.Credits.people)
+    ).filter(
+        models.Credits.id_movie == movie_id
+    ).all()
 
 
 @app.get("/movies/search/", response_model=List[Dict[str, Any]])

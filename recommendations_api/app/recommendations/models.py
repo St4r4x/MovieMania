@@ -49,13 +49,13 @@ class Peoples(Base):
 class Credits(Base):
     __tablename__ = "Credits"
     credit_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    person_name: Mapped[Optional[str]] = mapped_column(
-        String(255), nullable=True)
-    role: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    people_id: Mapped[int] = mapped_column(ForeignKey("Peoples.people_id"))
-    movie_id: Mapped[int] = mapped_column(
+    id_people: Mapped[int] = mapped_column(ForeignKey("Peoples.people_id"))
+    id_movie: Mapped[int] = mapped_column(
         ForeignKey("Movies.movie_id"))
-    job_id: Mapped[int] = mapped_column(ForeignKey("Jobs.job_id"))
+    id_job: Mapped[int] = mapped_column(ForeignKey("Jobs.job_id"))
+    character_name: Mapped[Optional[str]] = mapped_column(
+        String(255), nullable=True)
+    cast_order: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     
     job: Mapped["Jobs"] = relationship("Jobs", back_populates="credits")
     movie: Mapped["Movies"] = relationship("Movies", back_populates="credits")
