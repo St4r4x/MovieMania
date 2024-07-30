@@ -9,7 +9,7 @@ interface RegisterUserProps {
 export async function registerUserService(userData: RegisterUserProps) {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/open`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/open`,
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
