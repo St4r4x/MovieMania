@@ -2,7 +2,7 @@ from typing import Dict, List
 
 from sqlalchemy.orm import Session
 
-from movie_recommendations_api import models, schemas
+from . import models, schemas
 
 from .base import RecommendationFetcher
 from .config import CARROUSSEL_LENGTH
