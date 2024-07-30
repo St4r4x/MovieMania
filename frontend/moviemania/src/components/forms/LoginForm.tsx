@@ -2,12 +2,12 @@
 
 import React from "react";
 import { useFormState } from "react-dom";
-import { registerUserAction } from "@/data/actions/auth-actions";
+import { registerUserAction } from "@/src/data/actions/auth-actions";
 
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons/icons";
-import { Button } from "@/components/ui/button";
-import { ZodErrors } from "@/components/custom/ZodErrors";
+import { cn } from "@/src/lib/utils";
+import { ZodErrors } from "@/src/components/custom/ZodErrors";
+import { Icons } from "@/src/components/icons/icons";
+import { Button } from "@/src/components/ui/button";
 
 const INITIAL_STATE = {
    data: null,

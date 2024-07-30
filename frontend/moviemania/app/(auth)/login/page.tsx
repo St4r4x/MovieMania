@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
-import { LoginForm } from "@/components/forms/loginForm";
+import { LoginForm } from "@/src/components/forms/LoginForm";
 
 export const metadata: Metadata = {
    title: "Connexion",
@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 const LoginPage = () => {
    return (
-      <main className="flex flex-col items-center justify-center  ">
+      <main className="flex flex-col items-center justify-center min-h-screen ">
          <Image src={Logo} alt="logo" width="300" height="300"></Image>
-         <div className="w-auto p-10 rounded-3xl bg-gradient-to-b from-[rgba(66,242,247,0.1)] to-[rgba(255,255,255,0.1)] ">
+         <div className=" w-auto p-10 rounded-3xl bg-gradient-to-b from-[rgba(66,242,247,0.1)] to-[rgba(255,255,255,0.1)]">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6">
                <div className="flex flex-col space-y-2 text-center">
                   <h1 className="text-4xl font-semibold text-white">Login</h1>

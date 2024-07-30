@@ -2,12 +2,13 @@
 
 import React from "react";
 import { useFormState } from "react-dom";
-import { registerUserAction } from "@/data/actions/auth-actions";
+import { registerUserAction } from "@/src/data/actions/auth-actions";
 
-import { cn } from "@/lib/utils";
-import { Icons } from "@/components/icons/icons";
-import { Button } from "@/components/ui/button";
-import { ZodErrors } from "@/components/custom/ZodErrors";
+import { cn } from "@/src/lib/utils";
+import { ZodErrors } from "@/src/components/custom/ZodErrors";
+import { Icons } from "@/src/components/icons/icons";
+import { Button } from "@/src/components/ui/button";
+
 
 const INITIAL_STATE = {
    data: null,
@@ -31,7 +32,7 @@ export function SigninForm() {
                      className="p-3 border border-gray-300 rounded-md"
                      id="email"
                      name="email"
-                     placeholder="email@example.com"
+                     placeholder="email@exemple.com"
                      type="email"
                      autoCapitalize="none"
                      autoComplete="email"
@@ -46,7 +47,7 @@ export function SigninForm() {
                      className="p-3 border border-gray-300 rounded-md"
                      id="password"
                      name="password"
-                     placeholder="password"
+                     placeholder="Mot de passe"
                      type="password"
                      autoCorrect="off"
                      disabled={isLoading}
@@ -55,13 +56,13 @@ export function SigninForm() {
                </div>
                <Button disabled={isLoading}>
                   {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-                  Sign In with Email
+                  VALIDER
                </Button>
             </div>
          </form>
          <div className="relative flex items-center">
             <div className="flex-grow border-t border-gray-300"></div>
-            <span className="mx-4 text-xs uppercase text-muted-foreground text-white">Or continue with</span>
+            <span className="mx-4 text-xs uppercase text-muted-foreground text-white">Ou continuez avec</span>
             <div className="flex-grow border-t border-gray-300"></div>
          </div>
          <Button variant="outline" type="button" disabled={isLoading}>
