@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { StaticImageData } from "next/image";
 import Chevron from "@/public/chevron-right.png";
 import Image from "next/image";
-import { postGenresUser } from "@/data/services/user-services";
+import { postGenresUser } from "@/src/data/services/user-services";
 
 import actionImage from "@/public/action.png";
 import animationImage from "@/public/animation.webp";
