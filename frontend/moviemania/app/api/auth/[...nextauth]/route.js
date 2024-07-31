@@ -38,7 +38,7 @@ export const authOptions = {
                const response = await axios({
                   method: "post",
                   contentType: "application/x-www-form-urlencoded",
-                  url: `${process.env.NEXT_PUBLIC_API_URL}/api/v1/login/access-token`,
+                  url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/login/access-token`,
                   data: bodyContent,
                });
                const data = response.data;

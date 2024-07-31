@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMwMzI4NTQsInN1YiI6IjIifQ.BJl25Hm3ba2bo1n178zJJwGcKcWvQGHMLQoDrub465g";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMxMjE4NTMsInN1YiI6IjIifQ.R_XmsIum6q8YMbs5ZCKEwmXntDUcJ3bvFMe551cbWNQ";
 
 export const postGenresUser = async (genres: string[]) => {
 	try {

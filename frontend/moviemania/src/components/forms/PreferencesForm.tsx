@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
 import { StaticImageData } from "next/image";
 import Chevron from "@/public/chevron-right.png";
 import Image from "next/image";
