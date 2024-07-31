@@ -1,7 +1,7 @@
 import React from "react";
 import Popcorn from "@/public/popcorn.png";
 import Image from "next/image";
-import PreferencesForm from "@/components/forms/PreferencesForm";
+import PreferencesForm from "@/src/components/forms/PreferencesForm";
 
 export default function PreferencesPage() {
 	return (

@@ -1,6 +1,5 @@
+import { Button } from "@/src/components/ui/button";
 import Carousel from "@/src/components/ui/carrousel";
-import Footer from "@/src/components/ui/footer";
-import Navbar from "@/src/components/ui/navbar";
 import Image from "next/image";
 
 const images = [
@@ -18,7 +17,7 @@ const images = [
 export default function Home() {
    return (
       <main className="min-h-screen">
-         <Navbar />
+         {/* <Navbar /> */}
          <header className="relative w-full h-[90vh]">
             <Image src="/joker.png" alt="Affiche" layout="fill" objectFit="cover" quality={100} />
 
@@ -34,6 +33,8 @@ export default function Home() {
                      Dans les années 1980, à Gotham City, Arthur Fleck, un humoriste de stand-up raté, bascule dans la
                      folie et devient le Joker.
                   </p>
+
+                  <Button className="rounded-full w-30 text-base mt-4">Plus d'info</Button>
                </div>
             </div>
          </header>
@@ -55,7 +56,6 @@ export default function Home() {
 
             <Carousel images={images} />
          </section>
-         <Footer />
       </main>
    );
 }

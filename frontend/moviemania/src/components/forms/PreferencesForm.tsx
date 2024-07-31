@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { StaticImageData } from "next/image";
 import Chevron from "@/public/chevron-right.png";
 import Image from "next/image";
@@ -23,6 +22,7 @@ import scifiImage from "@/public/scifi.jpeg";
 import thrillerImage from "@/public/thriller.jpeg";
 import westernImage from "@/public/western.jpg";
 import crimeImage from "@/public/crime.jpg";
+import { Button } from "@/src/components/ui/button";
 
 
 type GenreImagePaths = {

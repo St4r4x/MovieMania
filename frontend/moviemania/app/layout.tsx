@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/src/components/auth-provider/AuthProvider";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import ConditionalNavbar from "@/src/components/ui/conditionalNavbar";
+import ConditionalFooter from "@/src/components/ui/conditionaFooter";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -20,7 +21,11 @@ export default function RootLayout({
    return (
       <html lang="en">
          <body className={nunito.className} style={{ backgroundImage: "var(--body-background-gradient)" }}>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider>
+               <ConditionalNavbar />
+               {children}
+               <ConditionalFooter />
+            </AuthProvider>
          </body>
       </html>
    );
