@@ -20,7 +20,6 @@ services:
       networks:
          - moviemania
 
-<<<<<<< HEAD
    phpmyadmin:
       image: phpmyadmin/phpmyadmin:latest
       container_name: phpmyadmin
@@ -37,23 +36,6 @@ services:
          - mariadb
       networks:
          - moviemania
-=======
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    environment:
-      PMA_HOST: mariadb
-      PMA_PORT: 3306
-      UPLOAD_LIMIT: 1000M
-      POST_MAX_SIZE: 1000M
-      MEMORY_LIMIT: 1000M
-    ports:
-      - "8080:80"
-    depends_on:
-      - mariadb
-    networks:
-      - moviemania
->>>>>>> 5cbb639 (add max size limit in docker-compose to permit big import for pma + update users_api models.py)
 
    users_api:
       container_name: users_api
