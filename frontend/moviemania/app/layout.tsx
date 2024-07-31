@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/src/components/auth-provider/AuthProvider";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 const nunito = Nunito({ subsets: ["latin"] });
 
