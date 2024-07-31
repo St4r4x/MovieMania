@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const LoginPage = () => {
    return (
-      <main className="flex flex-col items-center justify-center min-h-screen ">
+      <main className="flex flex-col items-center justify-center min-h-screen">
          <Image src={Logo} alt="logo" width="300" height="300"></Image>
          <div className=" w-auto p-10 rounded-3xl bg-gradient-to-b from-[rgba(66,242,247,0.1)] to-[rgba(255,255,255,0.1)]">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6">
