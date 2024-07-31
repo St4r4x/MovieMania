@@ -14,6 +14,12 @@ const medias = [
 	{ id: 7, poster_path: "/3E53WEZJqP6aM84D8CckXx4pIHw.jpg", title: "Test", rating: 3 },
 ];
 
+const user = {
+	email: "John@doe.com",
+	nom: "Doe",
+	prenom: "John",
+};
+
 function MediaUserRatings() {
 	return (
 		<main className="flex flex-col min-h-screen w-full gap-7">
@@ -22,6 +28,7 @@ function MediaUserRatings() {
 				style={{ backgroundImage: `url(${profileBackground?.src})`, height: `500px` }}
 			>
 				<ProfileDetails
+				    user={user}
 					enriched={false}
 					page="My Ratings"
 				/>

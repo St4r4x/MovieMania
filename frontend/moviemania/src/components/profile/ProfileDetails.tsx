@@ -1,12 +1,21 @@
 import React from "react";
 import Link from "next/link";
+import ProfileSavesAndRatings from "@/src/components/profile/ProfileSavesAndRatings";
+
+interface User {
+	email: string;
+	nom: string;
+	prenom: string;
+}
+
 
 interface ProfileDetailsProps {
+	user: User;
 	enriched: boolean;
 	page?: string;
 }
 
-function ProfileDetails({ enriched, page }: ProfileDetailsProps) {
+function ProfileDetails({ user, enriched, page }: ProfileDetailsProps) {
 	return (
 		<div className="flex flex-row text-white gap-14">
 			<div className="flex flex-row items-end justify-center gap-6">
@@ -22,13 +31,13 @@ function ProfileDetails({ enriched, page }: ProfileDetailsProps) {
 				<div className="flex flex-col gap-2">
 					{enriched ? (
 						<>
-							<div className="italic">@Profile</div>
-							<div className="text-2xl font-bold">John</div>
+							<div className="italic">@{user.nom}</div>
+							<div className="text-2xl font-bold">{user.prenom + " " + user.nom}</div>
 						</>
 					) : (
 						<>
 							<Link href="/profile">
-								<div className="italic hover:text-primary hover:underline">@Profile</div>
+								<div className="italic hover:text-primary hover:underline">@{user.nom}</div>
 							</Link>
 							<div className="text-4xl font-bold">{page}</div>
 						</>
@@ -45,20 +54,7 @@ function ProfileDetails({ enriched, page }: ProfileDetailsProps) {
 				</div>
 			</div>
 			{enriched ? (
-				<div className="flex flex-row items-end justify-center gap-5">
-					<Link href="/profile/ratings">
-						<div className="flex flex-col items-center justify-center border-e-2 border-e-white-200 pe-5">
-							<div className="text-xl font-bold">5</div>
-							<div className="text-xl text-gray-400">Ratings</div>
-						</div>
-					</Link>
-					<Link href="/profile/saved">
-						<div className="flex flex-col items-center justify-center">
-							<div className="text-xl font-bold">5</div>
-							<div className="text-xl text-gray-400">Saved</div>
-						</div>
-					</Link>
-				</div>
+				<ProfileSavesAndRatings ratings={5} saved={3}/>
 			) : (
 				""
 			)}
