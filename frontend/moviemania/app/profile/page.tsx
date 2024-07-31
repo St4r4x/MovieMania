@@ -11,7 +11,7 @@ function Profile() {
 				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-10`}
 				style={{ backgroundImage: `url(${profileBackground?.src})`, height: `690px` }}
 			>
-				<ProfileDetails enriched={true}/>
+				<ProfileDetails enriched={true} />
 			</div>
 		</main>
 	);

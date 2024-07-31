@@ -1,7 +1,12 @@
 import React from "react";
 import Link from "next/link";
 
-function ProfileDetails({ enriched }: { enriched: boolean }, { page }: { page: string }) {
+interface ProfileDetailsProps {
+	enriched: boolean;
+	page?: string;
+}
+
+function ProfileDetails({ enriched, page }: ProfileDetailsProps) {
 	return (
 		<div className="flex flex-row text-white gap-14">
 			<div className="flex flex-row items-end justify-center gap-6">
@@ -22,13 +27,15 @@ function ProfileDetails({ enriched }: { enriched: boolean }, { page }: { page: s
 						</>
 					) : (
 						<>
-							<div className="italic">@Profile</div>
+							<Link href="/profile">
+								<div className="italic hover:text-primary hover:underline">@Profile</div>
+							</Link>
 							<div className="text-4xl font-bold">{page}</div>
 						</>
 					)}
 					{enriched ? (
 						<Link href="/settings">
-							<div className="border border-1 py-1 px-10 rounded-md border-gray-400">
+							<div className="border border-1 py-1 px-10 rounded-md border-gray-400 hover:border-primary hover:text-primary">
 								<span>Edit profile</span>
 							</div>
 						</Link>
