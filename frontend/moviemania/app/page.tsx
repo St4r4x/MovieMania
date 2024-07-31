@@ -1,4 +1,5 @@
 import Carousel from "@/src/components/ui/carrousel";
+import Footer from "@/src/components/ui/footer";
 import Navbar from "@/src/components/ui/navbar";
 import Image from "next/image";
 
@@ -19,13 +20,7 @@ export default function Home() {
       <main className="min-h-screen">
          <Navbar />
          <header className="relative w-full h-[90vh]">
-            <Image
-               src="/joker.png"
-               alt="Affiche"
-               layout="fill"
-               objectFit="cover"
-               quality={100}
-            />
+            <Image src="/joker.png" alt="Affiche" layout="fill" objectFit="cover" quality={100} />
 
             <div className="absolute inset-0 bg-gradient-to-r from-black to-[rgba(0,0,0,0.2)]"></div>
 
@@ -60,6 +55,7 @@ export default function Home() {
 
             <Carousel images={images} />
          </section>
+         <Footer />
       </main>
    );
 }
