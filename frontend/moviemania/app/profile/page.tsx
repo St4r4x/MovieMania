@@ -4,6 +4,11 @@ import styles from "./Profile.module.css";
 import profileBackground from "@/public/profile-background.png";
 import ProfileDetails from "@/src/components/profile/ProfileDetails";
 import Carousel from "@/src/components/ui/carrousel";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Mes Films favoris",
+};
 
 const user = {
 	email: "John@doe.com",
