@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMwMzE0MjcsInN1YiI6IjEifQ.Wo_Gh3RvmQ38TSj4bfR6DGCRXIrs6bPb3cft2bhlNZw";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMxOTU5MzYsInN1YiI6IjEifQ.dEzxsfR8tUuyoV8J6_lxoe163xDv3zhJ1FKgrjzgA3s";
 
 export const getAllMovieGenres = async (genres: string[]) => {
 	try {

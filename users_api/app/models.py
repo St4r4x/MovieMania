@@ -36,7 +36,6 @@ class UserUpdateMe(SQLModel):
     prenom: str | None = None
     birthday: date | None = None
     sexe: str | None = None
-    email: EmailStr | None = None
 
 
 class UpdatePassword(SQLModel):

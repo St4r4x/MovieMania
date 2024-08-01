@@ -27,7 +27,7 @@ export function SigninForm() {
          if (formState.message === "Inscription réussie!") {
             // Redirection vers une nouvelle page après succès
             setTimeout(() => {
-               window.location.href = "/";
+               window.location.href = "/preferences";
             }, 1000); // Temps d'attente avant redirection, ajustable
          }
       }

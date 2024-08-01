@@ -2,6 +2,11 @@ import React from "react";
 import Popcorn from "@/public/popcorn.png";
 import Image from "next/image";
 import PreferencesForm from "@/src/components/forms/PreferencesForm";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Préférences",
+};
 
 export default function PreferencesPage() {
 	return (
