@@ -1,7 +1,5 @@
 import ActionButton from "@/src/components/ui/actionsButtons";
 import Carousel from "@/src/components/ui/carrousel";
-import Footer from "@/src/components/ui/footer";
-import Navbar from "@/src/components/ui/navbar";
 import Image from "next/image";
 
 const filmDetails = {
@@ -31,7 +29,6 @@ const images = [
 export default function FilmDetails() {
    return (
       <main className="min-h-screen text-white">
-         <Navbar />
 
          <header className="relative w-full h-[90vh]">
             <Image src={filmDetails.poster} alt="Film Poster" layout="fill" objectFit="cover" quality={100} />
@@ -72,11 +69,11 @@ export default function FilmDetails() {
                   <div className="flex space-x-3">
                      <div>
                         <h2 className="text-base text-gray-400 mb-2">Réalisé par</h2>
-                        <p className="font-bold">{filmDetails.directors.join(", ")}</p>{" "}
+                        <p className="font-bold">{filmDetails.directors.join(", ")}</p>
                      </div>
                      <div>
                         <h2 className="text-base text-gray-400 mb-2">Rédaction</h2>
-                        <p className="font-bold">{filmDetails.writers.join(", ")}</p>{" "}
+                        <p className="font-bold">{filmDetails.writers.join(", ")}</p>
                      </div>
                   </div>
                </div>
@@ -114,7 +111,6 @@ export default function FilmDetails() {
                <Carousel images={images} />
             </section>
          </section>
-         <Footer />
       </main>
    );
 }
