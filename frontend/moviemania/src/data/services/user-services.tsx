@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMxOTU5MzYsInN1YiI6IjEifQ.dEzxsfR8tUuyoV8J6_lxoe163xDv3zhJ1FKgrjzgA3s";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMyMDA5MTAsInN1YiI6IjMifQ.Zd4mt17m0NOnhbhXl5DNPHm8mLRmZzNXUYIKkAz05Mo";
 
 interface patchUserProfileProps {
 	nom: string;
@@ -25,7 +25,6 @@ export const postGenresUser = async (genres: string[]) => {
 			}),
 		});
 		if (response.status === 200) {
-			//router.push("/home");
 			alert("Genres enregistrés avec succès !");
 		}
 	} catch (error) {
@@ -49,7 +48,6 @@ export const patchUserProfile = async (userData: patchUserProfileProps) => {
 			}),
 		});
 		if (response.status === 200) {
-			//router.push("/home");
 			setTimeout(() => {
 				alert("Informations users mise à jour avec succès !");
 			}, 2000); // Délai de 2 secondes
@@ -63,7 +61,7 @@ export const patchUserProfile = async (userData: patchUserProfileProps) => {
 };
 
 interface deleteUserProfileProps {
-	email: string;
+	id: number;
 }
 
 export const deleteUserProfile = async (id: deleteUserProfileProps) => {
@@ -79,15 +77,16 @@ export const deleteUserProfile = async (id: deleteUserProfileProps) => {
 			},
 		});
 		if (response.status === 200) {
-			//router.push("/home");
 			setTimeout(() => {
 				alert("Users supprimé avec succès !");
 			}, 2000); // Délai de 2 secondes
+			return { success: true };
 		}
 	} catch (error) {
 		console.error("Erreur lors de la suppression du profil utilisateur:", error);
 		if (axios.isAxiosError(error)) {
 			console.error("Détails de l'erreur:", error.response?.data);
 		}
+		return { success: false };
 	}
 };

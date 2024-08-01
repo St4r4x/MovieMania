@@ -16,7 +16,7 @@ function SettingsPage() {
 						<span className="text-white">Profil</span>
 					</div>
 				</Link>
-				<Link href="/settings/delete-account">
+				<Link href="/settings/delete">
 					<div className="border border-1 border-gray-100 rounded-md p-5">
 						<span className="text-white">Supprimer compte</span>
 					</div>

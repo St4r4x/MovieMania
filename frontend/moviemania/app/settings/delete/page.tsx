@@ -1,39 +1,39 @@
-import Link from "next/link";
+"use client";
+
 import React, { useState } from "react";
-import { Metadata } from "next";
 import { Button } from "@/src/components/ui/button";
 import { deleteUserProfile } from "@/src/data/services/user-services";
-import Email from "next-auth/providers/email";
-
-export const metadata: Metadata = {
-	title: "Supprimer le compte",
-};
+import { useRouter } from "next/navigation";
+import { boolean } from "zod";
 
 const user = {
-	email: "john.doe@test.com"
-}
+	email: "john@doe.com",
+	id: 3,
+};
 
 function SettingsDelete() {
-	const [formData, setFormData] = useState({
-		email: "",
-	});
+	const router = useRouter();
 	const [isLoading, setIsLoading] = useState(false);
-	const [isModified, setIsModified] = useState(false);
+	const [isMatched, setIsMatched] = useState(false);
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+	const handleMatch = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-		setIsModified(true);
+		if (value === user.email) {
+			setIsMatched(true);
+		} else {
+			setIsMatched(false);
+		}
 	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		console.log("formData", formData);
-		await deleteUserProfile(formData);
+		const result = await deleteUserProfile(user.id);
+		if (result?.success) {
+			router.push("/signin");
+		} else {
+			console.error("La suppression a échoué");
+		}
 		setIsLoading(false);
 	};
 	return (
@@ -43,13 +43,13 @@ function SettingsDelete() {
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-5">
 						<div className="grid gap-1">
-							<div className="text-gray-300 text-start">Nom</div>
+							<div className="text-gray-300 text-start">Email</div>
 							<input
 								className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
 								id="email"
 								name="email"
-								placeholder="Votre email de connexion"
-								onChange={handleChange}
+								placeholder="Saisissez votre email de connexion"
+								onChange={handleMatch}
 								type="email"
 								autoCorrect="off"
 								autoComplete="email"
@@ -58,7 +58,7 @@ function SettingsDelete() {
 						<Button
 							variant="secondary"
 							type="submit"
-							disabled={isLoading || !isModified}
+							disabled={isLoading || !isMatched}
 						>
 							{isLoading ? "Suppression en cours..." : "Suppression du compte"}
 						</Button>

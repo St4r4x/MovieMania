@@ -4,11 +4,6 @@ import React, { useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { patchUserProfile } from "@/src/data/services/user-services";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-	title: "Paramètres de profil",
-};
 
 const user = {
 	nom: "Doe",
