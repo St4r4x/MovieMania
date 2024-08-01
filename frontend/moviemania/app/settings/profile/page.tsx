@@ -3,31 +3,41 @@
 import React, { useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
-import { useFormState } from "react-dom";
-import { registerUserAction } from "@/src/data/actions/auth-actions";
+import { patchUserProfile } from "@/src/data/services/user-services";
 
 const user = {
 	nom: "Doe",
 	prenom: "John",
-	genre: "homme",
+	sexe: "non-binary",
 	birthday: "2022-01-01",
 };
 
-const INITIAL_STATE = {
-	data: null,
-	zodErrors: null,
-	message: null,
-};
-
 function SettingsProfile() {
-	const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [formData, setFormData] = useState({
+		nom: user.nom,
+		prenom: user.prenom,
+		sexe: user.sexe,
+		birthday: user.birthday
+	});
+	const [isLoading, setIsLoading] = useState(false);
+	const [isModified, setIsModified] = useState(false);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+		const { name, value } = e.target;
+		setFormData({
+			...formData,
+			[name]: value,
+		});
+		setIsModified(true);
+	};
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-        setIsLoading(true);
-		await formAction(new FormData(event.target as HTMLFormElement));
-        setIsLoading(false);
+		setIsLoading(true);
+		console.log("formData", formData);
+		await patchUserProfile(formData);
+		setIsLoading(false);
+
 	};
 
 	return (
@@ -45,8 +55,9 @@ function SettingsProfile() {
 									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
 									id="nom"
 									name="nom"
-									placeholder="email@exemple.com"
-                                    value={user.nom}
+									placeholder="nom"
+									defaultValue={user.nom}
+									onChange={handleChange}
 									type="text"
 									autoCorrect="off"
 								/>
@@ -58,7 +69,8 @@ function SettingsProfile() {
 									id="prenom"
 									name="prenom"
 									placeholder="prénom"
-                                    value={user.prenom}
+									defaultValue={user.prenom}
+									onChange={handleChange}
 									type="text"
 									autoCorrect="off"
 								/>
@@ -66,9 +78,11 @@ function SettingsProfile() {
 							<div className="grid gap-1">
 								<div className="text-gray-300 text-start">Comment vous identifiez-vous?</div>
 								<select
-									name="genre"
-									id="genre"
+									name="sexe"
+									id="sexe"
 									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
+									defaultValue={user.sexe}
+									onChange={handleChange}
 								>
 									<option value="homme">Homme</option>
 									<option value="femme">Femme</option>
@@ -83,11 +97,18 @@ function SettingsProfile() {
 									id="birthday"
 									name="birthday"
 									placeholder=""
-                                    value={user.birthday}
+									defaultValue={user.birthday}
+									onChange={handleChange}
 									type="date"
 								/>
 							</div>
-							<Button variant="secondary">{isLoading ? "Mise à jour en cours..." : "Mise à jour"}</Button>
+							<Button
+								variant="secondary"
+								type="submit"
+								disabled={isLoading || !isModified}
+							>
+								{isLoading ? "Mise à jour en cours..." : "Mise à jour"}
+							</Button>
 						</div>
 					</form>
 				</div>
