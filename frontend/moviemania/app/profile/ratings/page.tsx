@@ -3,6 +3,11 @@ import profileBackground from "@/public/profile-background.png";
 import styles from "../Profile.module.css";
 import ProfileDetails from "@/src/components/profile/ProfileDetails";
 import ProfileMediaCard from "@/src/components/profile/ProfileMediaCard";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Mes Films notés",
+};
 
 const medias = [
 	{ id: 1, poster_path: "/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg", title: "Test", rating: 5 },
