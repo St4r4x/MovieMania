@@ -55,19 +55,20 @@ def configure_test_app():
 
 def cleanup_database():
     session = TestingSessionLocal()
-    session.execute(text("DELETE FROM medialike"))
-    session.execute(text("DELETE FROM user"))
+    session.execute(text("DELETE FROM MovieUsers"))
+    session.execute(text("DELETE FROM Users"))
+    session.execute(text("DELETE FROM UserGenre"))
     session.commit()
     session.close()
 
 def create_user_in_db(isAdmin, isActive, name):
     session = TestingSessionLocal()
-    hashed_password = get_password_hash("password")
+    password = get_password_hash("password")
     session.execute(
         text(
-            "INSERT INTO user (email, is_active, is_superuser, full_name, hashed_password) VALUES (:email, :is_active, :is_superuser, :full_name, :hashed_password)"
+            "INSERT INTO Users (email, is_active, is_superuser, nom, prenom, password) VALUES (:email, :is_active, :is_superuser, :nom, :prenom, :password)"
         ),
-        {"email": f"{name}@example.com", "is_active": isActive, "is_superuser": isAdmin, "full_name": name, "hashed_password": hashed_password},
+        {"email": f"{name}@example.com", "is_active": isActive, "is_superuser": isAdmin, "nom": name, "prenom": name, "password": password},
     )
     print("User created")
     session.commit()
@@ -162,10 +163,10 @@ def test_update_own_user():
     response = client.post("/api/v1/login/access-token", data=user_data)
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
-    new_data = {"email": "newuser3@example.com"}
+    new_data = {"nom": "newuser3"}
     response = client.patch("/api/v1/users/me", json=new_data, headers=headers)
     assert response.status_code == 200
-    assert response.json()["email"] == "newuser3@example.com"
+    assert response.json()["nom"] == "newuser3@example.com"
 
 def test_update_user_by_id_with_role_admin():
     user_data = {"username": "admin@example.com", "password": "password"}
@@ -301,22 +302,22 @@ def test_reset_password_invalid_token():
     assert response.status_code == 400
     assert response.json()["detail"] == "Invalid token"
 
-def test_create_medialike():
+def test_create_movieuser():
     user_data = {"username": "newuser2@example.com", "password": "newpassword3"}
     response = client.post("/api/v1/login/access-token", data=user_data)
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
-    medialike_data = {"media_id": "1", "media_type": "movie"}
-    response = client.post("/api/v1/medialikes/", json=medialike_data, headers=headers)
+    movieuser_data = {"movie_id": "1", "note": "5"}
+    response = client.post("/api/v1/movieusers/", json=movieuser_data, headers=headers)
     assert response.status_code == 200
-    assert response.json()["media_id"] == "1"
+    assert response.json()["movie_id"] == "1"
 
-def test_get_medialikes():
+def test_get_movieusers():
     user_data = {"username": "newuser2@example.com", "password": "newpassword3"}
     response = client.post("/api/v1/login/access-token", data=user_data)
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     print(headers)
-    response = client.get("/api/v1/medialikes/", headers=headers)
+    response = client.get("/api/v1/movieusers/", headers=headers)
     assert response.status_code == 200
     assert len(response.json()["data"]) == "1"
