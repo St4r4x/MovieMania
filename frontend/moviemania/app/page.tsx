@@ -2,6 +2,7 @@ import { Button } from "@/src/components/ui/button";
 import Carousel from "@/src/components/ui/carrousel";
 import Image from "next/image";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
 	title: "MovieMania - Recommandations de films et plus",
@@ -41,8 +42,9 @@ export default function Home() {
 						<p className="text-xl max-w-md">
 							Dans les années 1980, à Gotham City, Arthur Fleck, un humoriste de stand-up raté, bascule dans la folie et devient le Joker.
 						</p>
-
-						<Button className="rounded-full w-30 text-base mt-4">Plus d'info</Button>
+						<Link href="/details-film/joker">
+							<Button className="rounded-full w-30 text-base mt-4">Plus d'info</Button>
+						</Link>
 					</div>
 				</div>
 			</header>
