@@ -44,7 +44,7 @@ function ProfileDetails({ user, enriched, page }: ProfileDetailsProps) {
 					)}
 					{enriched ? (
 						<Link href="/settings">
-							<div className="border border-1 py-1 px-10 rounded-md border-gray-400 hover:border-primary hover:text-primary">
+							<div className="border border-1 py-1 px-10 rounded-md border-gray-400 transition-colors duration-500 hover:border-primary hover:text-primary hover:bg-gray-600">
 								<span>Editer profil</span>
 							</div>
 						</Link>
