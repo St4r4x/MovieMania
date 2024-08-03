@@ -41,8 +41,8 @@ function SettingsProfile() {
 	};
 
 	return (
-		<main className="flex flex-col items-center justify-center min-h-screen">
-			<div className="bg-gray-700 rounded-md p-10 flex flex-col gap-10 w-1/3">
+		<main className="flex flex-col items-center justify-center min-h-screen p-5">
+			<div className="bg-gray-700 rounded-md p-5 flex flex-col gap-10 w-full sm:w-500">
 				<div className="flex justify-center">
 					<div className="rounded-full w-28 h-28 bg-purple-400"></div>
 				</div>
@@ -52,7 +52,7 @@ function SettingsProfile() {
 							<div className="grid gap-1">
 								<div className="text-gray-300 text-start">Nom</div>
 								<input
-									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
+									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent focus:border-primary focus:outline-none"
 									id="nom"
 									name="nom"
 									placeholder="nom"
@@ -65,7 +65,7 @@ function SettingsProfile() {
 							<div className="grid gap-1">
 								<div className="text-gray-300 text-start">Prénom</div>
 								<input
-									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
+									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent focus:border-primary focus:outline-none"
 									id="prenom"
 									name="prenom"
 									placeholder="prénom"
@@ -80,20 +80,20 @@ function SettingsProfile() {
 								<select
 									name="sexe"
 									id="sexe"
-									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent"
+									className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent focus:border-primary focus:outline-none"
 									defaultValue={user.sexe}
 									onChange={handleChange}
 								>
-									<option value="homme">Homme</option>
-									<option value="femme">Femme</option>
-									<option value="non-binary">Non-binaire</option>
-									<option value="table">Table</option>
+									<option className="bg-gray-700" value="homme">Homme</option>
+									<option className="bg-gray-700" value="femme">Femme</option>
+									<option className="bg-gray-700" value="non-binary">Non-binaire</option>
+									<option className="bg-gray-700" value="table">Table</option>
 								</select>
 							</div>
 							<div className="grid gap-1">
 								<div className="text-gray-300 text-start">Date d'anniversaire</div>
 								<input
-									className="p-3 border border-gray-300 rounded-md bg-transparent text-gray-300"
+									className="p-3 border border-gray-300 rounded-md bg-transparent text-gray-300 focus:border-primary focus:outline-none"
 									id="birthday"
 									name="birthday"
 									placeholder=""

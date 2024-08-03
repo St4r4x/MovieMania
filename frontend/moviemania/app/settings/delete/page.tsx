@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { deleteUserProfile } from "@/src/data/services/user-services";
 import { useRouter } from "next/navigation";
-import { boolean } from "zod";
 
 const user = {
 	email: "john@doe.com",
@@ -37,8 +36,8 @@ function SettingsDelete() {
 		setIsLoading(false);
 	};
 	return (
-		<main className="flex flex-col items-center justify-center min-h-screen">
-			<div className="bg-gray-700 rounded-md p-10 flex flex-col gap-10 text-center w-1/3">
+		<main className="flex flex-col items-center justify-center min-h-screen p-5">
+			<div className="bg-gray-700 rounded-md p-5 flex flex-col gap-10 text-center w-full sm:w-500">
 				<h1 className="text-2xl text-white font-bold">Suppression du compte</h1>
 				<form onSubmit={handleSubmit}>
 					<div className="grid gap-5">
