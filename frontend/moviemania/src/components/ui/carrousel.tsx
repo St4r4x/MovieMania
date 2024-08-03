@@ -35,7 +35,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
       <div className="relative w-full overflow-hidden">
          <div ref={carouselRef} className="flex overflow-x-auto scroll-smooth scrollbar-hide">
             {images.map(({ src, name }, index) => (
-               <div key={index} className="flex-shrink-0 w-[250px] p-2">
+               <div key={index} className={`flex-shrink-0 w-[250px] ${index === 0 ? 'py-2 pe-2' : 'p-2'}`}>
                   <Link href="/details-film">
                      <div className="relative">
                         <Image

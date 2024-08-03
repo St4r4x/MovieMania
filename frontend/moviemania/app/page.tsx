@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-	title: "MovieMania - Movie recommendations and more",
+	title: "MovieMania - Recommandations de films et plus",
 };
 
 const images = [
@@ -47,19 +47,19 @@ export default function Home() {
 				</div>
 			</header>
 
-			<section className="p-8">
+			<section className="py-8 px-7">
 				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Mes recommandations</p>
 
 				<Carousel images={images} />
 			</section>
 
-			<section className="p-8">
+			<section className="py-8 px-7">
 				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Les tops du moment </p>
 
 				<Carousel images={images} />
 			</section>
 
-			<section className="p-8">
+			<section className="py-8 px-7">
 				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Nouveautés</p>
 				<Carousel images={images} />
 			</section>

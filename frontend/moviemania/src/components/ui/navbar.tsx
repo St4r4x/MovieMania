@@ -38,7 +38,7 @@ export default function Navbar({}: Props) {
 
    return (
       // masque la nav pour les petits écrans
-      <nav className="bg-gray-800 p-2 lg:block hidden">
+      <nav className="bg-gray-800 py-2 px-7 lg:block hidden">
          <div className="mx-auto flex items-center justify-between">
             <Link href="/">
                <Image src={Logo} alt="logo" width={100} height={100} />

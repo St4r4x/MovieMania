@@ -35,7 +35,7 @@ function MediaUserRatings() {
 				<ProfileDetails
 				    user={user}
 					enriched={false}
-					page="My Ratings"
+					page="Mes films notés"
 				/>
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 p-6 md:p-10 gap-4 md:gap-10">

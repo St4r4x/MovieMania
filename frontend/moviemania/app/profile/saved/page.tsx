@@ -27,7 +27,7 @@ function MediaUserSaved() {
 				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-10`}
 				style={{ backgroundImage: `url(${profileBackground?.src})`, height: `690px` }}
 			>
-				<ProfileDetails user={user} enriched={false} page="My Saves"/>
+				<ProfileDetails user={user} enriched={false} page="Mes films sauvegardés"/>
 			</div>
 			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 p-6 md:p-10 gap-4 md:gap-10">
 				{medias.map((media) => (
