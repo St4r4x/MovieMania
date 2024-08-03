@@ -31,7 +31,7 @@ export default function FilmDetails() {
       <main className="min-h-screen text-white">
 
          <header className="relative w-full h-[90vh]">
-            <Image src={filmDetails.poster} alt="Film Poster" layout="fill" objectFit="cover" quality={100} />
+            <Image src={filmDetails.poster} alt="Film Poster" layout="fill" objectFit="cover" quality={100} className="border-b-2 border-customBackground"/>
 
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#22272E]"></div>
 
