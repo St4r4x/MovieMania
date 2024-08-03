@@ -26,7 +26,7 @@ export default function Home() {
 			{/* <Navbar /> */}
 			<header className="relative w-full h-96 md:h-[90vh]">
 				<Image
-					className="border-b-2 border-customBackground"
+					className="border-b-2 border-customBackground md:border-none"
 					src="/joker.png"
 					alt="Affiche"
 					layout="fill"
