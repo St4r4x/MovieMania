@@ -33,7 +33,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 	};
 
 	return (
-		<div className="relative w-full overflow-hidden">
+		<div className="relative w-full">
 			<div
 				ref={carouselRef}
 				className="flex overflow-x-auto scroll-smooth scrollbar-hide"
@@ -65,13 +65,13 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 			</div>
 			<button
 				onClick={handlePrev}
-				className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 flex items-center justify-center"
+				className="hidden md:flex absolute top-1/2 left-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full z-10 items-center justify-center"
 			>
 				<ChevronLeft size={24} />
 			</button>
 			<button
 				onClick={handleNext}
-				className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 flex items-center justify-center"
+				className="hidden md:flex absolute top-1/2 right-4 transform -translate-y-1/2 bg-gray-700 text-white p-2 rounded-full z-10 items-center justify-center"
 			>
 				<ChevronRight size={24} />
 			</button>
