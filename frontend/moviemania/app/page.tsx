@@ -22,7 +22,7 @@ const images = [
 
 export default function Home() {
 	return (
-		<main className="min-h-screen">
+		<main className="min-h-screen flex flex-col gap-12">
 			{/* <Navbar /> */}
 			<header className="relative w-full h-[90vh]">
 				<Image
@@ -48,23 +48,24 @@ export default function Home() {
 					</div>
 				</div>
 			</header>
+			<div className="flex flex-col gap-12">
+				<section className="px-7">
+					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Mes recommandations</p>
 
-			<section className="py-8 px-7">
-				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Mes recommandations</p>
+					<Carousel images={images} />
+				</section>
 
-				<Carousel images={images} />
-			</section>
+				<section className="px-7">
+					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Les tops du moment </p>
 
-			<section className="py-8 px-7">
-				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Les tops du moment </p>
+					<Carousel images={images} />
+				</section>
 
-				<Carousel images={images} />
-			</section>
-
-			<section className="py-8 px-7">
-				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Nouveautés</p>
-				<Carousel images={images} />
-			</section>
+				<section className="px-7">
+					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Nouveautés</p>
+					<Carousel images={images} />
+				</section>
+			</div>
 		</main>
 	);
 }
