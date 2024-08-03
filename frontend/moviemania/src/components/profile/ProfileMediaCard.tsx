@@ -18,10 +18,10 @@ interface ProfileMediaCardProps {
 
 function MediaCard({ media, origin }: ProfileMediaCardProps) {
 	return (
-		<div className="max-w-56">
+		<div className="max-w-56 mt-5 md:mt-0">
 			<Link href={`/media/${media.id}`}>
 				<div className="flex flex-col items-start">
-					<div className="w-full h-64 md:h-80 relative">
+					<div className="w-full h-64 sm:h-80 relative">
 						{origin === "saves" ? <Icons.heart className="absolute top-2 right-2 text-white w-5 h-5 z-10" /> : ""}
 						<Image
 							className="rounded-md"

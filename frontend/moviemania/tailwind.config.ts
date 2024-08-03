@@ -18,6 +18,10 @@ const config = {
       },
     },
     extend: {
+      height: {
+        '500': '500px',
+        '690': '690px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -32,22 +32,22 @@ function Profile() {
 	return (
 		<main className="flex flex-col min-h-screen gap-7">
 			<div
-				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-10`}
-				style={{ backgroundImage: `url(${profileBackground?.src})`, height: `690px` }}
+				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-5 md:p-7 h-80 md:h-500`}
+				style={{ backgroundImage: `url(${profileBackground?.src})`}}
 			>
 				<ProfileDetails
 					user={user}
 					enriched={true}
 				/>
 			</div>
-			<section className="p-8">
-				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Récemment noté</p>
+			<section className="px-5 md:p-8">
+				<p className="text-white text-xl inline-block border-b-2 border-white pb-1 mb-3">Récemment noté</p>
 
 				<Carousel images={images} />
 			</section>
 
-			<section className="p-8">
-				<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Récemment sauvegardé</p>
+			<section className="px-5 md:p-8">
+				<p className="text-white text-xl inline-block border-b-2 border-white pb-1 mb-3">Récemment sauvegardé</p>
 
 				<Carousel images={images} />
 			</section>

@@ -29,8 +29,8 @@ function MediaUserRatings() {
 	return (
 		<main className="flex flex-col min-h-screen w-full gap-7">
 			<div
-				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-10`}
-				style={{ backgroundImage: `url(${profileBackground?.src})`, height: `500px` }}
+				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-5 md:p-7 h-80 md:h-500`}
+				style={{ backgroundImage: `url(${profileBackground?.src})`}}
 			>
 				<ProfileDetails
 				    user={user}
@@ -38,7 +38,7 @@ function MediaUserRatings() {
 					page="Mes films notés"
 				/>
 			</div>
-			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 p-6 md:p-10 gap-4 md:gap-10">
+			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 px-6 md:p-10 gap-4 md:gap-10 items-center justify-center">
 				{medias.map((media) => (
 					<ProfileMediaCard key={media.id} media={media} origin="ratings"/>
 				))}
