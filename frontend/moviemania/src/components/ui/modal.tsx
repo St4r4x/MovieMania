@@ -20,12 +20,13 @@ interface PopupProps {
 	onClose: () => void;
 }
 
-const Popup: React.FC<PopupProps> = ({ movie, onClose }) => {
+const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 	const [rating, setRating] = useState<number | null>(movie?.rating);
 	const [hover, setHover] = useState<number | null>(null);
 
 	const resetRating = () => {
 		setRating(null);
+		handleSubmit(0);
 	};
 
 	useEffect(() => {
@@ -34,6 +35,13 @@ const Popup: React.FC<PopupProps> = ({ movie, onClose }) => {
 			document.body.style.overflow = "unset";
 		};
 	}, []);
+
+	const handleSubmit = (ratingValue: number) => {
+		setRating(ratingValue);
+		console.log(ratingValue);
+		// Ajouter la logique pour enregistrer la note
+		onClose();
+	};
 
 	return (
 		<div
@@ -46,7 +54,10 @@ const Popup: React.FC<PopupProps> = ({ movie, onClose }) => {
 			>
 				<i className="fas fa-times text-4xl"></i>
 			</button>
-			<div className="flex flex-col gap-4 w-56">
+			<div
+				onSubmit={handleSubmit}
+				className="flex flex-col gap-4 w-56"
+			>
 				<h2 className="text-xl text-gray-300 text-center">J'ai vu ça</h2>
 				<Link href={`/details-film/${movie.title}`}>
 					<div className="flex flex-col items-start">
@@ -71,7 +82,7 @@ const Popup: React.FC<PopupProps> = ({ movie, onClose }) => {
 										type="radio"
 										name="rating"
 										value={ratingValue}
-										onClick={() => setRating(ratingValue)}
+										onClick={() => handleSubmit(ratingValue)}
 										className="hidden"
 									/>
 									<i
@@ -99,4 +110,4 @@ const Popup: React.FC<PopupProps> = ({ movie, onClose }) => {
 	);
 };
 
-export default Popup;
+export default Modal;

@@ -3,7 +3,7 @@
 import ActionButton from "@/src/components/ui/actionsButtons";
 import Carousel from "@/src/components/ui/carrousel";
 import Image from "next/image";
-import Popup from "@/src/components/ui/popup";
+import Modal from "@/src/components/ui/modal";
 import { useState } from "react";
 
 interface Movie {
@@ -31,7 +31,7 @@ const filmDetails: Movie = {
 	writers: ["Todd Phillips", "Scott Silver"],
 	poster_path: "/tWjJ3ILjsbTwKgXxEv48QAbYZ19.jpg",
    backdrop_path: "/joker.png",
-	rating: 0,
+	rating: 4,
 };
 
 const images = [
@@ -99,7 +99,7 @@ export default function FilmDetails() {
 					</div>
 				</div>
 				{showPopup && selectedMovie && (
-					<Popup
+					<Modal
 						movie={selectedMovie}
 						onClose={closePopup}
 					/>
