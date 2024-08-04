@@ -27,8 +27,6 @@ export async function registerUserAction(prevState: any, formData: FormData) {
 
    const responseData = await registerUserService(validatedFields.data);
 
-   console.log("registerUserAction", responseData);
-
    if (!responseData) {
       return {
          ...prevState,
@@ -42,6 +40,20 @@ export async function registerUserAction(prevState: any, formData: FormData) {
          ...prevState,
          zodErrors: null,
          message: "Failed to Register.",
+      };
+   }
+
+   const loginData = {
+      username: validatedFields.data.email,
+      password: validatedFields.data.password,
+   }
+   const loginResponse = await loginUserService(loginData);
+
+   if (!loginResponse || loginResponse.error) {
+      return {
+         ...prevState,
+         zodErrors: null,
+         message: "Inscription réussie, mais la connexion a échoué.",
       };
    }
 

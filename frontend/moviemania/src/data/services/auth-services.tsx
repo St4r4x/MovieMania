@@ -7,6 +7,7 @@ interface RegisterUserProps {
 }
 
 export async function registerUserService(userData: RegisterUserProps) {
+   console.log("registerUserService userData", userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/open`,
@@ -23,11 +24,12 @@ export async function registerUserService(userData: RegisterUserProps) {
 }
 
 interface LoginUserProps {
-   email: string;
+   username: string;
    password: string;
 }
 
 export async function loginUserService(userData: LoginUserProps) {
+   console.log("loginUserService userData", userData);
    try {
       const response = await axios.post(
          `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/login/access-token`,
