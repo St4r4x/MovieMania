@@ -47,7 +47,7 @@ export function SigninForm() {
                <div className="grid gap-1">
                   <div className="sr-only">Email</div>
                   <input
-                     className="p-3 border border-gray-300 rounded-md"
+                     className="p-3 border border-gray-300 rounded-md focus:border-primary focus:outline-none"
                      id="email"
                      name="email"
                      placeholder="email@exemple.com"
@@ -62,7 +62,7 @@ export function SigninForm() {
                <div className="grid gap-1">
                   <div className="sr-only">Password</div>
                   <input
-                     className="p-3 border border-gray-300 rounded-md"
+                     className="p-3 border border-gray-300 rounded-md focus:border-primary focus:outline-none"
                      id="password"
                      name="password"
                      placeholder="mot de passe"
@@ -82,7 +82,7 @@ export function SigninForm() {
          {/* Affichage du message */}
          {message && <div className="mt-4 p-4 bg-green-500 text-white rounded-md">{message}</div>}
 
-         <div className="relative flex items-center mt-6">
+         <div className="relative flex items-center my-4">
             <div className="flex-grow border-t border-gray-300"></div>
             <span className="mx-4 text-xs uppercase text-muted-foreground text-white">Ou continuez avec</span>
             <div className="flex-grow border-t border-gray-300"></div>

@@ -10,6 +10,22 @@ interface patchUserProfileProps {
 	birthday: string;
 }
 
+export const getUserProfile = async (session: any) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application",
+				Authorization: `Bearer ${session?.access_token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+};
+
 export const postGenresUser = async (genres: string[]) => {
 	try {
 		const response = await axios({
@@ -60,25 +76,20 @@ export const patchUserProfile = async (userData: patchUserProfileProps) => {
 	}
 };
 
-interface deleteUserProfileProps {
-	id: number;
-}
-
-export const deleteUserProfile = async (id: deleteUserProfileProps) => {
-	console.log("id", id);
+export const deleteUserProfile = async (session: any) => {
+	console.log("session", session);
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/${id}/`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				//Authorization: `Bearer ${session?.access_token}`,
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session?.access_token}`,
 			},
 		});
 		if (response.status === 200) {
 			setTimeout(() => {
-				alert("Users supprimé avec succès !");
+				alert("User supprimé avec succès !");
 			}, 2000); // Délai de 2 secondes
 			return { success: true };
 		}

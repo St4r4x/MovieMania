@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
 import Link from "next/link";
+import { signOut } from "next-auth/react"
 
 type Props = {};
 
@@ -95,9 +96,9 @@ export default function Navbar({}: Props) {
                            Paramètres
                         </Link>
 
-                        <Link href="" className="text-red-500 block px-4 py-1 hover:bg-gray-600">
+                        <button className="text-red-500 block px-4 py-1 hover:bg-gray-600" onClick={() => signOut({ callbackUrl: "/login" })}>
                            Déconnexion
-                        </Link>
+                        </button>
                      </div>
                   )}
                </div>

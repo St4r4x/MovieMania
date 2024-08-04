@@ -16,10 +16,9 @@ const SigninPage = () => {
          <div className="w-auto p-10 rounded-3xl bg-none sm:bg-gradient-to-b sm:from-[rgba(66,242,247,0.1)] sm:to-[rgba(255,255,255,0.1)]">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6">
                <div className="flex flex-col space-y-2 text-center">
-                  <h1 className="text-2xl font-semibold text-white">Créer un compte</h1>
-
+                  <h1 className="text-4xl font-semibold text-white">Créer un compte</h1>
                   <p className="text-sm text-muted-foreground text-white">
-                     Saisissez votre email ci-dessous pour créer votre compte
+                     Saisissez votre email et un mot de passe pour créer votre compte
                   </p>
                </div>
 
@@ -33,13 +32,13 @@ const SigninPage = () => {
                </p>
 
                <p className="text-center text-sm text-muted-foreground text-white">
-                  En cliquant sur continuer, vous acceptez notre <br />
+                  En cliquant sur continuer, vous acceptez nos <br />
                   <Link href="/terms-of-service" className="underline underline-offset-4 hover:text-primary">
-                     Conditions d'utilisation
+                     conditions de service
                   </Link>{" "}
-                  et{" "}
+                  et notre{" "}
                   <Link href="/privacy-policy" className="underline underline-offset-4 hover:text-primary">
-                     Politique de confidentialité
+                     politique de confidentialité
                   </Link>
                   .
                </p>
