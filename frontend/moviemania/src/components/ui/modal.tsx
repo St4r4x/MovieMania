@@ -26,7 +26,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 
 	const resetRating = () => {
 		setRating(null);
-		handleSubmit(0);
+		// Ajouter la logique pour reset la note
 	};
 
 	useEffect(() => {
