@@ -11,7 +11,7 @@ from .config import CARROUSSEL_LENGTH
 class TrendingRecommendationFetcher(RecommendationFetcher):
     """Fetches trending recommendations."""
 
-    def fetch(self, db: Session, not_seen_movie_ids:List) -> Dict[str, List[schemas.Movie]]:
+    def fetch(self, db: Session, not_seen_movie_ids:List) -> Dict[str, List[schemas.MovieSchema]]:
         """
         Recommends trending movies based on release date, number of votes, and average vote.
 
