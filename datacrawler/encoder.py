@@ -121,8 +121,8 @@ class MovieEncoder:
             db.add(movie)
             print(f"Encoded embeddings for movie {movie.title}")
         
-        # Commit changes to the database
-        db.commit()
+            # Commit changes to the database
+            db.commit()
 
 # Utiliser la classe pour encoder et mettre à jour les films
 if __name__ == "__main__":
