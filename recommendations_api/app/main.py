@@ -10,7 +10,7 @@ from recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
-from recommendations.schemas import CreditSchema, GenreSchema, RecommendationSchema, MovieSchema, PeopleSchema, JobSchema
+from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
 load_dotenv() 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -115,7 +115,7 @@ async def get_movie_details(movie_id: int, db: Session = Depends(database.get_db
             ))
 
     # Define a set of important job titles
-    important_jobs = {'Acting', 'Director', 'Producer', 'Writer', 'Editor', "Original Music Composer", "Executive Producer", "Director of Photography"}
+    important_jobs = {'Director', 'Producer', 'Writer', 'Editor', "Original Music Composer", "Executive Producer", "Director of Photography"}
 
     # Collect all credits
     credits = []
