@@ -1,6 +1,6 @@
 from FlagEmbedding import BGEM3FlagModel
 from sqlalchemy.orm import Session
-from models import Movies, Genres, Credits, Peoples, Jobs
+from models import Movies, Genres, Peoples, Jobs
 from schemas import GenreSchema, CreditSchema, PeopleSchema, JobSchema
 from database import engine
 import pickle
