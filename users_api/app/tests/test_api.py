@@ -280,16 +280,6 @@ def test_delete_user_by_id_with_role_user():
     assert response.json()["detail"] == "The user doesn't have enough privileges"
 
 
-def test_delete_user_me_with_role_user():
-    user_data = {"username": "newuser2@example.com", "password": "newpassword"}
-    response = client.post("/api/v1/login/access-token", data=user_data)
-    token = response.json().get("access_token")
-    headers = {"Authorization": f"Bearer {token}"}
-    response = client.delete("/api/v1/users/me", headers=headers)
-    assert response.status_code == 200
-    assert response.json()["detail"] == "User delete successfully"
-
-
 def test_delete_user_by_id_with_role_admin_not_found():
     user_data = {"username": "admin@example.com", "password": "password"}
     response = client.post("/api/v1/login/access-token", data=user_data)
@@ -406,3 +396,13 @@ def test_get_movieusers():
     response = client.get("/api/v1/movieusers/", headers=headers)
     assert response.status_code == 200
     assert len(response.json()["data"]) == 1
+
+
+def test_delete_user_me_with_role_user():
+    user_data = {"username": "newuser2@example.com", "password": "newpassword3"}
+    response = client.post("/api/v1/login/access-token", data=user_data)
+    token = response.json().get("access_token")
+    headers = {"Authorization": f"Bearer {token}"}
+    response = client.delete("/api/v1/users/me", headers=headers)
+    assert response.status_code == 200
+    assert response.json()["message"] == "User deleted successfully"
