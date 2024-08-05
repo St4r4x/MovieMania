@@ -7,7 +7,7 @@ const ConditionalNavbar = () => {
   const pathname = usePathname();
 
   // Définir les routes où la Navbar ne doit pas être affichée
-  const hiddenNavbarRoutes = ["/login", "/signin", "/preferences"];
+  const hiddenNavbarRoutes = ["/login", "/signup", "/preferences"];
   const showNavbar = !hiddenNavbarRoutes.includes(pathname);
 
   return showNavbar ? <Navbar /> : null;
