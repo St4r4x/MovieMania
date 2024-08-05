@@ -56,14 +56,13 @@ def recover_password(email: str, session: SessionDep) -> Message:
     """
     Password Recovery
     """
-    user_tuple = crud.get_user_by_email(session=session, email=email)
+    user = crud.get_user_by_email(session=session, email=email)
 
-    if not user_tuple:
+    if not user:
         raise HTTPException(
             status_code=404,
             detail="The user with this email does not exist in the system.",
         )
-    (user,) = user_tuple
     password_reset_token = generate_password_reset_token(email=email)
     email_data = generate_reset_password_email(
         email_to=user.email, email=email, token=password_reset_token
@@ -84,13 +83,12 @@ def reset_password(session: SessionDep, body: NewPassword) -> Message:
     id = verify_password_reset_token(token=body.token)
     if not id:
         raise HTTPException(status_code=400, detail="Invalid token")
-    user_tuple = crud.get_user_by_id(session=session, id=id)
-    if not user_tuple:
+    user = crud.get_user_by_id(session=session, id=id)
+    if not user:
         raise HTTPException(
             status_code=404,
             detail="The user with this email does not exist in the system.",
         )
-    (user,) = user_tuple
     if not user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     hashed_password = get_password_hash(password=body.new_password)

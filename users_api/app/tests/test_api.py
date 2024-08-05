@@ -1,8 +1,5 @@
 # conftest.py
 
-from re import A
-from urllib import response
-from wsgiref import headers
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 from fastapi.testclient import TestClient
@@ -76,7 +73,7 @@ def create_user_in_db(isAdmin, isActive, name):
 client = configure_test_app()
 
 def test_create_user_open():
-    user_data = {"email": "newuser@example.com", "password": "newpassword"}
+    user_data = {"email": "newuser@example.com", "password": "newpassword", "nom": "newuser", "prenom": "newuser", "birthday": "1990-01-01", "sexe": "M"}
     response = client.post("/api/v1/users/open", json=user_data)
     assert response.status_code == 200
     assert response.json()["email"] == "newuser@example.com"
@@ -166,7 +163,7 @@ def test_update_own_user():
     new_data = {"nom": "newuser3"}
     response = client.patch("/api/v1/users/me", json=new_data, headers=headers)
     assert response.status_code == 200
-    assert response.json()["nom"] == "newuser3@example.com"
+    assert response.json()["nom"] == "newuser3"
 
 def test_update_user_by_id_with_role_admin():
     user_data = {"username": "admin@example.com", "password": "password"}
