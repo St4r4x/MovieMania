@@ -15,7 +15,7 @@ from .config import (CARROUSSEL_LENGTH, WEIGHT_REVENUE, WEIGHT_VOTE_AVERAGE,
 class GenreBasedRecommendationFetcher(RecommendationFetcher):
     """Fetches recommendations based on user's preferred genres."""
 
-    def fetch(self, db: Session, user_id: int, not_seen_movie_ids:List) -> Dict[str, List[schemas.Movie]]:
+    def fetch(self, db: Session, user_id: int, not_seen_movie_ids:List) -> Dict[str, List[schemas.MovieSchema]]:
             """
             Recommends movies to a user based on their preferred genres.
 
@@ -39,7 +39,7 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
             try:
                 # Fetch the preferred genres of the user
                 preferred_genres = db.query(models.Genres.name).join(
-                    models.UserGenrePreferences).filter(models.UserGenrePreferences.user_id == user_id).all()
+                    models.UserGenre).filter(models.UserGenre.user_id == user_id).all()
                 preferred_genres = [genre[0] for genre in preferred_genres]
 
                 if not preferred_genres:
@@ -50,9 +50,9 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
                     movies = db.query(models.Movies).options(
                         joinedload(models.Movies.genres)
                     ).join(
-                        models.MovieGenreAssociations, models.Movies.movie_id == models.MovieGenreAssociations.movie_id
+                        models.MovieGenres, models.Movies.movie_id == models.MovieGenres.movie_id
                     ).join(
-                        models.Genres, models.MovieGenreAssociations.genre_id == models.Genres.genre_id
+                        models.Genres, models.MovieGenres.genre_id == models.Genres.genre_id
                     ).filter(
                         models.Genres.name == genre,
                         models.Movies.release_date <= datetime.now(),
