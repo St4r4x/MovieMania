@@ -11,12 +11,15 @@ export const metadata: Metadata = {
 
 const LoginPage = () => {
    return (
-      <main className="flex flex-col items-center justify-center min-h-screen">
+      <main className="flex flex-col items-center justify-center min-h-screen gap-7">
          <Image src={Logo} alt="logo" width="300" height="300"></Image>
-         <div className=" w-auto p-10 rounded-3xl bg-gradient-to-b from-[rgba(66,242,247,0.1)] to-[rgba(255,255,255,0.1)]">
+         <div className=" w-auto p-10 rounded-3xl bg-none sm:bg-gradient-to-b sm:from-[rgba(66,242,247,0.1)] sm:to-[rgba(255,255,255,0.1)]">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6">
                <div className="flex flex-col space-y-2 text-center">
-                  <h1 className="text-4xl font-semibold text-white">Login</h1>
+                  <h1 className="text-4xl font-semibold text-white">Connexion</h1>
+                  <p className="text-sm text-muted-foreground text-white">
+                     Saisissez vos identifiants pour vous connectez à votre compte
+                  </p>
                </div>
 
                <LoginForm />
@@ -30,11 +33,11 @@ const LoginPage = () => {
 
                <p className="text-center text-sm text-muted-foreground text-white">
                   En cliquant sur continuer, vous acceptez nos <br />
-                  <Link href="/terms-of-service" className="underline underline-offset-4 hover:text-primary">
+                  <Link href="/terms" className="underline underline-offset-4 hover:text-primary">
                      conditions de service{" "}
                   </Link>
                   et notre{" "}
-                  <Link href="/privacy-policy" className="underline underline-offset-4 hover:text-primary">
+                  <Link href="/privacy" className="underline underline-offset-4 hover:text-primary">
                      politique de confidentialité
                   </Link>
                   .

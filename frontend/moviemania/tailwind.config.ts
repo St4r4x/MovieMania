@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      height: {
+        '500': '500px',
+        '690': '690px',
+      },
+      width: {
+        '500': '500px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -52,6 +59,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        customBackground: "hsl(var(--body-background-non-gradient))",
       },
       borderRadius: {
         lg: "var(--radius)",

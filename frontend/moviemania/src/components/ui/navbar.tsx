@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
 import Link from "next/link";
+import { signOut } from "next-auth/react"
 
 type Props = {};
 
@@ -38,7 +39,7 @@ export default function Navbar({}: Props) {
 
    return (
       // masque la nav pour les petits écrans
-      <nav className="bg-gray-800 p-2 lg:block hidden">
+      <nav className="bg-gray-800 py-2 px-7 lg:block hidden">
          <div className="mx-auto flex items-center justify-between">
             <Link href="/">
                <Image src={Logo} alt="logo" width={100} height={100} />
@@ -56,14 +57,14 @@ export default function Navbar({}: Props) {
                {dropdownOpen.library && (
                   <div
                      ref={menuRef}
-                     className="absolute z-10 border border-1 border-white bg-[#1F2937] text-white rounded-lg mt-2 w-40 shadow-lg"
+                     className="absolute z-10 border border-1 border-gray-600 bg-[#1F2937] text-white rounded-lg mt-2 w-40 shadow-lg py-2"
                   >
-                     <Link href="/profile/saved" className="block px-4 py-2 hover:bg-gray-600 rounded-lg hover:text-primary">
+                     <Link href="/profile/saved" className="block px-4 py-1 hover:bg-gray-600 hover:text-primary">
                         Sauvegardé
                      </Link>
 
-                     <Link href="/profile/ratings" className="block px-4 py-2 hover:bg-gray-600 rounded-lg hover:text-primary">
-                        Notée
+                     <Link href="/profile/ratings" className="block px-4 py-1 hover:bg-gray-600 hover:text-primary">
+                        Noté
                      </Link>
                   </div>
                )}
@@ -86,18 +87,18 @@ export default function Navbar({}: Props) {
                      onClick={() => handleClick("profile")}
                   ></div>
                   {dropdownOpen.profile && (
-                     <div className="absolute z-10 border border-1 border-white bg-[#1F2937] text-white rounded-lg mt-2 right-0 w-32 shadow-lg">
-                        <Link href="/profile" className="block px-4 py-2 hover:bg-gray-600 rounded-lg hover:text-primary">
-                           Profile
+                     <div className="absolute z-10 border border-1 border-gray-600 bg-[#1F2937] text-white rounded-lg mt-2 right-0 w-32 shadow-lg py-2">
+                        <Link href="/profile" className="block px-4 py-1 hover:bg-gray-600 hover:text-primary">
+                           Profil
                         </Link>
 
-                        <Link href="/settings" className="block px-4 py-2 hover:bg-gray-600 hover:text-primary">
-                           Settings
+                        <Link href="/settings" className="block px-4 py-1 hover:bg-gray-600 hover:text-primary">
+                           Paramètres
                         </Link>
 
-                        <Link href="" className="text-red-500 block px-4 py-2 rounded-lg hover:bg-gray-600">
-                           Log out
-                        </Link>
+                        <button className="text-red-500 block px-4 py-1 hover:bg-gray-600" onClick={() => signOut({ callbackUrl: "/login" })}>
+                           Déconnexion
+                        </button>
                      </div>
                   )}
                </div>

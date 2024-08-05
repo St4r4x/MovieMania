@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Footer = () => {
    return (
-      <footer className="text-white py-4 mt-8">
-         <div className="container mx-auto px-4">
+      <footer className="text-white py-4 mt-8 px-7">
+         <div className="mx-auto">
             <div className="flex space-x-4 mb-4 ">
                <Link href="/" className="hover:underline text-sm">
                   Home

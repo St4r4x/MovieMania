@@ -189,9 +189,7 @@ def update_user(
             detail="The user with this id does not exist in the system",
         )
     if user_in.email:
-        existing_user = crud.get_user_by_email(
-            session=session, email=user_in.email
-        )
+        existing_user = crud.get_user_by_email(session=session, email=user_in.email)
         if existing_user and existing_user.user_id != user_id:
             raise HTTPException(
                 status_code=409, detail="User with this email already exists"
@@ -199,6 +197,30 @@ def update_user(
 
     db_user = crud.update_user(session=session, db_user=db_user, user_in=user_in)
     return db_user
+
+
+@router.delete("/me")
+def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Message:
+    """
+    Delete a user me.
+    """
+    user = session.get(User, current_user.user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    elif user != current_user and not current_user.is_superuser:
+        raise HTTPException(
+            status_code=403, detail="The user doesn't have enough privileges"
+        )
+    elif user == current_user and current_user.is_superuser:
+        raise HTTPException(
+            status_code=403, detail="Super users are not allowed to delete themselves"
+        )
+
+    statement = delete(MovieUser).where(col(MovieUser.user_id) == current_user.user_id)
+    session.execute(statement)  # type: ignore
+    session.delete(user)
+    session.commit()
+    return Message(message="User deleted successfully")
 
 
 @router.delete("/{user_id}")

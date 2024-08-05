@@ -9,6 +9,11 @@ export async function middleware(request) {
 
    const pathname = request.nextUrl.pathname;
 
+   if (pathname == "/details-film") {
+      const absoluteURL = new URL(`/`, request.nextUrl.origin);
+      return NextResponse.redirect(absoluteURL.toString());
+   }
+
    if (!token && protectedRoutes.includes(pathname)) {
       const absoluteURL = new URL(`/login`, request.nextUrl.origin);
       return NextResponse.redirect(absoluteURL.toString());
