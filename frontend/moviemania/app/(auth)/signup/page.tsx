@@ -1,5 +1,5 @@
 import React from "react";
-import { SigninForm } from "@/src/components/forms/SigninForm";
+import { SignupForm } from "@/src/components/forms/SignupForm";
 import Link from "next/link";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
    title: "Créer un compte",
 };
 
-const SigninPage = () => {
+const SignupPage = () => {
    return (
       <main className="flex flex-col items-center justify-center min-h-screen w-full gap-7">
          <Image src={Logo} alt="logo" width="300" height="300"></Image>
@@ -22,7 +22,7 @@ const SigninPage = () => {
                   </p>
                </div>
 
-               <SigninForm />
+               <SignupForm />
 
                <p className="text-center text-sm text-muted-foreground text-white">
                   Vous avez déjà un compte ?{" "}
@@ -48,4 +48,4 @@ const SigninPage = () => {
    );
 };
 
-export default SigninPage;
+export default SignupPage;

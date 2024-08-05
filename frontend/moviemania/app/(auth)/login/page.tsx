@@ -26,7 +26,7 @@ const LoginPage = () => {
 
                <p className="text-center text-sm text-muted-foreground text-white">
                   Pas encore de compte ?{" "}
-                  <Link href="/signin" className="text-primary font-extrabold">
+                  <Link href="/signup" className="text-primary font-extrabold">
                      S'inscrire
                   </Link>
                </p>
