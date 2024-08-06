@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session, joinedload
 from jose import JWTError, jwt
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from redis_connect import redis_client
 import os
 import database
 from recommendations import (
@@ -19,6 +20,15 @@ ALGORITHM = os.getenv("ALGORITHM")
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=database.engine)
+
+def save_recommendations_to_redis(client, user_id, recommendations):
+    try:
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        key = f"recommendations:{user_id}:{timestamp}"
+        client.set(key, str(recommendations))
+        print(f"Recommandations enregistrées pour l'utilisateur {user_id} avec la clé {key}")
+    except Exception as e:
+        print(f"Erreur lors de l'enregistrement des recommandations dans Redis : {e}")
 
 class TokenData(BaseModel):
     user_id: int
@@ -50,7 +60,7 @@ async def get_current_user(request: Request) -> TokenData:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
 @app.get("/recommendations/", response_model=Dict[str, Any])
-async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(database.get_db)):
+async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(database.get_db), redis_client=Depends(redis_client)):
     """
     Get movie recommendations for the current user.
 
@@ -82,6 +92,9 @@ async def get_recommendations(current_user: TokenData = Depends(get_current_user
         movie_recommendations = movie_fetcher.fetch(movie_id, db, not_seen_movie_ids)
         for key, value in movie_recommendations.items():
             recommendations[key] = value
+    
+    if redis_client:
+        save_recommendations_to_redis(redis_client, user_id, recommendations)
 
     return recommendations
 
