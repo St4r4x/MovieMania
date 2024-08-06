@@ -3,9 +3,31 @@
 import axios from "axios";
 import { signIn } from "next-auth/react";
 
+interface CheckUserProps {
+	email: string;
+}
+
+export async function checkUserService(userData: CheckUserProps) {
+	console.log("checkUserService userData", userData);
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/check`,
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			data: JSON.stringify({ ...userData }),
+		});
+		return response.data;
+	} catch (axiosError) {
+		console.error(axiosError);
+	}
+}
+
 interface RegisterUserProps {
 	email: string;
 	password: string;
+	genres: number[];
 }
 
 export async function registerUserService(userData: RegisterUserProps) {

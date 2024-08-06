@@ -1,9 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
 import { registerUserAction } from "@/src/data/actions/auth-actions";
-
 import { cn } from "@/src/lib/utils";
 import { ZodErrors } from "@/src/components/custom/ZodErrors";
 import { Icons } from "@/src/components/icons/icons";
@@ -15,28 +14,28 @@ const INITIAL_STATE = {
 	message: null,
 };
 
-export function SignupForm() {
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+interface SigninFormProps {
+	onNextClick: (data: FormData) => void;
+}
+
+export function SignupForm({ onNextClick }: SigninFormProps) {
+	const [isLoading, setIsLoading] = useState(false);
 	const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
 	const [message, setMessage] = useState<string | null>(null);
+	const [formData, setFormData] = useState<FormData | null>(null);
 
-	// Utilisation d'un effet pour mettre à jour le message de confirmation ou d'erreur
-	React.useEffect(() => {
-		if (formState?.message) {
-			setMessage(formState.message);
-			if (formState.message === "Inscription réussie!") {
-				// Redirection vers une nouvelle page après succès
-				setTimeout(() => {
-					window.location.href = "/login";
-				}, 1000); // Temps d'attente avant redirection, ajustable
-			}
+	useEffect(() => {
+		if (formState?.message === "Champs valident" && formData) {
+			onNextClick(formData);
 		}
-	}, [formState?.message]);
+	}, [formState?.message, formData, onNextClick]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		await formAction(new FormData(event.target as HTMLFormElement));
+		const formData = new FormData(event.target as HTMLFormElement);
+		setFormData(formData);
+		await formAction(formData);
 		setIsLoading(false);
 	};
 
@@ -45,7 +44,12 @@ export function SignupForm() {
 			<form onSubmit={handleSubmit}>
 				<div className="grid gap-4">
 					<div className="grid gap-1">
-						<div className="sr-only">Email</div>
+						<label
+							htmlFor="email"
+							className="sr-only"
+						>
+							Email
+						</label>
 						<input
 							className="p-3 border border-gray-300 rounded-md focus:border-primary focus:outline-none"
 							id="email"
@@ -60,7 +64,12 @@ export function SignupForm() {
 						<ZodErrors error={formState?.zodErrors?.email} />
 					</div>
 					<div className="grid gap-1">
-						<div className="sr-only">Password</div>
+						<label
+							htmlFor="password"
+							className="sr-only"
+						>
+							Password
+						</label>
 						<input
 							className="p-3 border border-gray-300 rounded-md focus:border-primary focus:outline-none"
 							id="password"
@@ -79,7 +88,6 @@ export function SignupForm() {
 				</div>
 			</form>
 
-			{/* Affichage du message */}
 			{message && <div className="mt-4 p-4 bg-green-500 text-white rounded-md">{message}</div>}
 
 			<div className="relative flex items-center my-4">
@@ -93,7 +101,8 @@ export function SignupForm() {
 				type="button"
 				disabled={isLoading}
 			>
-				{isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.google className="mr-5 h-4 w-4" />} Google
+				{isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.google className="mr-5 h-4 w-4" />}
+				Google
 			</Button>
 		</div>
 	);
