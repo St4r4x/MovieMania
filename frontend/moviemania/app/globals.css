@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --body-background-gradient: linear-gradient(180deg, rgba(34,40,47,1) 63%, rgba(50,59,71,1) 100%);
-    --body-background-non-gradient: 210, 13%, 16%;
+    --body-background-non-gradient: 210, 17%, 16%;
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
