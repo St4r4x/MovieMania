@@ -2,7 +2,7 @@ import email
 from sqlmodel import Field, Relationship, SQLModel
 from pydantic import EmailStr
 from datetime import date
-from typing import List
+from typing import List, Optional
 
 
 # Shared properties
@@ -16,14 +16,22 @@ class UserBase(SQLModel):
     is_superuser: bool = False
 
 
+class Genres(SQLModel, table=True):
+    __tablename__ = "Genres"
+    genre_id: Optional[int] = Field(default=None, primary_key=True)
+    name: Optional[str] = Field(default=None, max_length=255)
+
+
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     password: str
+    genres: List[int] = []
 
 
 class UserCreateOpen(SQLModel):
     email: EmailStr
     password: str
+    genres: List[int] = []
 
 
 # Properties to receive via API on update, all are optional
@@ -73,8 +81,7 @@ class MovieUserBase(SQLModel):
 class MovieUserCreate(MovieUserBase):
     movie_id: int
     note: int | None = None
-    #! ajouter favorits bool 
-
+    #! ajouter favorits bool
 
 
 # Database model, database table inferred from class name
@@ -88,7 +95,6 @@ class MovieUser(MovieUserBase, table=True):
     #! ajouter favorits bool
 
 
-
 # Properties to return via API, id is always required
 class MovieUserOut(MovieUserBase):
     movie_id: int | None = None
@@ -96,20 +102,23 @@ class MovieUserOut(MovieUserBase):
     #! ajouter favorits bool
 
 
-
 class MovieUsersOut(SQLModel):
     data: list[MovieUserOut]
     count: int
 
+
 class GenreUserBase(SQLModel):
     genre_id: int
+
 
 # Properties to receive on item creation
 class GenreUserCreate(GenreUserBase):
     genre_id: List[int]
 
+
 class GenreUserUpdate(GenreUserBase):
     genre_ids: List[int]
+
 
 # Database model, database table inferred from class name
 class GenreUser(GenreUserBase, table=True):
@@ -118,6 +127,7 @@ class GenreUser(GenreUserBase, table=True):
     user_id: int | None = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
+
 
 # Properties to return via API, id is always required
 class GenreUserOut(GenreUserBase):
@@ -128,6 +138,7 @@ class GenreUserOut(GenreUserBase):
 class GenreUsersOut(SQLModel):
     data: list[GenreUserOut]
     count: int
+
 
 # Generic message
 class Message(SQLModel):
