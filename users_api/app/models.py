@@ -1,3 +1,4 @@
+import email
 from sqlmodel import Field, Relationship, SQLModel
 from pydantic import EmailStr
 from datetime import date
@@ -32,6 +33,7 @@ class UserUpdate(UserBase):
 
 
 class UserUpdateMe(SQLModel):
+    email: EmailStr | None = None  # type: ignore
     nom: str | None = None
     prenom: str | None = None
     birthday: date | None = None

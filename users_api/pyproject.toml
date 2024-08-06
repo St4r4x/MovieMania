@@ -28,6 +28,7 @@ mysql-connector-python = "^8.3.0"
 fastapi-nextauth-jwt = "^1.1.2"
 pytest = "^8.2.2"
 werkzeug = "^3.0.3"
+alembic = "^1.13.2"
 
 [tool.poetry.group.dev.dependencies]
 types-python-jose = "^3.3.4.20240106"

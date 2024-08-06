@@ -7,7 +7,7 @@ const ConditionalFooter = () => {
   const pathname = usePathname();
 
   // Définir les routes où le Footer ne doit pas être affiché
-  const hiddenFooterRoutes = ["/login", "/signin", "/preferences"];
+  const hiddenFooterRoutes = ["/login", "/signup", "/preferences"];
   const showFooter = !hiddenFooterRoutes.includes(pathname);
 
   return showFooter ? <Footer /> : null;

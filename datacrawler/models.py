@@ -28,45 +28,57 @@ class Movies(Base):
     tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     embeddings: Mapped[Optional[bytes]] = mapped_column(BLOB, nullable=True)
 
-    castings: Mapped[List["Castings"]] = relationship(
-        "Castings", back_populates="movie")
-    crews: Mapped[List["Crews"]] = relationship(
-        "Crews", back_populates="movie")
+
     genres: Mapped[List["MovieGenres"]] = relationship(
-        "MovieGenres", back_populates="movie")
-    similar_movies: Mapped[List["MoviesMovies"]] = relationship(
-        "MoviesMovies", foreign_keys="MoviesMovies.movie_id", back_populates="movie")
+        "MovieGenres")
+
     users: Mapped[List["MovieUsers"]] = relationship(
-        "MovieUsers", back_populates="movie")
+        "MovieUsers")
+    
+    credits: Mapped[List["Credits"]] = relationship("Credits")
 
 
-class Castings(Base):
-    __tablename__ = "Castings"
-    cast_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    actor_name: Mapped[Optional[str]] = mapped_column(
+class Peoples(Base):
+    __tablename__ = "Peoples"
+    people_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(
         String(255), nullable=True)
+    photo: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    
+    credits: Mapped[List["Credits"]] = relationship("Credits")
+
+class Credits(Base):
+    __tablename__ = "Credits"
+    credit_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_people: Mapped[int] = mapped_column(ForeignKey("Peoples.people_id"))
+    id_movie: Mapped[int] = mapped_column(
+        ForeignKey("Movies.movie_id"))
+    id_job: Mapped[int] = mapped_column(ForeignKey("Jobs.job_id"))
     character_name: Mapped[Optional[str]] = mapped_column(
         String(255), nullable=True)
-    movie_id: Mapped[int] = mapped_column(ForeignKey("Movies.movie_id"))
+    cast_order: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
+    
+    job: Mapped["Jobs"] = relationship("Jobs",overlaps="credits")
+    movie: Mapped["Movies"] = relationship("Movies",overlaps="credits")
+    people: Mapped["Peoples"] = relationship("Peoples",overlaps="credits")
 
-    movie: Mapped["Movies"] = relationship("Movies", back_populates="castings")
 
-
-class Crews(Base):
-    __tablename__ = "Crews"
-    crew_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    person_name: Mapped[Optional[str]] = mapped_column(
-        String(255), nullable=True)  # Spécifier la longueur de la chaîne
-    role: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
-    movie_id: Mapped[int] = mapped_column(ForeignKey("Movies.movie_id"))
-
-    movie: Mapped["Movies"] = relationship("Movies", back_populates="crews")
+class Jobs(Base):
+    __tablename__ = "Jobs"
+    job_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(
+        String(255), nullable=True)
+    
+    credits: Mapped[List["Credits"]] = relationship("Credits")
 
 
 class Genres(Base):
     __tablename__ = "Genres"
     genre_id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+
+    moviegenres: Mapped[List["MovieGenres"]] = relationship("MovieGenres")
+    usergenres: Mapped[List["UserGenre"]] = relationship("UserGenre")
 
 
 class MovieGenres(Base):
@@ -76,23 +88,8 @@ class MovieGenres(Base):
     genre_id: Mapped[int] = mapped_column(
         ForeignKey("Genres.genre_id"), primary_key=True)
 
-    movie: Mapped["Movies"] = relationship("Movies", back_populates="genres")
-    genre: Mapped["Genres"] = relationship("Genres")
-
-
-class MoviesMovies(Base):
-    __tablename__ = "MoviesMovies"
-    movie_id: Mapped[int] = mapped_column(
-        ForeignKey("Movies.movie_id"), primary_key=True)
-    movie_id_1: Mapped[int] = mapped_column(
-        ForeignKey("Movies.movie_id"), primary_key=True)
-    similarity_score: Mapped[Optional[float]
-                             ] = mapped_column(Float, nullable=True)
-
-    movie: Mapped["Movies"] = relationship(
-        "Movies", foreign_keys=[movie_id], back_populates="similar_movies")
-    similar_movie: Mapped["Movies"] = relationship(
-        "Movies", foreign_keys=[movie_id_1])
+    movie: Mapped["Movies"] = relationship("Movies",overlaps="genres")
+    genre: Mapped["Genres"] = relationship("Genres",overlaps="moviegenres")
 
 
 class MovieUsers(Base):
@@ -103,8 +100,8 @@ class MovieUsers(Base):
         ForeignKey("Users.user_id"), primary_key=True)
     note: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
 
-    movie: Mapped["Movies"] = relationship("Movies", back_populates="users")
-    user: Mapped["Users"] = relationship("Users", back_populates="movies")
+    movie: Mapped["Movies"] = relationship("Movies",overlaps="users")
+    user: Mapped["Users"] = relationship("Users")
 
 
 class Users(Base):
@@ -119,9 +116,9 @@ class Users(Base):
     email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
 
     genres: Mapped[List["UserGenre"]] = relationship(
-        "UserGenre", back_populates="user")
+        "UserGenre")
     movies: Mapped[List["MovieUsers"]] = relationship(
-        "MovieUsers", back_populates="user")
+        "MovieUsers",overlaps="user")
 
 
 class UserGenre(Base):
@@ -131,5 +128,5 @@ class UserGenre(Base):
     user_id: Mapped[int] = mapped_column(
         ForeignKey("Users.user_id"), primary_key=True)
 
-    user: Mapped["Users"] = relationship("Users", back_populates="genres")
-    genre: Mapped["Genres"] = relationship("Genres")
+    user: Mapped["Users"] = relationship("Users",overlaps="genres")
+    genre: Mapped["Genres"] = relationship("Genres",overlaps="usergenres")
