@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Chevron from "@/public/chevron-right.png";
 import Image from "next/image";
 import { registerUserService } from "@/src/data/services/auth-services";
 import { Button } from "@/src/components/ui/button";
@@ -25,18 +24,27 @@ const genresTable = {
 	crime: { id: 16, image: "crime.jpg" },
 };
 
-export default function PreferencesForm({ onBackClick, formData }: any) {
+interface PreferencesFormProps {
+	onBackClick: () => void;
+	formData: FormData | null;
+}
+
+export default function PreferencesForm({ onBackClick, formData }: PreferencesFormProps) {
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const secondFormData = new FormData(e.currentTarget);
 		const genres = secondFormData.getAll("genres").map(Number) as number[];
 
-		if (genres.length === 0 || genres.length < 3) {
-			alert("Veuillez sélectionner au moins trois genre.");
+		if (genres.length < 3) {
+			alert("Veuillez sélectionner au moins trois genres.");
 			return;
 		}
 
-		// Créer un nouvel objet pour stocker les données des deux formulaires
+		if (!formData) {
+			alert("Données du formulaire précédent manquantes.");
+			return;
+		}
+
 		const mergedData = {
 			email: formData.get("email"),
 			password: formData.get("password"),
@@ -51,24 +59,15 @@ export default function PreferencesForm({ onBackClick, formData }: any) {
 	const capitalizeFirstLetter = (string: string) => {
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	};
+
 	return (
 		<form onSubmit={handleFormSubmit}>
 			<div className="flex flex-col md:flex-row gap-16 items-center justify-center">
-				{/* <button
-					className="hidden md:block"
-					onClick={onBackClick}
-				>
-					<Image
-						src={Chevron}
-						alt="chevron-left"
-						width={100}
-					/>
-				</button> */}
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 border-t-2 pt-10 md:pt-14">
 					{Object.entries(genresTable).map(([genre, { id, image }]) => (
 						<div
 							key={id}
-							className={`rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transition-transform transform hover:scale-105 flex justify-center items-center`}
+							className="rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transition-transform transform hover:scale-105 flex justify-center items-center"
 							style={{ backgroundImage: `url(/${image})` }}
 						>
 							<label className="cursor-pointer flex flex-col items-center">
@@ -93,9 +92,10 @@ export default function PreferencesForm({ onBackClick, formData }: any) {
 				</Button>
 				<button className="hidden md:block">
 					<Image
-						src={Chevron}
+						src="/chevron-right.png"
 						alt="chevron-right"
 						width={100}
+						height={100}
 					/>
 				</button>
 			</div>
