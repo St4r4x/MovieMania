@@ -46,28 +46,28 @@ export async function registerUserAction(prevState: any, formData: FormData) {
 		};
 	}
 
-	const responseData = await registerUserService(validatedFields.data);
+	// const responseData = await registerUserService(validatedFields.data);
 
-	if (!responseData) {
-		return {
-			...prevState,
-			zodErrors: null,
-			message: "Oups ! Quelque chose a mal tourné. Veuillez réessayer.",
-		};
-	}
+	// if (!responseData) {
+	// 	return {
+	// 		...prevState,
+	// 		zodErrors: null,
+	// 		message: "Oups ! Quelque chose a mal tourné. Veuillez réessayer.",
+	// 	};
+	// }
 
-	if (responseData.error) {
-		return {
-			...prevState,
-			zodErrors: null,
-			message: "Echec de l'enregistrement.",
-		};
-	}
+	// if (responseData.error) {
+	// 	return {
+	// 		...prevState,
+	// 		zodErrors: null,
+	// 		message: "Echec de l'enregistrement.",
+	// 	};
+	// }
 
 	return {
 		...prevState,
 		zodErrors: null,
-		message: "Inscription réussie!",
+		message: "Champs valident",
 	};
 }
 
