@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { registerUserService } from "@/src/data/services/auth-services";
 import { Button } from "@/src/components/ui/button";
+import { useRouter } from "next/navigation";
 
 const genresTable = {
 	action: { id: 1, image: "action.png" },
@@ -30,6 +31,8 @@ interface PreferencesFormProps {
 }
 
 export default function PreferencesForm({ onBackClick, formData }: PreferencesFormProps) {
+	const router = useRouter();
+
 	const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const secondFormData = new FormData(e.currentTarget);
@@ -51,9 +54,12 @@ export default function PreferencesForm({ onBackClick, formData }: PreferencesFo
 			genres,
 		};
 
-		console.log("mergedData:", mergedData);
-
-		await registerUserService(mergedData);
+		try {
+			await registerUserService(mergedData);
+			router.push("/login");
+		} catch (error) {
+			alert("Une erreur est survenue lors de l'enregistrement. Veuillez réessayer.");
+		}
 	};
 
 	const capitalizeFirstLetter = (string: string) => {

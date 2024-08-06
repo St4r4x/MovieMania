@@ -1,6 +1,7 @@
 "use server";
 
 import axios from "axios";
+import { error } from "console";
 import { signIn } from "next-auth/react";
 
 interface CheckUserProps {
@@ -43,7 +44,8 @@ export async function registerUserService(userData: RegisterUserProps) {
 		});
 		return response.data;
 	} catch (axiosError) {
-		console.error(axiosError);
+		console.error("Erreur lors de l'enregistrement de l'utilisateur :", error);
+		throw error;
 	}
 }
 
