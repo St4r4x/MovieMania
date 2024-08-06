@@ -11,6 +11,7 @@ from recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
+import datetime
 from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
 load_dotenv() 
