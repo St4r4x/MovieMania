@@ -25,7 +25,7 @@ function DeleteForm({ user }: any) {
 		setIsLoading(true);
 		const result = await deleteUserProfile(session);
 		if (result?.success) {
-			signOut({ callbackUrl: "/signin" });
+			signOut({ callbackUrl: "/signup" });
 		} else {
 			console.error("La suppression a échoué");
 		}

@@ -15,7 +15,7 @@ const INITIAL_STATE = {
 	message: null,
 };
 
-export function SigninForm() {
+export function SignupForm() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
 	const [message, setMessage] = useState<string | null>(null);
