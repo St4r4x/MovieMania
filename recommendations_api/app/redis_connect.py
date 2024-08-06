@@ -1,9 +1,16 @@
 import redis
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+HOST = os.getenv("REDIS_HOST")
+PORT = os.getenv("REDIS_PORT")
 
 def connect_to_redis():
     try:
         # Connexion à la base de données Redis
-        client = redis.Redis(host='los-santos.fr', port=7195, password=None)
+        client = redis.Redis(host=HOST, port=PORT, password=None)
         
         # Vérification de la connexion
         if client.ping():
