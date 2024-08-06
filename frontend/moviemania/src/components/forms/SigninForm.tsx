@@ -15,28 +15,29 @@ const INITIAL_STATE = {
 	message: null,
 };
 
-export function SigninForm() {
+export function SigninForm({ onNextClick }: any) {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [formState, formAction] = useFormState(registerUserAction, INITIAL_STATE);
 	const [message, setMessage] = useState<string | null>(null);
+	const [formData, setFormData] = useState(null);
 
 	// Utilisation d'un effet pour mettre à jour le message de confirmation ou d'erreur
 	React.useEffect(() => {
 		if (formState?.message) {
 			setMessage(formState.message);
-			if (formState.message === "Inscription réussie!") {
-				// Redirection vers une nouvelle page après succès
-				setTimeout(() => {
-					window.location.href = "/login";
-				}, 1000); // Temps d'attente avant redirection, ajustable
+			if (formState.message === "Champs valident") {
+				// Redirection vers la page des genres
+				onNextClick(formData);
 			}
 		}
-	}, [formState?.message]);
+	}, [formState?.message, formData]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		await formAction(new FormData(event.target as HTMLFormElement));
+		const formData = new FormData(event.target as HTMLFormElement);
+		setFormData(formData);
+		await formAction(formData);
 		setIsLoading(false);
 	};
 
