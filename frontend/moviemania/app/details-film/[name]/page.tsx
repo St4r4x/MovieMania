@@ -48,10 +48,8 @@ const images = [
 
 export default function FilmDetails() {
 	const [showPopup, setShowPopup] = useState(false);
-	const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-	const openPopup = (movie: Movie) => {
-		setSelectedMovie(movie);
+	const openPopup = () => {
 		setShowPopup(true);
 	};
 
@@ -88,9 +86,8 @@ export default function FilmDetails() {
 							<ActionButton
 								icon="fa-check"
 								ariaLabel="Check"
-								onClick={() => openPopup(filmDetails)}
+								onClick={() => openPopup()}
 							/>
-
 							<ActionButton
 								icon="fa-thumbs-down"
 								ariaLabel="Dislike"
@@ -98,9 +95,9 @@ export default function FilmDetails() {
 						</div>
 					</div>
 				</div>
-				{showPopup && selectedMovie && (
+				{showPopup && (
 					<Modal
-						movie={selectedMovie}
+						movie={filmDetails}
 						onClose={closePopup}
 					/>
 				)}
