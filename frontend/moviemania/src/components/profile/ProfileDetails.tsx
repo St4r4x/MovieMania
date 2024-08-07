@@ -1,20 +1,31 @@
 import React from "react";
 import Link from "next/link";
 import ProfileSavesAndRatings from "@/src/components/profile/ProfileSavesAndRatings";
+import { capitalizeFirstLetter } from "@/src/utils/common";
 
-interface User {
-	email: string;
-	nom: string;
+type User = {
 	prenom: string;
-}
+	nom: string;
+};
 
-interface ProfileDetailsProps {
+type MovieUser = {
+	data: { movie_id: number; note: number; saved: boolean }[];
+	count: number;
+};
+
+type ProfileDetailsProps = {
 	user: User;
+	movieuser?: MovieUser;
 	enriched: boolean;
 	page?: string;
-}
+};
 
-function ProfileDetails({ user, enriched, page }: ProfileDetailsProps) {
+function ProfileDetails({ user, movieuser, enriched, page }: ProfileDetailsProps) {
+	console.log(movieuser);
+
+	const ratedCount = movieuser?.data.filter((movie) => movie.note > 0).length || 0;
+	const savedCount = movieuser?.data.filter((movie) => movie.saved).length || 0;
+
 	return (
 		<div className="flex flex-row justify-between w-full md:justify-start text-white gap-4 md:gap-14">
 			<div className="flex flex-row items-end justify-center gap-4 md:gap-6">
@@ -31,7 +42,9 @@ function ProfileDetails({ user, enriched, page }: ProfileDetailsProps) {
 					{enriched ? (
 						<div>
 							<div className="text-sm md:text-md italic">@{user.nom}</div>
-							<div className="text-base md:text-2xl font-bold">{user.prenom + " " + user.nom}</div>
+							<div className="text-base md:text-2xl font-bold">{`${user.prenom ? capitalizeFirstLetter(user.prenom) : ""} ${
+								user.nom ? capitalizeFirstLetter(user.nom) : ""
+							}`}</div>
 						</div>
 					) : (
 						<div>
@@ -54,8 +67,8 @@ function ProfileDetails({ user, enriched, page }: ProfileDetailsProps) {
 			</div>
 			{enriched ? (
 				<ProfileSavesAndRatings
-					ratings={5}
-					saved={3}
+					ratings={ratedCount}
+					saved={savedCount}
 				/>
 			) : (
 				""

@@ -136,6 +136,23 @@ interface movieUserProps {
 	saved: boolean;
 }
 
+export const getMovieUser = async (session: any) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${session?.access_token}`,
+			},
+		});
+		return response.data;
+	} catch (error) {
+		console.error("Erreur lors de la récupération des films user:", error);
+		throw error;
+	}
+};
+
 export const postMovieUser = async (session: any, userData: movieUserProps) => {
 	try {
 		const response = await axios({

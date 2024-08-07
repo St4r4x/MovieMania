@@ -5,15 +5,12 @@ import profileBackground from "@/public/profile-background.png";
 import ProfileDetails from "@/src/components/profile/ProfileDetails";
 import Carousel from "@/src/components/ui/carrousel";
 import { Metadata } from "next";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getUserProfile, getMovieUser } from "@/src/data/services/user-services";
 
 export const metadata: Metadata = {
 	title: "Mes Films favoris",
-};
-
-const user = {
-	email: "John@doe.com",
-	nom: "Doe",
-	prenom: "John",
 };
 
 const images = [
@@ -28,15 +25,20 @@ const images = [
 	{ src: "/joker.png", name: "Joker" },
 ];
 
-function Profile() {
+const Profile = async () => {
+	const session = await getServerSession(authOptions);
+	const user = await getUserProfile(session);
+	const movieUser = await getMovieUser(session);
+
 	return (
 		<main className="flex flex-col min-h-screen gap-7">
 			<div
 				className={`${styles.background} w-full bg-no-repeat bg-cover bg-center items-end flex p-5 md:p-7 h-80 md:h-500`}
-				style={{ backgroundImage: `url(${profileBackground?.src})`}}
+				style={{ backgroundImage: `url(${profileBackground?.src})` }}
 			>
 				<ProfileDetails
 					user={user}
+					movieuser={movieUser}
 					enriched={true}
 				/>
 			</div>
@@ -53,6 +55,6 @@ function Profile() {
 			</section>
 		</main>
 	);
-}
+};
 
 export default Profile;
