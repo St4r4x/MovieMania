@@ -21,7 +21,7 @@ interface Movie {
 }
 
 const filmDetails: Movie = {
-	id: 1,
+	id: 2,
 	title: "Joker",
 	description: "Dans les années 1980, à Gotham City, Arthur Fleck, un humoriste de stand-up raté, bascule dans la folie et devient le Joker.",
 	genre: ["crime", "drama", "thriller"],
