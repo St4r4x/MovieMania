@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { cn } from "@/src/lib/utils";
 import { Button } from "@/src/components/ui/button";
 import { UpdateUserPassword } from "@/src/data/services/user-services";
+import { useSession } from "next-auth/react";
 
 function ResetPassword() {
+	const { data: session } = useSession();
 	const [formData, setFormData] = useState({
 		current_password: "",
 		new_password: "",
@@ -26,14 +28,14 @@ function ResetPassword() {
 		event.preventDefault();
 		setIsLoading(true);
 		console.log("formData", formData);
-		await UpdateUserPassword(formData);
+		await UpdateUserPassword(session, formData);
 		setIsLoading(false);
 	};
 
 	return (
 		<main className="flex flex-col items-center min-h-screen p-5">
 			<div className="bg-gray-700 rounded-md p-10 flex flex-col gap-10 w-full sm:w-500">
-                <h1 className="text-2xl text-white text-center font-bold">Modifier mot de passe</h1>
+				<h1 className="text-2xl text-white text-center font-bold">Modifier mot de passe</h1>
 				<div className={cn("grid gap-6")}>
 					<form onSubmit={handleSubmit}>
 						<div className="grid gap-5">

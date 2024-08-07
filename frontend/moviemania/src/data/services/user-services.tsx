@@ -1,8 +1,6 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMyMDA5MTAsInN1YiI6IjMifQ.Zd4mt17m0NOnhbhXl5DNPHm8mLRmZzNXUYIKkAz05Mo";
-
 interface patchUserProfileProps {
 	nom: string;
 	prenom: string;
@@ -26,15 +24,14 @@ export const getUserProfile = async (session: any) => {
 	}
 };
 
-export const postGenresUser = async (genres: string[]) => {
+export const postGenresUser = async (session: any, genres: string[]) => {
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/genreusers/`,
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				//Authorization: `Bearer ${session?.access_token}`,
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session?.access_token}`,
 			},
 			data: JSON.stringify({
 				genre_id: genres,
@@ -48,7 +45,7 @@ export const postGenresUser = async (genres: string[]) => {
 	}
 };
 
-export const patchUserProfile = async (userData: patchUserProfileProps) => {
+export const patchUserProfile = async (session: any, userData: patchUserProfileProps) => {
 	console.log("userData", userData);
 	try {
 		const response = await axios({
@@ -56,8 +53,7 @@ export const patchUserProfile = async (userData: patchUserProfileProps) => {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
-				//Authorization: `Bearer ${session?.access_token}`,
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session?.access_token}`,
 			},
 			data: JSON.stringify({
 				userData,
@@ -107,7 +103,7 @@ interface updateUserPasswordProps {
 	new_password: string;
 }
 
-export const UpdateUserPassword = async (userData: updateUserPasswordProps) => {
+export const UpdateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
 	console.log("userData", userData);
 	try {
 		const response = await axios({
@@ -115,8 +111,7 @@ export const UpdateUserPassword = async (userData: updateUserPasswordProps) => {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
-				//Authorization: `Bearer ${session?.access_token}`,
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session?.access_token}`,
 			},
 			data: JSON.stringify({
 				userData,
@@ -161,7 +156,7 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 	}
 };
 
-export const updateMovieUser = async (userData: movieUserProps) => {
+export const updateMovieUser = async (session: any, userData: movieUserProps) => {
 	console.log("userData", userData);
 	try {
 		const response = await axios({
@@ -169,7 +164,7 @@ export const updateMovieUser = async (userData: movieUserProps) => {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${token}`,
+				Authorization: `Bearer ${session?.access_token}`,
 			},
 			data: JSON.stringify({
 				userData,
