@@ -17,7 +17,6 @@ const SettingsProfile = async () => {
 				<div className={cn("grid gap-6")}>
 					<ProfileForm
 						user={currentUser}
-						session={session}
 					/>
 				</div>
 			</div>

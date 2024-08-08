@@ -2,10 +2,11 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 interface patchUserProfileProps {
-	nom: string;
-	prenom: string;
-	sexe: string;
-	birthday: string;
+	email?: string,
+	nom?: string;
+	prenom?: string;
+	sexe?: string;
+	birthday?: string;
 }
 
 export const getUserProfile = async (session: any) => {
@@ -46,18 +47,15 @@ export const postGenresUser = async (session: any, genres: string[]) => {
 };
 
 export const patchUserProfile = async (session: any, userData: patchUserProfileProps) => {
-	console.log("userData", userData);
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
-			method: "PATCH",
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${session?.access_token}`,
 			},
-			data: JSON.stringify({
-				userData,
-			}),
+			data: userData,
 		});
 		if (response.status === 200) {
 			setTimeout(() => {
@@ -108,14 +106,12 @@ export const UpdateUserPassword = async (session: any, userData: updateUserPassw
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/password`,
-			method: "PATCH",
+			method: "PUT",
 			headers: {
-				"Content-Type": "application/json",
+				ContentType: "application/json",
 				Authorization: `Bearer ${session?.access_token}`,
 			},
-			data: JSON.stringify({
-				userData,
-			}),
+			data: userData,
 		});
 		if (response.status === 200) {
 			setTimeout(() => {

@@ -94,7 +94,7 @@ def delete_movieuser(
     return Message(message="movieuser deleted successfully")
 
 
-@router.patch("/")
+@router.put("/")
 def update_movieuser(
     session: SessionDep, current_user: CurrentUser, movieuser_in: MovieUserUpdate
 ) -> Message:

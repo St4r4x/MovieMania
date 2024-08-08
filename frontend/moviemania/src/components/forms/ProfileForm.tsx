@@ -3,14 +3,12 @@
 import React, { useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { patchUserProfile } from "@/src/data/services/user-services";
+import { useSession } from "next-auth/react";
 
-function ProfileForm({ user }: any, { session }: any) {
-	const [formData, setFormData] = useState({
-		nom: user.nom,
-		prenom: user.prenom,
-		sexe: user.sexe,
-		birthday: user.birthday,
-	});
+function ProfileForm({ user }: any) {
+	const { data: session } = useSession();
+
+	const [formData, setFormData] = useState({});
 	const [isLoading, setIsLoading] = useState(false);
 	const [isModified, setIsModified] = useState(false);
 
@@ -26,7 +24,6 @@ function ProfileForm({ user }: any, { session }: any) {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		console.log("formData", formData);
 		await patchUserProfile(session, formData);
 		setIsLoading(false);
 	};
@@ -56,6 +53,19 @@ function ProfileForm({ user }: any, { session }: any) {
 						defaultValue={user.prenom}
 						onChange={handleChange}
 						type="text"
+						autoCorrect="off"
+					/>
+				</div>
+				<div className="grid gap-1">
+					<div className="text-gray-300 text-start">Email</div>
+					<input
+						className="text-gray-300 p-3 border border-gray-300 rounded-md bg-transparent focus:border-primary focus:outline-none"
+						id="email"
+						name="email"
+						placeholder="email"
+						defaultValue={user.email}
+						onChange={handleChange}
+						type="email"
 						autoCorrect="off"
 					/>
 				</div>

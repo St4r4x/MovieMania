@@ -28,6 +28,7 @@ function ResetPassword() {
 		event.preventDefault();
 		setIsLoading(true);
 		console.log("formData", formData);
+		console.log("session", session);
 		await UpdateUserPassword(session, formData);
 		setIsLoading(false);
 	};
