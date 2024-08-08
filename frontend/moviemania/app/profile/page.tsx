@@ -10,7 +10,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getUserProfile, getMovieUser } from "@/src/data/services/user-services";
 
 export const metadata: Metadata = {
-	title: "Mes Films favoris",
+	title: "Mon profil - MovieMania",
 };
 
 const images = [

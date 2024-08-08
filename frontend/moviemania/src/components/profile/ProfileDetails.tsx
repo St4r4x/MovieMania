@@ -42,8 +42,8 @@ function ProfileDetails({ user, movieuser, enriched, page }: ProfileDetailsProps
 					{enriched ? (
 						<div>
 							<div className="text-sm md:text-md italic">@{user.nom}</div>
-							<div className="text-base md:text-2xl font-bold">{`${user.prenom ? capitalizeFirstLetter(user.prenom) : ""} ${
-								user.nom ? capitalizeFirstLetter(user.nom) : ""
+							<div className="text-base md:text-2xl font-bold">{`${user.nom ? capitalizeFirstLetter(user.nom) : ""} ${
+								user.prenom ? capitalizeFirstLetter(user.prenom) : ""
 							}`}</div>
 						</div>
 					) : (
