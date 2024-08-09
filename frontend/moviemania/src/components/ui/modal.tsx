@@ -1,6 +1,10 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { postMovieUser } from "@/src/data/services/user-services";
+import { useSession } from "next-auth/react";
 
 interface Movie {
 	id: number;
@@ -21,6 +25,7 @@ interface PopupProps {
 }
 
 const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
+	const { data: session } = useSession();
 	const [rating, setRating] = useState<number | null>(movie?.rating);
 	const [hover, setHover] = useState<number | null>(null);
 
@@ -36,10 +41,10 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 		};
 	}, []);
 
-	const handleSubmit = (ratingValue: number) => {
+	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
 		console.log(ratingValue);
-		// Ajouter la logique pour enregistrer la note
+		await postMovieUser(session, { movie_id: movie.id, note: ratingValue, saved: false });
 		onClose();
 	};
 

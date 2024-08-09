@@ -4,7 +4,15 @@ from fastapi import APIRouter, HTTPException
 from sqlmodel import func, select
 
 from app.api.deps import CurrentUser, SessionDep
-from app.models import MovieUser, MovieUserCreate, MovieUserOut, MovieUsersOut, MovieUserOut, Message
+from app.models import (
+    MovieUser,
+    MovieUserCreate,
+    MovieUserOut,
+    MovieUsersOut,
+    MovieUserOut,
+    Message,
+    MovieUserUpdate,
+)
 
 router = APIRouter()
 
@@ -74,7 +82,7 @@ def delete_movieuser(
     session: SessionDep, current_user: CurrentUser, id: int
 ) -> Message:
     """
-    Delete an movieuser.
+    Delete a movieuser.
     """
     movieuser = session.get(MovieUser, id)
     if not movieuser:
@@ -85,4 +93,20 @@ def delete_movieuser(
     session.commit()
     return Message(message="movieuser deleted successfully")
 
-    #! creer une route PATCH avec l'id du film et l'id user
+
+@router.put("/")
+def update_movieuser(
+    session: SessionDep, current_user: CurrentUser, movieuser_in: MovieUserUpdate
+) -> Message:
+    """
+    Update a movieuser.
+    """
+    movieuser = session.get(MovieUser, movieuser_in.movie_id)
+    if not movieuser:
+        raise HTTPException(status_code=404, detail="movieuser not found")
+    if not current_user.is_superuser and (movieuser.user_id != current_user.user_id):
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+    movieuser.note = movieuser_in.note
+    movieuser.saved = movieuser_in.saved
+    session.commit()
+    return Message(message="movieuser updated successfully")
