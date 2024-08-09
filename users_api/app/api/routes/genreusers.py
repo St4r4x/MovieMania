@@ -75,7 +75,7 @@ def create_genreuser(
     return tab_genres_user
 
 
-@router.patch("/", response_model=List[GenreUserOut])
+@router.put("/", response_model=List[GenreUserOut])
 def update_genreuser(
     genreuser_in: GenreUserUpdate,
     session: SessionDep,
