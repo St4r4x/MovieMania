@@ -1,8 +1,9 @@
 # test_api.py
+from unittest.mock import patch
+from app.core.config import settings
+
 from app.tests.conftest import conftest
-from app.core.security import verify_password
-from app.models import User
-from sqlmodel import Session, select
+
 
 client = conftest.configure_test_app()
 
@@ -70,9 +71,13 @@ def test_login_access_token_inactive_user():
 
 
 def test_password_recovery():
-    response = client.post(f"/api/v1/password-recovery/newuser2@example.com")
-    assert response.status_code == 200
-    assert response.json()["message"] == "Password recovery email sent"
+    with (
+        patch("app.core.config.settings.SMTP_HOST", "smtp.example.com"),
+        patch("app.core.config.settings.SMTP_USER", "admin@example.com"),
+    ):
+        response = client.post(f"/api/v1/password-recovery/newuser2@example.com")
+        assert response.status_code == 200
+        assert response.json()["message"] == "Password recovery email sent"
 
 
 def test_password_recovery_user_not_found():

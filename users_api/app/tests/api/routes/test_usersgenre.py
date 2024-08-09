@@ -1,3 +1,4 @@
+# test_usersgenre.py
 from app.tests.conftest import conftest
 
 client = conftest.configure_test_app()
@@ -9,9 +10,7 @@ def test_create_genresuser():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     genresuser_data = {"genre_ids": [1, 2, 3]}
-    response = client.post(
-        "/api/v1/genreusers/", json=genresuser_data, headers=headers
-    )
+    response = client.post("/api/v1/genreusers/", json=genresuser_data, headers=headers)
     genreusers = response.json()
     assert response.status_code == 200
     genre_ids = {genreuser["genre_id"] for genreuser in genreusers}
@@ -33,14 +32,12 @@ def test_update_genresuser():
     response = client.post("/api/v1/login/access-token", data=user_data)
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
-    genresuser_data = {"genre_ids": [1, 2, 3]}
-    response = client.post(
-        "/api/v1/genreusers/", json=genresuser_data, headers=headers
-    )
+    genresuser_data = {"genre_ids": [4, 5, 6]}
+    response = client.post("/api/v1/genreusers/", json=genresuser_data, headers=headers)
     genreusers = response.json()
     assert response.status_code == 200
     genre_ids = {genreuser["genre_id"] for genreuser in genreusers}
-    assert genre_ids == {1, 2, 3}
+    assert genre_ids == {4, 5, 6}
 
     # Mettre à jour les GenreUser
     update_data = {"genre_ids": [2, 3, 4]}
