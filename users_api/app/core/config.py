@@ -71,7 +71,7 @@ class Settings(BaseSettings):
     def SQLITE_DATABASE_URI(self) -> MySQLDsn:
         return "sqlite:///./app/tests/data/test.db"
 
-    print(f"SQLALCHEMY URI: {SQLALCHEMY_DATABASE_URI}")
+    # print(f"SQLALCHEMY URI: {SQLALCHEMY_DATABASE_URI}")
 
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
