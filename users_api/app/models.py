@@ -129,7 +129,9 @@ class MovieUserUpdate(MovieUserBase):
 # Database model, database table inferred from class name
 class MovieUser(MovieUserBase, table=True):
     __tablename__ = "MovieUsers"
-    movie_id: int | None = Field(default=None, primary_key=True, foreign_key="Movies.movie_id")
+    movie_id: int | None = Field(
+        default=None, primary_key=True, foreign_key="Movies.movie_id"
+    )
     user_id: int | None = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
@@ -154,19 +156,21 @@ class GenreUserBase(SQLModel):
 
 
 # Properties to receive on item creation
-class GenreUserCreate(GenreUserBase):
-    genre_id: List[int]
+class GenreUserCreate(SQLModel):
+    genre_ids: List[int]
 
 
-class GenreUserUpdate(GenreUserBase):
+class GenreUserUpdate(SQLModel):
     genre_ids: List[int]
 
 
 # Database model, database table inferred from class name
-class GenreUser(GenreUserBase, table=True):
+class GenreUser(SQLModel, table=True):
     __tablename__ = "UserGenre"
-    genre_id: int | None = Field(default=None, primary_key=True, foreign_key="Genres.genre_id")
-    user_id: int | None = Field(
+    genre_id: Optional[int] = Field(
+        default=None, primary_key=True, foreign_key="Genres.genre_id"
+    )
+    user_id: Optional[int] = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
 

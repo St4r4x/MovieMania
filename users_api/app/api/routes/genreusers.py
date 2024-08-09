@@ -61,7 +61,7 @@ def create_genreuser(
     Create new genreuser.
     """
     tab_genres_user = []
-    for genre_id in genreuser_in.genre_id:
+    for genre_id in genreuser_in.genre_ids:
         genre_user = GenreUser.model_validate(
             {"genre_id": genre_id, "user_id": current_user.user_id}
         )
