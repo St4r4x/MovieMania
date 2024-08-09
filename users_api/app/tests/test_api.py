@@ -197,7 +197,7 @@ def test_update_own_user():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"nom": "newuser3"}
-    response = client.patch("/api/v1/users/me", json=new_data, headers=headers)
+    response = client.put("/api/v1/users/me", json=new_data, headers=headers)
     assert response.status_code == 200
     assert response.json()["nom"] == "newuser3"
 
@@ -208,7 +208,7 @@ def test_update_user_by_id_with_role_admin():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"email": "newuser1@example.com"}
-    response = client.patch("/api/v1/users/3", json=new_data, headers=headers)
+    response = client.put("/api/v1/users/3", json=new_data, headers=headers)
     assert response.status_code == 200
     assert response.json()["email"] == "newuser1@example.com"
 
@@ -224,7 +224,7 @@ def test_update_user_by_id_with_role_user():
         "is_superuser": "false",
         "full_name": "newuser3",
     }
-    response = client.patch("/api/v1/users/4", json=new_data, headers=headers)
+    response = client.put("/api/v1/users/4", json=new_data, headers=headers)
     assert response.status_code == 400
     assert response.json()["detail"] == "The user doesn't have enough privileges"
 
@@ -235,7 +235,7 @@ def test_update_user_by_id_with_role_admin_not_found():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"email": "newuser1@example.com"}
-    response = client.patch("/api/v1/users/99", json=new_data, headers=headers)
+    response = client.put("/api/v1/users/99", json=new_data, headers=headers)
     assert response.status_code == 404
     assert (
         response.json()["detail"]
@@ -249,7 +249,7 @@ def test_update_user_by_id_with_role_admin_email_already_exists():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"email": "admin@example.com"}
-    response = client.patch("/api/v1/users/3", json=new_data, headers=headers)
+    response = client.put("/api/v1/users/3", json=new_data, headers=headers)
     assert response.status_code == 409
     assert response.json()["detail"] == "User with this email already exists"
 
@@ -308,7 +308,7 @@ def test_update_own_password():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"current_password": "newpassword", "new_password": "newpassword2"}
-    response = client.patch(
+    response = client.put(
         "/api/v1/users/me/password/", json=new_data, headers=headers
     )
     assert response.status_code == 200
@@ -321,7 +321,7 @@ def test_update_own_password_wrong_password():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"current_password": "newpassword", "new_password": "newpassword3"}
-    response = client.patch(
+    response = client.put(
         "/api/v1/users/me/password/", json=new_data, headers=headers
     )
     assert response.status_code == 400
@@ -334,7 +334,7 @@ def test_update_own_password_same_password():
     token = response.json().get("access_token")
     headers = {"Authorization": f"Bearer {token}"}
     new_data = {"current_password": "newpassword2", "new_password": "newpassword2"}
-    response = client.patch(
+    response = client.put(
         "/api/v1/users/me/password/", json=new_data, headers=headers
     )
     assert response.status_code == 400

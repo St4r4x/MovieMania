@@ -35,10 +35,7 @@ target_metadata = SQLModel.metadata
 
 
 def get_url():
-    if os.getenv("TESTING"):
-        return "sqlite:///./app/tests/data/test.db"
-    else:
-        return str(settings.SQLALCHEMY_DATABASE_URI)
+    return str(settings.SQLITE_DATABASE_URI)
 
 
 def run_migrations_offline() -> None:

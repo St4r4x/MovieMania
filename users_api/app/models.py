@@ -129,7 +129,7 @@ class MovieUserUpdate(MovieUserBase):
 # Database model, database table inferred from class name
 class MovieUser(MovieUserBase, table=True):
     __tablename__ = "MovieUsers"
-    movie_id: int | None = Field(default=None, primary_key=True)
+    movie_id: int | None = Field(default=None, primary_key=True, foreign_key="Movies.movie_id")
     user_id: int | None = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
@@ -165,7 +165,7 @@ class GenreUserUpdate(GenreUserBase):
 # Database model, database table inferred from class name
 class GenreUser(GenreUserBase, table=True):
     __tablename__ = "UserGenre"
-    genre_id: int | None = Field(default=None, primary_key=True)
+    genre_id: int | None = Field(default=None, primary_key=True, foreign_key="Genres.genre_id")
     user_id: int | None = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
