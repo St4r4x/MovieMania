@@ -1,4 +1,3 @@
-import email
 from sqlmodel import Field, Relationship, SQLModel
 from pydantic import EmailStr
 from datetime import date
@@ -16,10 +15,48 @@ class UserBase(SQLModel):
     is_superuser: bool = False
 
 
-class Genres(SQLModel, table=True):
+class GenresBase(SQLModel):
+    genre_id: int
+    name: str
+
+
+class Genres(GenresBase, table=True):
     __tablename__ = "Genres"
     genre_id: Optional[int] = Field(default=None, primary_key=True)
     name: Optional[str] = Field(default=None, max_length=255)
+
+
+class MoviesBase(SQLModel):
+    movie_id: int
+    overview: str
+    title: str
+    poster_path: str
+    backdrop_path: str
+    release_date: date
+    budget: int
+    revenue: int
+    runtime: int
+    vote_average: float
+    vote_count: int
+    tagline: str
+    adult: bool
+
+
+class Movies(MoviesBase, table=True):
+    __tablename__ = "Movies"
+    movie_id: Optional[int] = Field(default=None, primary_key=True)
+    overview: Optional[str] = Field(default=None, max_length=255)
+    title: Optional[str] = Field(default=None, max_length=255)
+    poster_path: Optional[str] = Field(default=None, max_length=255)
+    backdrop_path: Optional[str] = Field(default=None, max_length=255)
+    release_date: Optional[date] = None
+    budget: Optional[int] = None
+    revenue: Optional[int] = None
+    runtime: Optional[int] = None
+    vote_average: Optional[float] = None
+    vote_count: Optional[int] = None
+    tagline: Optional[str] = Field(default=None, max_length=255)
+    adult: Optional[bool] = None
 
 
 # Properties to receive via API on creation

@@ -24,6 +24,7 @@ fileConfig(config.config_file_name)
 
 #from sqlmodel import SQLModel # noqa
 from app.models import SQLModel # noqa
+from app.core.config import settings # noqa
 
 target_metadata = SQLModel.metadata
 
@@ -37,14 +38,7 @@ def get_url():
     if os.getenv("TESTING"):
         return "sqlite:///./app/tests/data/test.db"
     else:
-        user = os.getenv("MYSQL_USER")
-        password = os.getenv("MYSQL_PASSWORD")
-        # server = os.getenv("MYSQL_SERVER")
-        server = "localhost"
-        # port = os.getenv("MYSQL_PORT")
-        port = "2356"
-        db = os.getenv("MYSQL_DATABASE")
-        return f"mysql+mysqlconnector://{user}:{password}@{server}:{port}/{db}"
+        return str(settings.SQLALCHEMY_DATABASE_URI)
 
 
 def run_migrations_offline() -> None:
