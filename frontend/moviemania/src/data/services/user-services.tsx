@@ -71,7 +71,6 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 };
 
 export const deleteUserProfile = async (session: any) => {
-	console.log("session", session);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
@@ -170,7 +169,6 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 };
 
 export const updateMovieUser = async (session: any, userData: movieUserProps) => {
-	console.log("userData", userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/`,
