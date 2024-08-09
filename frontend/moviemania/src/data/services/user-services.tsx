@@ -101,7 +101,6 @@ interface updateUserPasswordProps {
 }
 
 export const UpdateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
-	console.log("userData", userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/password`,
