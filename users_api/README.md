@@ -21,7 +21,6 @@ Build the docker for users_api/ :
 Import the database with backup
 
 To execute unit test, run :
-    - `export TESTING=true`
     - `poetry run pytest`
 
 Method POST only available with valid token in headers (Authentication = Bearer) on `http://localhost:8888/`.

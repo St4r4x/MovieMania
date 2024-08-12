@@ -1,4 +1,3 @@
-import email
 from sqlmodel import Field, Relationship, SQLModel
 from pydantic import EmailStr
 from datetime import date
@@ -16,10 +15,48 @@ class UserBase(SQLModel):
     is_superuser: bool = False
 
 
-class Genres(SQLModel, table=True):
+class GenresBase(SQLModel):
+    genre_id: int
+    name: str
+
+
+class Genres(GenresBase, table=True):
     __tablename__ = "Genres"
     genre_id: Optional[int] = Field(default=None, primary_key=True)
     name: Optional[str] = Field(default=None, max_length=255)
+
+
+class MoviesBase(SQLModel):
+    movie_id: int
+    overview: str
+    title: str
+    poster_path: str
+    backdrop_path: str
+    release_date: date
+    budget: int
+    revenue: int
+    runtime: int
+    vote_average: float
+    vote_count: int
+    tagline: str
+    adult: bool
+
+
+class Movies(MoviesBase, table=True):
+    __tablename__ = "Movies"
+    movie_id: Optional[int] = Field(default=None, primary_key=True)
+    overview: Optional[str] = Field(default=None, max_length=255)
+    title: Optional[str] = Field(default=None, max_length=255)
+    poster_path: Optional[str] = Field(default=None, max_length=255)
+    backdrop_path: Optional[str] = Field(default=None, max_length=255)
+    release_date: Optional[date] = None
+    budget: Optional[int] = None
+    revenue: Optional[int] = None
+    runtime: Optional[int] = None
+    vote_average: Optional[float] = None
+    vote_count: Optional[int] = None
+    tagline: Optional[str] = Field(default=None, max_length=255)
+    adult: Optional[bool] = None
 
 
 # Properties to receive via API on creation
@@ -74,32 +111,39 @@ class UsersOut(SQLModel):
 class MovieUserBase(SQLModel):
     movie_id: int
     note: int | None = None
-    #! ajouter favorits bool
+    saved: bool | None = None
 
 
 # Properties to receive on item creation
 class MovieUserCreate(MovieUserBase):
     movie_id: int
     note: int | None = None
-    #! ajouter favorits bool
+    saved: bool | None = None
+
+
+class MovieUserUpdate(MovieUserBase):
+    note: int | None = None
+    saved: bool | None = None
 
 
 # Database model, database table inferred from class name
 class MovieUser(MovieUserBase, table=True):
     __tablename__ = "MovieUsers"
-    movie_id: int | None = Field(default=None, primary_key=True)
+    movie_id: int | None = Field(
+        default=None, primary_key=True, foreign_key="Movies.movie_id"
+    )
     user_id: int | None = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
     note: int | None = None
-    #! ajouter favorits bool
+    saved: bool | None = Field(default=False)
 
 
 # Properties to return via API, id is always required
 class MovieUserOut(MovieUserBase):
     movie_id: int | None = None
     note: int | None = None
-    #! ajouter favorits bool
+    saved: bool | None = None
 
 
 class MovieUsersOut(SQLModel):
@@ -112,19 +156,21 @@ class GenreUserBase(SQLModel):
 
 
 # Properties to receive on item creation
-class GenreUserCreate(GenreUserBase):
-    genre_id: List[int]
+class GenreUserCreate(SQLModel):
+    genre_ids: List[int]
 
 
-class GenreUserUpdate(GenreUserBase):
+class GenreUserUpdate(SQLModel):
     genre_ids: List[int]
 
 
 # Database model, database table inferred from class name
-class GenreUser(GenreUserBase, table=True):
+class GenreUser(SQLModel, table=True):
     __tablename__ = "UserGenre"
-    genre_id: int | None = Field(default=None, primary_key=True)
-    user_id: int | None = Field(
+    genre_id: Optional[int] = Field(
+        default=None, primary_key=True, foreign_key="Genres.genre_id"
+    )
+    user_id: Optional[int] = Field(
         default=None, foreign_key="Users.user_id", nullable=False
     )
 
