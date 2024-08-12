@@ -1,7 +1,6 @@
 from typing import Any, Dict, List, Optional
 from fastapi import Depends, FastAPI, HTTPException, Request,Query
 from sqlalchemy.orm import Session, joinedload
-from jose import JWTError, jwt
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from redis_connect import redis_client
@@ -11,6 +10,8 @@ from recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
+import jwt
+from jwt import PyJWTError
 import datetime
 from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
@@ -50,14 +51,16 @@ async def get_current_user(request: Request) -> TokenData:
     token = request.headers.get("Authorization")
     if not token:
         raise HTTPException(status_code=403, detail="Not authenticated")
+    
     token = token.split(" ")[1]
+    
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: int = payload.get("sub")
         if user_id is None:
             raise HTTPException(status_code=403, detail="Not authenticated")
         return TokenData(user_id=user_id)
-    except JWTError:
+    except PyJWTError:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
 @app.get("/recommendations/", response_model=Dict[str, Any])
