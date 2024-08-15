@@ -24,22 +24,22 @@ const images = [
 function HomeContent() {
 	///////////////Décommenter pour activer le loader////////////////
 
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 
-	// Remplacez cette promesse par l'appel d'API
-	const promise = new Promise((resolve) => {
-		setTimeout(resolve, Math.random() * 5000); // Temps aléatoire pour simuler un appel d'API
-	});
+	// // Remplacez cette promesse par l'appel d'API
+	// const promise = new Promise((resolve) => {
+	// 	setTimeout(resolve, Math.random() * 10000); // Temps aléatoire pour simuler un appel d'API
+	// });
 
-	useEffect(() => {
-		promise.then(() => {
-			setLoading(false);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	promise.then(() => {
+	// 		setLoading(false);
+	// 	});
+	// }, []);
 
-	if (loading) {
-		return <Loader />;
-	}
+	// if (loading) {
+	// 	return <Loader />;
+	// }
 
 	return (
 		<Suspense fallback={<Loader />}>
