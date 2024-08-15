@@ -5,7 +5,6 @@ import React from "react";
 import { Button } from "@/src/components/ui/button";
 import Carousel from "@/src/components/ui/carrousel";
 import Image from "next/image";
-import { Metadata } from "next";
 import Link from "next/link";
 import Loader from "@/src/components/ui/loader";
 import { Suspense, useState, useEffect } from "react";
@@ -25,19 +24,23 @@ const images = [
 function HomeContent() {
 	///////////////Décommenter pour activer le loader////////////////
 
-	// const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
 
-	// useEffect(() => {
-	// 	const timer = setTimeout(() => {
-	// 		setLoading(false);
-	// 	}, 10000);
+	// Remplacez cette promesse par l'appel d'API
+	const promise = new Promise((resolve) => {
+		setTimeout(resolve, Math.random() * 5000); // Temps aléatoire pour simuler un appel d'API
+	});
 
-	// 	return () => clearTimeout(timer); // Nettoyez le timer si le composant est démonté
-	// }, []);
+	useEffect(() => {
+		promise.then(() => {
+			setLoading(false);
+		});
+	}, []);
 
-	// if (loading) {
-	// 	return <Loader />;
-	// }
+	if (loading) {
+		return <Loader />;
+	}
+
 	return (
 		<Suspense fallback={<Loader />}>
 			<header className="relative w-full h-96 md:h-[90vh]">
