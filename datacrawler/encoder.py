@@ -105,8 +105,6 @@ class MovieEncoder:
                 'vote_count': movie.vote_count,
                 'tagline': movie.tagline,
                 'overview': movie.overview,
-                'poster_path': movie.poster_path,
-                'backdrop_path': movie.backdrop_path,
                 'genres': genres,
                 'credits': list(combined_credits)
             }
