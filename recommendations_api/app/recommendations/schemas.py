@@ -1,6 +1,7 @@
 from datetime import date
-from typing import  Optional, List
+from typing import Optional, List
 from pydantic import BaseModel
+
 
 class PeopleSchema(BaseModel):
     people_id: int
@@ -11,6 +12,7 @@ class PeopleSchema(BaseModel):
         orm_mode = True
         from_attributes = True
 
+
 class JobSchema(BaseModel):
     job_id: int
     title: str
@@ -19,6 +21,7 @@ class JobSchema(BaseModel):
         orm_mode = True
         from_attributes = True
 
+
 class GenreSchema(BaseModel):
     genre_id: int
     name: str
@@ -26,6 +29,7 @@ class GenreSchema(BaseModel):
     class Config:
         orm_mode = True
         from_attributes = True
+
 
 class CreditSchema(BaseModel):
     credit_id: int
@@ -57,7 +61,7 @@ class MovieSchema(BaseModel):
     backdrop_path: Optional[str] = None
     genres: Optional[List[GenreSchema]] = None
     credits: Optional[List[CreditSchema]] = None
-    
+
     class Config:
         orm_mode = True
         from_attributes = True
@@ -77,7 +81,7 @@ class RecommendationSchema(BaseModel):
     poster_path: Optional[str] = None
     backdrop_path: Optional[str] = None
     credits: Optional[List[CreditSchema]] = None
+
     class Config:
         orm_mode = True
         from_attributes = True
-

@@ -81,7 +81,7 @@ async def get_recommendations(current_user: TokenData = Depends(get_current_user
     user_id = current_user.user_id
     recommendations = {}
 
-    not_seen_movie_ids = db.query(models.UserMovieRatings.movie_id).filter(models.UserMovieRatings.user_id != user_id).all()
+    not_seen_movie_ids = db.query(models.MovieUsers.movie_id).filter(models.MovieUsers.user_id != user_id).all()
     not_seen_movie_ids = [movie_id[0] for movie_id in not_seen_movie_ids]
     genre_fetcher = GenreBasedRecommendationFetcher()
     genre_recommendations = genre_fetcher.fetch(db, user_id, not_seen_movie_ids)
@@ -89,7 +89,7 @@ async def get_recommendations(current_user: TokenData = Depends(get_current_user
     trending_recommendations = trending_fetcher.fetch(db, not_seen_movie_ids)
     movie_fetcher = MovieBasedRecommendationFetcher()
 
-    loved_movie_ids = db.query(models.UserMovieRatings.movie_id).filter(models.UserMovieRatings.user_id == user_id, models.UserMovieRatings.note >= 4).all()
+    loved_movie_ids = db.query(models.MovieUsers.movie_id).filter(models.MovieUsers.user_id == user_id, models.MovieUsers.note >= 4).all()
     loved_movie_ids = [movie_id[0] for movie_id in loved_movie_ids]
     for key, value in genre_recommendations.items():
         recommendations[key] = value
