@@ -3,7 +3,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request,Query
 from sqlalchemy.orm import Session, joinedload
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from redis_connect import redis_client
+from app.redis_connect import connect_to_redis
 import os
 from app.database import engine, get_db
 from app.recommendations import (
@@ -65,7 +65,7 @@ async def get_current_user(request: Request) -> TokenData:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
 @app.get("/recommendations/", response_model=Dict[str, Any])
-async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(get_db), redis_client=Depends(redis_client)):
+async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(get_db), redis_client=Depends(connect_to_redis)):
 
     """
     Get movie recommendations for the current user.
