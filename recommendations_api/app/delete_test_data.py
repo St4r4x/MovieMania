@@ -1,5 +1,5 @@
-from database import SessionLocal
-from recommendations.models import Movies, Genres, Castings, Crews, Users, MovieGenres, MovieUsers, UserGenre
+from app.database import SessionLocal
+from app.recommendations.models import Movies, Genres, Castings, Crews, Users, MovieGenres, MovieUsers, UserGenre
 
 def delete_test_data():
     db = SessionLocal()

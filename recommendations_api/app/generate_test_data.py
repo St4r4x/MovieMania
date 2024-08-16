@@ -1,8 +1,8 @@
 import random
 
-from database import SessionLocal
+from app.database import SessionLocal
 from faker import Faker
-from recommendations.models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
+from app.recommendations.models import (Castings, Crews, Genres, MovieGenres, Movies, MovieUsers,
                     UserGenre, Users)
 
 fake = Faker()
