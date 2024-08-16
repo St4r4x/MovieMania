@@ -5,12 +5,12 @@ from jose import JWTError, jwt
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
-import database
-from recommendations import (
+from app.database import engine, get_db
+from app.recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
-from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
+from app.recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
 load_dotenv() 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -18,7 +18,7 @@ ALGORITHM = os.getenv("ALGORITHM")
 
 app = FastAPI()
 
-models.Base.metadata.create_all(bind=database.engine)
+models.Base.metadata.create_all(bind=engine)
 
 class TokenData(BaseModel):
     user_id: int
@@ -50,7 +50,7 @@ async def get_current_user(request: Request) -> TokenData:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
 @app.get("/recommendations/", response_model=Dict[str, Any])
-async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(database.get_db)):
+async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)):
     """
     Get movie recommendations for the current user.
 
@@ -86,13 +86,13 @@ async def get_recommendations(current_user: TokenData = Depends(get_current_user
     return recommendations
 
 @app.get("/movies/{movie_id}", response_model=MovieSchema)
-async def get_movie_details(movie_id: int, db: Session = Depends(database.get_db)):
+async def get_movie_details(movie_id: int, db: Session = Depends(get_db)):
     """
     Retrieve details of a movie by its ID.
 
     Args:
         movie_id (int): The ID of the movie to retrieve.
-        db (Session, optional): The database session. Defaults to Depends(database.get_db).
+        db (Session, optional): The database session. Defaults to Depends(get_db).
 
     Returns:
         MovieSchema: A Pydantic model containing the details of the movie.
@@ -165,12 +165,12 @@ async def get_movie_details(movie_id: int, db: Session = Depends(database.get_db
     return movie_details
 
 @app.get("/genres", response_model=List[GenreSchema])
-def read_genres(skip: int = 0, limit: int = 20, db: Session = Depends(database.get_db)):
+def read_genres(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
     genres = db.query(models.Genres).offset(skip).limit(limit).all()
     return genres
 
 @app.get("/movies/{movie_id}/credits", response_model=List[CreditSchema])
-def read_credits(movie_id: int, db: Session = Depends(database.get_db)):
+def read_credits(movie_id: int, db: Session = Depends(get_db)):
     return db.query(models.Credits).options(
         joinedload(models.Credits.people)
     ).filter(
@@ -185,7 +185,7 @@ async def search_movies(
     genre: Optional[str] = Query(None),
     skip: int = 0,
     limit: int = 10,
-    db: Session = Depends(database.get_db)
+    db: Session = Depends(get_db)
 ):
     """
     Search for movies by title, release date, and genre with pagination.
@@ -196,7 +196,7 @@ async def search_movies(
         genre (str, optional): The genre of the movie to search for. Defaults to None.
         skip (int, optional): The number of records to skip for pagination. Defaults to 0.
         limit (int, optional): The maximum number of records to return. Defaults to 10.
-        db (Session, optional): The database session. Defaults to Depends(database.get_db).
+        db (Session, optional): The database session. Defaults to Depends(get_db).
 
     Returns:
         List[MovieSchema]: A list of MovieSchema instances containing the details of each matching movie.

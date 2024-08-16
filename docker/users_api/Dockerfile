@@ -22,8 +22,6 @@ COPY ./users_api/alembic.ini /app/
 
 COPY ./users_api/app /app/app
 
-RUN chown -R www-data:www-data /opt/$APP_NAME /var/log/$APP_NAME
-
 EXPOSE 8888
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8888", "--log-level", "debug", "--access-log"]
