@@ -5,11 +5,11 @@ FROM python:3.9
 WORKDIR /app
 
 # Copier les fichiers requirements.txt et installer les dépendances
-COPY ../../recommendations_api/app/requirements.txt .
+COPY ./recommendations_api/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copier tout le contenu du répertoire 'recommendations_api/app' dans le répertoire de travail
-COPY ../../recommendations_api/app /app
+COPY ./recommendations_api/app /app
 
 # Exposer le port sur lequel l'application sera disponible
 EXPOSE 8000
