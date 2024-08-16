@@ -13,12 +13,6 @@ The users API allows for managing users and the content related to their profile
 - 🔑 JWT token authentication.
 
 ## Usage
-Be sur you have a .env file in root directory with rights credentials (refer to .env.developpment).
-
-Build the docker for users_api/ : 
-    - `cd users_api/`
-    - `docker-compose up -d`
-Import the database with backup
 
 To execute unit test, run :
     - `poetry run pytest`

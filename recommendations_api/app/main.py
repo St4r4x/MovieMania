@@ -1,3 +1,4 @@
+from traceback import print_tb
 from typing import Any, Dict, List, Optional
 from fastapi import Depends, FastAPI, HTTPException, Request,Query
 from sqlalchemy.orm import Session, joinedload
@@ -53,7 +54,7 @@ async def get_current_user(request: Request) -> TokenData:
     if not token:
         raise HTTPException(status_code=403, detail="Not authenticated")
     
-    token = token.split(" ")[1]
+    #token = token.split(" ")[1]
     
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
