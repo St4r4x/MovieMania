@@ -1,5 +1,4 @@
 /mov_env/
-*__pycache__/*
 app.egg-info
 *.pyc
 .mypy_cache
@@ -7,6 +6,7 @@ app.egg-info
 htmlcov
 .cache
 .venv
+__pycache__
 
 # local env files
 .env*.local
