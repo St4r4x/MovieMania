@@ -53,3 +53,15 @@ Semaine 9-10: Tests et déploiement
 ## MLD
 
 https://www.dbdiagram.io/d/6659fbb7b65d933879340213
+
+## Usage
+
+Be sur you have a .env file in root directory with rights credentials (refer to .env.developpment).
+
+Build the stack with (dev):
+    - `docker compose up -d`
+
+For production build : 
+    - `docker compose -f docker-compose.yml up -d`
+    
+Import the database with backup
