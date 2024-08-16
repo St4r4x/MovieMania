@@ -65,11 +65,8 @@ async def get_current_user(request: Request) -> TokenData:
         raise HTTPException(status_code=403, detail="Not authenticated")
 
 @app.get("/recommendations/", response_model=Dict[str, Any])
-<<<<<<< HEAD
-async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(database.get_db), redis_client=Depends(redis_client)):
-=======
-async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(get_db)):
->>>>>>> docker_clean
+async def get_recommendations(current_user: TokenData = Depends(get_current_user), db: Session = Depends(get_db), redis_client=Depends(redis_client)):
+
     """
     Get movie recommendations for the current user.
 
