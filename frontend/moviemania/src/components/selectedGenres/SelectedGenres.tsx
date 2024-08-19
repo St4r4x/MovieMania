@@ -28,7 +28,7 @@ const imagesByGenresTable: ImageByGenre = {
 	horreur: { image: "horreur.jpg" },
 	musique: { image: "musique.jpeg" },
 	romance: { image: "romance.webp" },
-	scifi: { image: "scifi.jpeg" },
+	"science-fiction": { image: "scifi.jpeg" },
 	thriller: { image: "thriller.jpeg" },
 	western: { image: "western.jpg" },
 	crime: { image: "crime.jpg" },
@@ -40,7 +40,9 @@ const SelectedGenres = () => {
 	useEffect(() => {
 		const fetchGenres = async () => {
 			let fetchedGenres: Genre[] = await getAllMovieGenres();
-            console.log(fetchedGenres);
+			fetchedGenres = fetchedGenres.filter((genre) => {
+				return genre.name.toLowerCase() !== "familial" && genre.name.toLowerCase() !== "mystère" && genre.name.toLowerCase() !== "téléfilm";
+			});
 
 			// Associer les genres aux images correspondantes
 			fetchedGenres = fetchedGenres.map((genre) => ({
