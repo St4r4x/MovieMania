@@ -4,17 +4,17 @@ from fastapi import Depends, FastAPI, HTTPException, Request,Query
 from sqlalchemy.orm import Session, joinedload
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from redis_connect import connect_to_redis
+from app.redis_connect import connect_to_redis
 import os
-from database import engine, get_db
-from recommendations import (
+from app.database import engine, get_db
+from app.recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
 import jwt
 from jwt import PyJWTError
 import datetime
-from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
+from app.recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
 
 load_dotenv() 
