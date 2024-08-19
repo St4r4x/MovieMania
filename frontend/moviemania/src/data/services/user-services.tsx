@@ -180,9 +180,7 @@ export const updateMovieUser = async (session: any, userData: movieUserProps) =>
 			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			return { success: true };
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
