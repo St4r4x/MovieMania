@@ -4,17 +4,17 @@ from fastapi import Depends, FastAPI, HTTPException, Request,Query
 from sqlalchemy.orm import Session, joinedload
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from app.redis_connect import connect_to_redis
+from redis_connect import connect_to_redis
 import os
-from app.database import engine, get_db
-from app.recommendations import (
+from database import engine, get_db
+from recommendations import (
     GenreBasedRecommendationFetcher, MovieBasedRecommendationFetcher,
     TrendingRecommendationFetcher, models
 )
 import jwt
 from jwt import PyJWTError
 import datetime
-from app.recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
+from recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
 
 
 load_dotenv() 
@@ -108,62 +108,55 @@ async def get_recommendations(current_user: TokenData = Depends(get_current_user
 @app.get("/movies/{movie_id}", response_model=MovieSchema)
 async def get_movie_details(movie_id: int, db: Session = Depends(get_db)):
     """
-    Retrieve details of a movie by its ID.
-
-    Args:
-        movie_id (int): The ID of the movie to retrieve.
-        db (Session, optional): The database session. Defaults to Depends(get_db).
-
+    Get movie details by movie ID.
+    Parameters:
+    - movie_id (int): The ID of the movie.
+    - db (Session): The database session.
     Returns:
-        MovieSchema: A Pydantic model containing the details of the movie.
-
+    - MovieSchema: The movie details.
     Raises:
-        HTTPException: If the movie with the specified ID is not found.
+    - HTTPException: If the movie is not found (status code 404).
     """
-    movie = db.query(models.Movies).filter(models.Movies.movie_id == movie_id).first()
+    movie = db.query(models.Movies).filter(models.Movies.movie_id == movie_id)\
+        .options(
+            joinedload(models.Movies.genres),
+            joinedload(models.Movies.credits).joinedload(models.Credits.people),
+            joinedload(models.Movies.credits).joinedload(models.Credits.job)
+        ).first()
+    
     if not movie:
         raise HTTPException(status_code=404, detail="Movie not found")
-    
-    # Collect genre details
-    genres = []
-    for genre in movie.genres:
-        genre_details = db.query(models.Genres).filter(models.Genres.genre_id == genre.genre_id).first()
-        if genre_details:
-            genres.append(GenreSchema(
-                genre_id=genre_details.genre_id,
-                name=genre_details.name
-            ))
 
-    # Define a set of important job titles
-    important_jobs = {'Director', 'Producer', 'Writer', 'Editor', "Original Music Composer", "Executive Producer", "Director of Photography"}
+    genres = [GenreSchema(
+        genre_id=movie_genre.genre.genre_id,
+        name=movie_genre.genre.name
+    ) for movie_genre in movie.genres]
 
-    # Collect all credits
+    important_jobs = {'Director', 'Producer', 'Writer', 'Editor', 
+                      "Original Music Composer", "Executive Producer", "Director of Photography"}
+
     credits = []
+    actors = []
     for credit in movie.credits:
-        people = db.query(models.Peoples).filter(models.Peoples.people_id == credit.id_people).first()
-        job = db.query(models.Jobs).filter(models.Jobs.job_id == credit.id_job).first()
-        
-        if people and job:
-            credits.append(CreditSchema(
+        if credit.job and credit.people:
+            credit_data = CreditSchema(
                 credit_id=credit.credit_id,
                 id_movie=credit.id_movie,
                 id_people=credit.id_people,
                 id_job=credit.id_job,
-                job=JobSchema(job_id=job.job_id, title=job.title),
-                people=PeopleSchema(people_id=people.people_id, name=people.name, photo=people.photo),
+                job=JobSchema(job_id=credit.job.job_id, title=credit.job.title),
+                people=PeopleSchema(people_id=credit.people.people_id, name=credit.people.name, photo=credit.people.photo),
                 character_name=credit.character_name,
                 cast_order=credit.cast_order
-            ))
+            )
+            if credit.job.title == 'Acting':
+                actors.append(credit_data)
+            elif credit.job.title in important_jobs:
+                credits.append(credit_data)
 
-    # Separate credits into actors and important jobs
-    actors = [credit for credit in credits if credit.job.title == 'Acting']
-    important_credits = [credit for credit in credits if credit.job.title in important_jobs and credit.job.title != 'Acting']
-
-    # Sort actors by cast_order and take the first 10
     top_actors = sorted(actors, key=lambda x: (x.cast_order or float('inf')))[:10]
 
-    # Combine top actors and important credits, ensuring no duplicates
-    combined_credits = {credit.credit_id: credit for credit in top_actors + important_credits}.values()
+    combined_credits = {credit.credit_id: credit for credit in top_actors + credits}.values()
 
     movie_details = MovieSchema(
         movie_id=movie.movie_id,
@@ -184,18 +177,11 @@ async def get_movie_details(movie_id: int, db: Session = Depends(get_db)):
 
     return movie_details
 
+
 @app.get("/genres", response_model=List[GenreSchema])
 def read_genres(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):
     genres = db.query(models.Genres).offset(skip).limit(limit).all()
     return genres
-
-@app.get("/movies/{movie_id}/credits", response_model=List[CreditSchema])
-def read_credits(movie_id: int, db: Session = Depends(get_db)):
-    return db.query(models.Credits).options(
-        joinedload(models.Credits.people)
-    ).filter(
-        models.Credits.id_movie == movie_id
-    ).all()
 
 
 @app.get("/movies/search/", response_model=List[MovieSchema])
