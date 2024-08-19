@@ -19,7 +19,7 @@ const genresTable = {
 	horreur: { id: 10, image: "horreur.jpg" },
 	musique: { id: 11, image: "musique.jpeg" },
 	romance: { id: 12, image: "romance.webp" },
-	"sci-fi": { id: 13, image: "scifi.jpeg" },
+	scifi: { id: 13, image: "scifi.jpeg" },
 	thriller: { id: 14, image: "thriller.jpeg" },
 	western: { id: 15, image: "western.jpg" },
 	crime: { id: 16, image: "crime.jpg" },
@@ -49,8 +49,8 @@ export default function PreferencesForm({ onBackClick, formData }: PreferencesFo
 		}
 
 		const mergedData = {
-			email: formData.get("email"),
-			password: formData.get("password"),
+			email: formData.get("email") as string,
+			password: formData.get("password") as string,
 			genres,
 		};
 
