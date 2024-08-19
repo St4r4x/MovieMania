@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { MultipleMovieUserProps } from "@/src/types";
 
 export const getAllMovieGenres = async () => {
 	try {
@@ -25,7 +26,7 @@ export const getMoviesRecommendations = async (session: any) => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				"Authorization": `${session?.access_token}`,
+				Authorization: `${session?.access_token}`,
 			},
 		});
 		if (response.status === 200) {
@@ -34,9 +35,9 @@ export const getMoviesRecommendations = async (session: any) => {
 	} catch (error) {
 		NextResponse.json({ error });
 	}
-}
+};
 
-export const getMovieDetails = async (id: string) => {
+export const getMovieDetails = async (id: number) => {
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/${id}`,
@@ -51,4 +52,19 @@ export const getMovieDetails = async (id: string) => {
 	} catch (error) {
 		NextResponse.json({ error });
 	}
-}
+};
+
+export const getHydratedMedia = async (movies: MultipleMovieUserProps) => {
+	const mediaPromises = movies.data.map(async (movie) => {
+		const details = await getMovieDetails(movie.movie_id);
+		return {
+			...details,
+			note: movie.note,
+			saved: movie.saved,
+		};
+	});
+
+	const mediaList = await Promise.all(mediaPromises);
+
+	return mediaList;
+};

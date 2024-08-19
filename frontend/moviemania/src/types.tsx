@@ -51,3 +51,11 @@ export interface Movie {
 	genres: Genre[];
 	credits: Credit[];
 }
+
+export interface MovieUserProps {
+	movie_id: number;
+	note: number;
+	saved: boolean;
+}
+
+export interface MultipleMovieUserProps extends Array<MovieUserProps> {}
