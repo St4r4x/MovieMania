@@ -5,7 +5,7 @@ import Image from "next/image";
 import MovieDetails from "@/src/components/movie-details/MovieDetails";
 import { getMovieDetails } from "@/src/data/services/movie-services";
 
-export default async function Movie({ params: { id } }: { params: { id: string } }) {
+export default async function Movie({ params: { id } }: { params: { id: number } }) {
 	const movie = await getMovieDetails(id);
 
 	return (

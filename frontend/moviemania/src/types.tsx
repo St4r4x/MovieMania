@@ -50,6 +50,8 @@ export interface Movie {
 	backdrop_path: string;
 	genres: Genre[];
 	credits: Credit[];
+	note?: number;
+	saved?: boolean;
 }
 
 export interface MovieUserProps {
