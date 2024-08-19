@@ -13,6 +13,8 @@ from app.recommendations import (
     TrendingRecommendationFetcher,
     models,
 )
+from fastapi.middleware.cors import CORSMiddleware
+
 import jwt
 from jwt import PyJWTError
 import datetime
@@ -28,11 +30,19 @@ from app.recommendations.schemas import (
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
+ORIGINS = os.getenv("BACKEND_CORS_ORIGINS")
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def save_recommendations_to_redis(client, user_id, recommendations):
     try:
