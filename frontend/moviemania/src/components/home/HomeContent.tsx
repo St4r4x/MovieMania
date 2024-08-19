@@ -69,22 +69,7 @@ function HomeContent() {
 				</div>
 			</header>
 			<div className="flex flex-col gap-12">
-				<section className="px-7">
-					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Mes recommandations</p>
-
-					<Carousel images={images} />
-				</section>
-
-				<section className="px-7">
-					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Les tops du moment </p>
-
-					<Carousel images={images} />
-				</section>
-
-				<section className="px-7">
-					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Nouveautés</p>
-					<Carousel images={images} />
-				</section>
+				
 			</div>
 		</Suspense>
 	);

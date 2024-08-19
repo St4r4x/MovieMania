@@ -7,17 +7,18 @@ import { Icons } from "@/src/components/icons/icons";
 
 // Définir le type pour les images
 //! il manquera l'id du film
-interface CarouselImage {
-	src: string;
-	name: string;
+interface CarouselMovie {
+	movie_id: string;
+	title: string;
+	poster_path: string;
 }
 
 // Définir les types pour les props du composant
 interface CarouselProps {
-	images: CarouselImage[];
+	movies: CarouselMovie[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images }) => {
+const Carousel: React.FC<CarouselProps> = ({ movies }) => {
 	const carouselRef = useRef<HTMLDivElement>(null);
 
 	const handleNext = () => {
@@ -38,15 +39,15 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 				ref={carouselRef}
 				className="flex overflow-x-auto scroll-smooth scrollbar-hide"
 			>
-				{images.map(({ src, name }, index) => (
+				{movies.map(({ movie_id, title, poster_path }, index) => (
 					<div
 						key={index}
 						className={`flex-shrink-0 w-[250px]  ${index === 0 ? "py-2 pe-2" : "p-2"}`}
 					>
-						<Link href="/details-film/titre">
+						<Link href={`/details-film/${movie_id}`}>
 							<div className="relative rounded-lg md:hover:border-2 md:hover:border-white md:hover:scale-95 transition-transform duration-300 ease-in-out">
 								<Image
-									src={src}
+									src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_PATH}w500/${poster_path}`}
 									alt={`Image ${index + 1}`}
 									layout="responsive"
 									width={250}
@@ -54,7 +55,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
 									objectFit="cover"
 									className="rounded-lg"
 								/>
-								<div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm rounded-b-lg">{name}</div>
+								<div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm rounded-b-lg">{title}</div>
 								<div className="absolute rounded-lg inset-0 flex items-center justify-center opacity-0 hover:opacity-50 hover:bg-black transition-opacity duration-300 ease-in-out">
 									<Icons.arrowRight/>
 								</div>
