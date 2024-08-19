@@ -15,6 +15,7 @@ import jwt
 from jwt import PyJWTError
 import datetime
 from app.recommendations.schemas import CreditSchema, GenreSchema, MovieSchema, PeopleSchema, JobSchema
+from starlette.middleware.cors import CORSMiddleware
 
 
 load_dotenv() 
@@ -22,6 +23,20 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = os.getenv("ALGORITHM")
 
 app = FastAPI()
+
+origins = [
+    "http://localhost",
+    "http://localhost:3000", 
+]
+
+# Ajouter le middleware CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 models.Base.metadata.create_all(bind=engine)
 
