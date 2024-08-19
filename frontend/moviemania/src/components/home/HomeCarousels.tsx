@@ -9,8 +9,11 @@ function HomeCarousels({ movies }: { movies: MovieRecommendationsDictionary }) {
 
 	return (
 		<>
-			{entries.map(([genre, movies]) => (
-				<section className="px-7">
+			{entries.map(([genre, movies], index) => (
+				<section
+					className="px-7"
+					key={index}
+				>
 					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">{parseGenreKey(genre)}</p>
 
 					<Carousel movies={movies} />

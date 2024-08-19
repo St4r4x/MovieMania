@@ -7,7 +7,7 @@ import Image from "next/image";
 import Modal from "@/src/components/ui/modal";
 import { useState } from "react";
 import { Movie } from "@/src/types";
-import { extractYear, convertMinutesToHours } from "@/src/utils/common";
+import { extractYear, convertMinutesToHours, formatDate } from "@/src/utils/common";
 
 function MovieDetails({ movie }: { movie: Movie }) {
 	const [showPopup, setShowPopup] = useState(false);
@@ -117,7 +117,7 @@ function MovieDetails({ movie }: { movie: Movie }) {
 						<div>
 							<h2 className="text-base text-gray-400 mb-2">Date de sortie</h2>
 
-							<p className="font-bold">{movie.release_date}</p>
+							<p className="font-bold">{formatDate(movie.release_date)}</p>
 						</div>
 					</div>
 				</div>

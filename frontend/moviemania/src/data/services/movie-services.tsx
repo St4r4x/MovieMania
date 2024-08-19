@@ -19,7 +19,6 @@ export const getAllMovieGenres = async () => {
 };
 
 export const getMoviesRecommendations = async (session: any) => {
-	console.log(session?.access_token);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/recommendations/`,
