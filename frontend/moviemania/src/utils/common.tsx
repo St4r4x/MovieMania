@@ -5,7 +5,7 @@ export function capitalizeFirstLetter(string: string) {
 export function parseGenreKey(key: string) {
 	const parts = key.split("_");
 	if (parts.length > 1 && parts[0] === "genre") {
-		return parts.slice(1).join("_");
+		return `Parce que vous avez aimé le genre ${parts.slice(1).join("_")}`;
 	}
-	return null;
+	return "Les tendances du moment";
 }

@@ -3,32 +3,25 @@
 import React from "react";
 
 import { Button } from "@/src/components/ui/button";
-import Carousel from "@/src/components/ui/carrousel";
+import Carousel from "@/src/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
 import Loader from "@/src/components/ui/loader";
 import { Suspense, useState, useEffect } from "react";
+import { MovieRecommendations } from "@/src/types";
+import HomeCarousels from "@/src/components/home/HomeCarousels";
 
-const images = [
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-	{ src: "/joker.png", name: "Joker" },
-];
-
-function HomeContent() {
+function HomeContent({ movies }: { movies: MovieRecommendations }) {
 	///////////////Décommenter pour activer le loader////////////////
 
-	// const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(true);
+	
+	// Récupérer le premier film du dictionnaire trending_movie
+	const firstTrendingMovie = movies.trending_movie;
+	console.log(firstTrendingMovie);
 
-	// // Remplacez cette promesse par l'appel d'API
 	// const promise = new Promise((resolve) => {
-	// 	setTimeout(resolve, Math.random() * 10000); // Temps aléatoire pour simuler un appel d'API
+	// 	setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long
 	// });
 
 	// useEffect(() => {
@@ -69,7 +62,7 @@ function HomeContent() {
 				</div>
 			</header>
 			<div className="flex flex-col gap-12">
-				
+				<HomeCarousels movies={movies} />
 			</div>
 		</Suspense>
 	);

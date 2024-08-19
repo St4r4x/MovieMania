@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./Profile.module.css";
 import profileBackground from "@/public/profile-background.png";
 import ProfileDetails from "@/src/components/profile/ProfileDetails";
-import Carousel from "@/src/components/ui/carrousel";
+import Carousel from "@/src/components/ui/carousel";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

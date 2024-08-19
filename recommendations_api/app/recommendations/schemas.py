@@ -70,7 +70,7 @@ class MovieSchema(BaseModel):
 class RecommendationSchema(BaseModel):
     movie_id: int
     title: str
-    poster_path: Optional[str] = None
+    backdrop_path: Optional[str] = None
 
 
     class Config:

@@ -12,11 +12,10 @@ export const metadata: Metadata = {
 export default async function Home() {
 	const session = await getServerSession(authOptions);
 	const movieRecommendations = await getMoviesRecommendations(session);
-	console.log(movieRecommendations);
 	
 	return (
 		<main className="min-h-screen flex flex-col gap-12">
-			<HomeContent />
+			<HomeContent movies={movieRecommendations}/>
 		</main>
 	);
 }

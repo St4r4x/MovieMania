@@ -1,7 +1,7 @@
 "use client";
 
 import ActionButton from "@/src/components/ui/actionsButtons";
-import Carousel from "@/src/components/ui/carrousel";
+import Carousel from "@/src/components/ui/carousel";
 import Image from "next/image";
 import Modal from "@/src/components/ui/modal";
 import { useState } from "react";
@@ -16,7 +16,7 @@ interface Movie {
 	directors: string[];
 	writers: string[];
 	poster_path: string;
-   backdrop_path: string;
+	backdrop_path: string;
 	rating: number;
 }
 
@@ -30,7 +30,7 @@ const filmDetails: Movie = {
 	directors: ["Todd Phillips"],
 	writers: ["Todd Phillips", "Scott Silver"],
 	poster_path: "/tWjJ3ILjsbTwKgXxEv48QAbYZ19.jpg",
-   backdrop_path: "/joker.png",
+	backdrop_path: "/joker.png",
 	rating: 4,
 };
 
