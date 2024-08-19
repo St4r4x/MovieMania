@@ -104,7 +104,8 @@ def update_movieuser(
     """
     movieuser = session.get(MovieUser, movieuser_in.movie_id)
     if not movieuser:
-        raise HTTPException(status_code=404, detail="movieuser not found")
+        movieuser = MovieUser(movie_id=movieuser_in.movie_id, user_id=current_user.user_id)
+        session.add(movieuser)
     if not current_user.is_superuser and (movieuser.user_id != current_user.user_id):
         raise HTTPException(status_code=400, detail="Not enough permissions")
     movieuser.note = movieuser_in.note

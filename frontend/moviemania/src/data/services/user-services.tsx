@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 interface patchUserProfileProps {
-	email?: string,
+	email?: string;
 	nom?: string;
 	prenom?: string;
 	sexe?: string;
@@ -168,17 +168,16 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 };
 
 export const updateMovieUser = async (session: any, userData: movieUserProps) => {
+	console.log(userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/`,
-			method: "PATCH",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: `Bearer ${session?.access_token}`,
 			},
-			data: JSON.stringify({
-				userData,
-			}),
+			data: userData,
 		});
 		if (response.status === 200) {
 			setTimeout(() => {

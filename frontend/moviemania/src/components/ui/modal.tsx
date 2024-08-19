@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { postMovieUser } from "@/src/data/services/user-services";
+import { updateMovieUser } from "@/src/data/services/user-services";
 import { useSession } from "next-auth/react";
 import { Movie } from "@/src/types";
 
@@ -32,7 +32,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
 		console.log(ratingValue);
-		await postMovieUser(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
+		await updateMovieUser(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
 		onClose();
 	};
 
