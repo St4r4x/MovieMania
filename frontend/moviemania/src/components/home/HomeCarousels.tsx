@@ -2,9 +2,9 @@ import React from "react";
 
 import { parseGenreKey } from "@/src/utils/common";
 import Carousel from "@/src/components/ui/carousel";
-import { MovieRecommendations } from "@/src/types";
+import { MovieRecommendationsDictionary } from "@/src/types";
 
-function HomeCarousels({ movies }: { movies: MovieRecommendations }) {
+function HomeCarousels({ movies }: { movies: MovieRecommendationsDictionary }) {
 	const entries = Object.entries(movies).reverse();
 
 	return (

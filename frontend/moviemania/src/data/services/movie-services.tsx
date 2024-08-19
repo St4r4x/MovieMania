@@ -36,3 +36,20 @@ export const getMoviesRecommendations = async (session: any) => {
 		NextResponse.json({ error });
 	}
 }
+
+export const getMovieDetails = async (id: string) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/${id}`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+}

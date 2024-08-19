@@ -5,19 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { postMovieUser } from "@/src/data/services/user-services";
 import { useSession } from "next-auth/react";
-
-interface Movie {
-	id: number;
-	title: string;
-	description: string;
-	genre: string[];
-	releaseDate: string;
-	cast: string[];
-	directors: string[];
-	writers: string[];
-	poster_path: string;
-	rating: number;
-}
+import { Movie } from "@/src/types";
 
 interface PopupProps {
 	movie: Movie;
@@ -44,7 +32,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
 		console.log(ratingValue);
-		await postMovieUser(session, { movie_id: movie.id, note: ratingValue, saved: false });
+		await postMovieUser(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
 		onClose();
 	};
 

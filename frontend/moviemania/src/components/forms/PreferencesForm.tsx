@@ -6,7 +6,7 @@ import Image from "next/image";
 import { registerUserService } from "@/src/data/services/auth-services";
 import { Button } from "@/src/components/ui/button";
 import { useRouter } from "next/navigation";
-import SelectedGenres from "@/src/components/selectedGenres/SelectedGenres";
+import FavoriteGenres from "@/src/components/favorite-genres/FavoriteGenres";
 
 interface FormData {
 	get: (key: string) => string | null;
@@ -53,7 +53,7 @@ export default function PreferencesForm({ onBackClick, formData }: PreferencesFo
 		<form onSubmit={handleFormSubmit}>
 			<div className="flex flex-col md:flex-row gap-16 items-center justify-center">
 				<div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 border-t-2 pt-10 md:pt-14">
-					<SelectedGenres />
+					<FavoriteGenres />
 				</div>
 				<Button
 					className="w-full md:hidden"

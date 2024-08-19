@@ -5,9 +5,9 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Icons } from "@/src/components/icons/icons";
-import { Movie, MovieRecommendations } from "@/src/types";
+import { MovieRecommendationsProps, MovieRecommendationsDictionary } from "@/src/types";
 
-const Carousel: React.FC<MovieRecommendations> = ({ movies }) => {
+const Carousel: React.FC<MovieRecommendationsDictionary> = ({ movies }) => {
 	const carouselRef = useRef<HTMLDivElement>(null);
 
 	const handleNext = () => {
@@ -28,12 +28,12 @@ const Carousel: React.FC<MovieRecommendations> = ({ movies }) => {
 				ref={carouselRef}
 				className="flex overflow-x-auto scroll-smooth scrollbar-hide"
 			>
-				{movies.map((movie: Movie, index) => (
+				{movies.map((movie: MovieRecommendationsProps, index) => (
 					<div
 						key={movie.movie_id}
 						className={`flex-shrink-0 w-[250px]  ${index === 0 ? "py-2 pe-2" : "p-2"}`}
 					>
-						<Link href={`/details-film/${movie.movie_id}`}>
+						<Link href={`/movie/${movie.movie_id}`}>
 							<div className="relative rounded-lg md:hover:border-2 md:hover:border-white md:hover:scale-95 transition-transform duration-300 ease-in-out">
 								<Image
 									src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_PATH}w300${movie.backdrop_path}`}

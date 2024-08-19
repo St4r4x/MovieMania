@@ -9,3 +9,15 @@ export function parseGenreKey(key: string) {
 	}
 	return "Les tendances du moment";
 }
+
+// Fonction pour extraire l'année d'une date
+export function extractYear(dateString: string): number {
+    return new Date(dateString).getFullYear();
+}
+
+// Fonction pour convertir les minutes en heures et minutes
+export function convertMinutesToHours(minutes: number): string {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    return `${hours}h ${remainingMinutes}min`;
+}

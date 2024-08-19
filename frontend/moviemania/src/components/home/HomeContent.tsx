@@ -8,10 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Loader from "@/src/components/ui/loader";
 import { Suspense, useState, useEffect } from "react";
-import { MovieRecommendations } from "@/src/types";
+import { MovieRecommendationsDictionary } from "@/src/types";
 import HomeCarousels from "@/src/components/home/HomeCarousels";
 
-function HomeContent({ movies }: { movies: MovieRecommendations }) {
+function HomeContent({ movies }: { movies: MovieRecommendationsDictionary }) {
 	///////////////Décommenter pour activer le loader////////////////
 
 	const [loading, setLoading] = useState(true);
