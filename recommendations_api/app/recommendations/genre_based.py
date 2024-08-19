@@ -65,7 +65,7 @@ class GenreBasedRecommendationFetcher(RecommendationFetcher):
 
                     if movies:
                         recommendations[f'genre_{genre}'] = [
-                            schemas.Movie.from_orm(movie) for movie in movies
+                            schemas.RecommendationSchema.from_orm(movie) for movie in movies
                         ]
 
                 return recommendations if recommendations else {"message": "No recommendations available."}

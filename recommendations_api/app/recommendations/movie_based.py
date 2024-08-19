@@ -49,7 +49,7 @@ class MovieBasedRecommendationFetcher(RecommendationFetcher):
                 recommendations = {}
                 if limited_movies:
                     recommendations[f'movie_{target_movie.title}'] = [
-                        schemas.MovieSchema.from_orm(movie[0]) for movie in limited_movies
+                        schemas.RecommendationSchema.from_orm(movie[0]) for movie in limited_movies
                     ]
                     return recommendations
                 else:
