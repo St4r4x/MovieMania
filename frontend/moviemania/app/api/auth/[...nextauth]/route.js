@@ -54,10 +54,8 @@ export const authOptions = {
          // If `user` and `account` are set that means it is a login event
          if (user && account) {
             let backendResponse = account.provider === "credentials" ? user : account.meta;
-            console.log("backendResponse", backendResponse);
             token["access_token"] = backendResponse.access_token;
             token["ref"] = getCurrentEpochTime() + BACKEND_ACCESS_TOKEN_LIFETIME;
-            console.log("jwt token", token);
          }
          return token || {};
       },

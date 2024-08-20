@@ -45,7 +45,6 @@ export function LoginForm() {
 		setIsLoading(true);
 		// await formAction(new FormData(event.target as HTMLFormElement));
 		// setIsLoading(false);
-		console.log(data);
 		await signIn("credentials", {
 			...data,
 			redirect: false,
