@@ -61,3 +61,14 @@ export interface MovieUserProps {
 }
 
 export interface MultipleMovieUserProps extends Array<MovieUserProps> {}
+
+export interface PopupProps {
+	movie: Movie;
+	userMovieProps: MovieUserProps;
+	onClose: () => void;
+}
+
+export interface MovieDetailsProps {
+	movie: Movie;
+	userMovieProps: MovieUserProps;
+}

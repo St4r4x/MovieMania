@@ -5,21 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { updateMovieUser } from "@/src/data/services/user-services";
 import { useSession } from "next-auth/react";
-import { Movie } from "@/src/types";
+import { PopupProps } from "@/src/types";
 
-interface PopupProps {
-	movie: Movie;
-	onClose: () => void;
-}
-
-const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
+const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 	const { data: session } = useSession();
-	const [rating, setRating] = useState<number | null>(movie?.rating);
+	const [rating, setRating] = useState<number | null>(userMovieProps?.note ?? null);
 	const [hover, setHover] = useState<number | null>(null);
 
-	const resetRating = () => {
+	const resetRating = async () => {
 		setRating(null);
-		// Ajouter la logique pour reset la note
+		await updateMovieUser(session, { movie_id: movie.movie_id, note: 0, saved: false });
 	};
 
 	useEffect(() => {
@@ -31,7 +26,6 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 
 	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
-		console.log(ratingValue);
 		await updateMovieUser(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
 		onClose();
 	};

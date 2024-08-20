@@ -6,10 +6,10 @@ import ActionButton from "@/src/components/ui/actionsButtons";
 import Image from "next/image";
 import Modal from "@/src/components/ui/modal";
 import { useState } from "react";
-import { Movie } from "@/src/types";
+import { MovieDetailsProps } from "@/src/types";
 import { extractYear, convertMinutesToHours, formatDate } from "@/src/utils/common";
 
-function MovieDetails({ movie }: { movie: Movie }) {
+const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) => {
 	const [showPopup, setShowPopup] = useState(false);
 
 	const openPopup = () => {
@@ -68,6 +68,7 @@ function MovieDetails({ movie }: { movie: Movie }) {
 				{showPopup && (
 					<Modal
 						movie={movie}
+						userMovieProps={userMovieProps}
 						onClose={closePopup}
 					/>
 				)}
@@ -121,21 +122,9 @@ function MovieDetails({ movie }: { movie: Movie }) {
 						</div>
 					</div>
 				</div>
-
-				{/* <section className="mt-20">
-                        <p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Dans le même genre</p>
-    
-                        <Carousel movies={movies} />
-                    </section> */}
-
-				{/* <section className="mt-20">
-                        <p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">Nouveautés</p>
-    
-                        <Carousel movies={movies} />
-                    </section> */}
 			</section>
 		</>
 	);
-}
+};
 
 export default MovieDetails;
