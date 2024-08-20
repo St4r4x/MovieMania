@@ -33,31 +33,33 @@ export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie,
 		setUserMovie({ movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
 	};
 	return (
-		<div className="flex space-x-4 mb-4 justify-center sm:justify-start">
-			{userMovie && (userMovie.note === 0 || userMovie.saved) ? (
+		<>
+			<div className="flex space-x-4 mb-4 justify-center sm:justify-start">
+				{userMovie && (userMovie.note === 0 || userMovie.saved) ? (
+					<ActionButton
+						icon="fa-heart"
+						ariaLabel="Like"
+						isActive={userMovie?.saved}
+						onClick={saveMovie}
+					/>
+				) : (
+					""
+				)}
 				<ActionButton
-					icon="fa-heart"
-					ariaLabel="Like"
-					isActive={userMovie?.saved}
-					onClick={saveMovie}
+					icon="fa-check"
+					ariaLabel="Check"
+					onClick={() => openPopup()}
+					isActive={userMovie?.note > 0}
 				/>
-			) : (
-				""
-			)}
-			<ActionButton
-				icon="fa-check"
-				ariaLabel="Check"
-				onClick={() => openPopup()}
-				isActive={userMovie?.note > 0}
-			/>
-			{userMovie && (userMovie.note === 0 || userMovie.saved) ? (
-				<ActionButton
-					icon="fa-thumbs-down"
-					ariaLabel="Dislike"
-				/>
-			) : (
-				""
-			)}
+				{userMovie && (userMovie.note === 0 || userMovie.saved) ? (
+					<ActionButton
+						icon="fa-thumbs-down"
+						ariaLabel="Dislike"
+					/>
+				) : (
+					""
+				)}
+			</div>
 			{showPopup && (
 				<Modal
 					movie={movie}
@@ -65,6 +67,6 @@ export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie,
 					onClose={closePopup}
 				/>
 			)}
-		</div>
+		</>
 	);
 };

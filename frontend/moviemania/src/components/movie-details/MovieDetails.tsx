@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { MovieDetailsProps } from "@/src/types";
 import { extractYear, convertMinutesToHours, formatDate } from "@/src/utils/common";
-import { ActionsButtonsGroups } from "./ActionsButtonsGroups";
+import { ActionsButtonsGroups } from "../actions-buttons-groups/ActionsButtonsGroups";
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) => {
 	// Filtre les crédits pour obtenir les acteurs, les réalisateurs et les scénaristes
