@@ -13,8 +13,6 @@ export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie,
 	const [showPopup, setShowPopup] = useState(false);
 	const [userMovie, setUserMovie] = useState(userMovieProps);
 
-	console.log("userMovie", userMovie);
-
 	useEffect(() => {
 		setUserMovie(userMovieProps);
 	}, [userMovieProps]);
@@ -29,7 +27,6 @@ export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie,
 
 	const saveMovie = async () => {
 		const updatedMovieUser = await updateMovieUser(session, { movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
-		console.log("updatedMovieUser", updatedMovieUser);
 		setUserMovie({ movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
 	};
 	return (

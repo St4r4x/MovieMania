@@ -42,7 +42,6 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 				<i className="fas fa-times text-4xl"></i>
 			</button>
 			<div
-				onSubmit={handleSubmit}
 				className="flex flex-col gap-4 w-56"
 			>
 				<h2 className="text-xl text-gray-300 text-center">J'ai vu ça</h2>
@@ -74,7 +73,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 									/>
 									<i
 										className={`fas fa-star text-2xl cursor-pointer ${
-											ratingValue <= (hover ?? rating) ? "text-yellow-500" : "text-gray-300"
+											ratingValue <= (hover ?? (rating ?? 0)) ? "text-yellow-500" : "text-gray-300"
 										}`}
 										onMouseEnter={() => setHover(ratingValue)}
 										onMouseLeave={() => setHover(null)}
@@ -83,7 +82,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 							);
 						})}
 					</div>
-					{rating > 0 && (
+					{(rating ?? 0) > 0 && (
 						<button
 							onClick={resetRating}
 							className="mt-2 bg-secondary text-white py-1 px-2 rounded-md"

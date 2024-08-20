@@ -60,7 +60,9 @@ export interface MovieUserProps {
 	saved: boolean;
 }
 
-export interface MultipleMovieUserProps extends Array<MovieUserProps> {}
+export interface MultipleMovieUserProps {
+	data: MovieUserProps[];
+}
 
 export interface PopupProps {
 	movie: Movie;

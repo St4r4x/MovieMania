@@ -96,8 +96,6 @@ export async function loginUserAction(prevState: any, formData: FormData) {
 
 	const responseData = await loginUserService(validatedFields.data);
 
-	console.log("loginUserAction responseData", responseData);
-
 	if (!responseData) {
 		return {
 			...prevState,

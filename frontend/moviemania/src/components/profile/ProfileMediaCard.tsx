@@ -13,7 +13,6 @@ interface ProfileMediaCardProps {
 }
 
 function MediaCard({ media, origin }: ProfileMediaCardProps) {
-	console.log(media);
 	return (
 		<div className={`max-w-56 mt-5 md:mt-0 ${style.hoverImageEffect}`}>
 			<Link href={`/movie/${media.movie_id}`}>

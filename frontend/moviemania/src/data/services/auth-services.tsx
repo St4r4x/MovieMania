@@ -47,7 +47,7 @@ export async function registerUserService(userData: RegisterUserProps) {
 }
 
 interface LoginUserProps {
-	username: string;
+	email: string;
 	password: string;
 }
 
@@ -62,7 +62,6 @@ export async function loginUserService(userData: LoginUserProps) {
 				},
 			}
 		);
-		console.log("loginUserService response", response);
 		return response.data;
 	} catch (error) {
 		console.error("loginUserService error", error);
