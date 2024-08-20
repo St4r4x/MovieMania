@@ -1,6 +1,6 @@
 import React from "react";
 
-import { parseGenreKey } from "@/src/utils/common";
+import { parseCarouselKey } from "@/src/utils/common";
 import Carousel from "@/src/components/ui/carousel";
 import { MovieRecommendationsDictionary } from "@/src/types";
 
@@ -14,7 +14,7 @@ function HomeCarousels({ movies }: { movies: MovieRecommendationsDictionary }) {
 					className="px-7"
 					key={index}
 				>
-					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">{parseGenreKey(genre)}</p>
+					<p className="text-white text-xl inline-block border-b-2 border-white pb-2 mb-3">{parseCarouselKey(genre)}</p>
 
 					<Carousel movies={movies} />
 				</section>

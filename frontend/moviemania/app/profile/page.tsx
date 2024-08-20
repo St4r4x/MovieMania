@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 
 const Profile = async () => {
 	const session = await getServerSession(authOptions);
-	const user = await getUserProfile(session);
-	const userMovies = await getMovieUser(session);
+	const [user, userMovies] = await Promise.all([getUserProfile(session), getMovieUser(session)]);
 	const userMovieDetails = await getHydratedMedia(userMovies);
 
 	// Filtre les films

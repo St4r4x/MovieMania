@@ -36,15 +36,19 @@ async function MediaUserRatings() {
 					page="Mes films notés"
 				/>
 			</div>
-			<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 px-6 md:p-10 gap-4 md:gap-10 items-center justify-center">
-				{ratedMovies.map((ratedMovie: Movie) => (
-					<ProfileMediaCard
-						key={ratedMovie.movie_id}
-						media={ratedMovie}
-						origin="ratings"
-					/>
-				))}
-			</div>
+			{ratedMovies.length > 0 ? (
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 px-6 md:p-10 gap-4 md:gap-10 items-center justify-center">
+					{ratedMovies.map((ratedMovie: Movie) => (
+						<ProfileMediaCard
+							key={ratedMovie.movie_id}
+							media={ratedMovie}
+							origin="ratings"
+						/>
+					))}
+				</div>
+			) : (
+				<p className="text-white text-lg px-6 md:p-10">Vous n'avez pas encore noté de films.</p>
+			)}
 		</main>
 	);
 }

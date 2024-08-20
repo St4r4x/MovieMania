@@ -21,8 +21,6 @@ type ProfileDetailsProps = {
 };
 
 function ProfileDetails({ user, movieuser, enriched, page }: ProfileDetailsProps) {
-	console.log(movieuser);
-
 	const ratedCount = movieuser?.data.filter((movie) => movie.note > 0).length || 0;
 	const savedCount = movieuser?.data.filter((movie) => movie.saved).length || 0;
 

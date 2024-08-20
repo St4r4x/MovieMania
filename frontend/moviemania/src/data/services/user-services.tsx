@@ -12,7 +12,7 @@ interface patchUserProfileProps {
 export const getUserProfile = async (session: any) => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application",
@@ -73,7 +73,7 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 export const deleteUserProfile = async (session: any) => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
@@ -163,7 +163,7 @@ export const getMovieUserBy = async (session: any, id: number) => {
 		return response.data;
 	} catch (error) {
 		console.error("Erreur lors de la récupération des films user:", error);
-		return {};
+		return { movie_id: id, note: 0, saved: false };
 	}
 };
 
@@ -188,7 +188,6 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 };
 
 export const updateMovieUser = async (session: any, userData: movieUserProps) => {
-	console.log(userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/`,
@@ -200,7 +199,7 @@ export const updateMovieUser = async (session: any, userData: movieUserProps) =>
 			data: userData,
 		});
 		if (response.status === 200) {
-			return { success: true };
+			return response.data;
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
