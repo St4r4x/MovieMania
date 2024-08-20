@@ -2,14 +2,12 @@
 
 import axios from "axios";
 import { error } from "console";
-import { signIn } from "next-auth/react";
 
 interface CheckUserProps {
 	email: string;
 }
 
 export async function checkUserService(userData: CheckUserProps) {
-	console.log("checkUserService userData", userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/check`,
@@ -32,7 +30,6 @@ interface RegisterUserProps {
 }
 
 export async function registerUserService(userData: RegisterUserProps) {
-	console.log("registerUserService userData", userData);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/open`,
@@ -55,7 +52,6 @@ interface LoginUserProps {
 }
 
 export async function loginUserService(userData: LoginUserProps) {
-	console.log("loginUserService userData", userData);
 	try {
 		const response = await axios.post(
 			`${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/login/access-token`,

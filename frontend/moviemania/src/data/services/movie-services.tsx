@@ -20,13 +20,14 @@ export const getAllMovieGenres = async () => {
 };
 
 export const getMoviesRecommendations = async (session: any) => {
+	console.log(session);
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/recommendations/`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `${session?.access_token}`,
+				Authorization: `${session?.accessToken}`,
 			},
 		});
 		if (response.status === 200) {

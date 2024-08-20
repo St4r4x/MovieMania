@@ -6,7 +6,7 @@ import ProfileDetails from "@/src/components/profile/ProfileDetails";
 import Carousel from "@/src/components/ui/carousel";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getUserProfile, getMovieUser } from "@/src/data/services/user-services";
 import { getHydratedMedia } from "@/src/data/services/movie-services";
 import { MovieUserProps } from "@/src/types";

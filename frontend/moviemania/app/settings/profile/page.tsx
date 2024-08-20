@@ -3,7 +3,7 @@ import { cn } from "@/src/lib/utils";
 import { getUserProfile } from "@/src/data/services/user-services";
 import ProfileForm from "@/src/components/forms/ProfileForm";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 const SettingsProfile = async () => {
 	const session = await getServerSession(authOptions);

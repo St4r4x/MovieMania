@@ -1,7 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 
 import profileBackground from "@/public/profile-background.png";
 import styles from "../Profile.module.css";

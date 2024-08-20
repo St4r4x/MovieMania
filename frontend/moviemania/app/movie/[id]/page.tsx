@@ -4,7 +4,7 @@ import Carousel from "@/src/components/ui/carousel";
 import MovieDetails from "@/src/components/movie-details/MovieDetails";
 import { getMovieDetails } from "@/src/data/services/movie-services";
 import { getMovieUserBy } from "@/src/data/services/user-services";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth/next";
 
 export default async function Movie({ params: { id } }: { params: { id: number } }) {

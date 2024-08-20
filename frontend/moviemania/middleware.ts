@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 const unprotectedRoutes = ["/login", "/signup"];
 
-export async function middleware(request) {
+export async function middleware(request: any) {
 	const token = await getToken({ req: request });
 
 	const pathname = request.nextUrl.pathname;

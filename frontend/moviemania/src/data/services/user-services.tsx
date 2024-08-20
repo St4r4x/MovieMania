@@ -16,7 +16,7 @@ export const getUserProfile = async (session: any) => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		return response.data;
@@ -32,7 +32,7 @@ export const postGenresUser = async (session: any, genres: string[]) => {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: JSON.stringify({
 				genre_id: genres,
@@ -53,7 +53,7 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
@@ -77,7 +77,7 @@ export const deleteUserProfile = async (session: any) => {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		if (response.status === 200) {
@@ -107,7 +107,7 @@ export const UpdateUserPassword = async (session: any, userData: updateUserPassw
 			method: "PUT",
 			headers: {
 				ContentType: "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
@@ -137,7 +137,7 @@ export const getMovieUser = async (session: any) => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		return response.data;
@@ -154,7 +154,7 @@ export const getMovieUserBy = async (session: any, id: number) => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		if (response.status !== 200) {
@@ -174,7 +174,7 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
@@ -194,7 +194,7 @@ export const updateMovieUser = async (session: any, userData: movieUserProps) =>
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
