@@ -104,11 +104,15 @@ def update_movieuser(
     """
     movieuser = session.get(MovieUser, movieuser_in.movie_id)
     if not movieuser:
-        movieuser = MovieUser(movie_id=movieuser_in.movie_id, user_id=current_user.user_id)
+        movieuser = MovieUser(
+            movie_id=movieuser_in.movie_id, user_id=current_user.user_id
+        )
         session.add(movieuser)
     if not current_user.is_superuser and (movieuser.user_id != current_user.user_id):
         raise HTTPException(status_code=400, detail="Not enough permissions")
     movieuser.note = movieuser_in.note
     movieuser.saved = movieuser_in.saved
+    if movieuser.note == 0 and not movieuser.saved:
+        session.delete(movieuser)
     session.commit()
     return Message(message="movieuser updated successfully")
