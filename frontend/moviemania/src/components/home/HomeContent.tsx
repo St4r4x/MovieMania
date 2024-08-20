@@ -38,8 +38,8 @@ function HomeContent({ movies, headliner }: { movies: MovieRecommendationsDictio
 					className="border-b-2 border-customBackground md:border-none"
 					src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_PATH}original${headliner.backdrop_path}`}
 					alt={`Affiche ${headliner.title}`}
-					layout="fill"
-					objectFit="cover"
+					fill
+					style={{ objectFit: "cover" }}
 					quality={100}
 				/>
 				<div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#22272E] md:bg-gradient-to-r md:from-black md:to-[rgba(0,0,0,0.2)]"></div>

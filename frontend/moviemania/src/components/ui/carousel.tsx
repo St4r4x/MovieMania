@@ -38,8 +38,7 @@ const Carousel: React.FC<MovieRecommendationsDictionary> = ({ movies }) => {
 								<Image
 									src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_PATH}w300${movie.backdrop_path}`}
 									alt={`Image ${movie.title}`}
-									layout="responsive"
-									objectFit="cover"
+									style={{ objectFit: "cover" }}
 									width={250}
 									height={375}
 									className="rounded-lg"
