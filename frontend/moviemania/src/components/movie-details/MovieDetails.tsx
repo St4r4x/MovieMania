@@ -51,12 +51,14 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) =>
 							<ActionButton
 								icon="fa-heart"
 								ariaLabel="Like"
+								isActive={userMovieProps?.saved}
 							/>
 
 							<ActionButton
 								icon="fa-check"
 								ariaLabel="Check"
 								onClick={() => openPopup()}
+								isActive={userMovieProps?.note > 0}
 							/>
 							<ActionButton
 								icon="fa-thumbs-down"

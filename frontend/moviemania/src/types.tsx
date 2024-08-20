@@ -72,3 +72,10 @@ export interface MovieDetailsProps {
 	movie: Movie;
 	userMovieProps: MovieUserProps;
 }
+
+export interface ActionButtonProps {
+	icon: string;
+	onClick?: () => void; 
+	ariaLabel?: string; 
+	isActive?: boolean;
+  }
