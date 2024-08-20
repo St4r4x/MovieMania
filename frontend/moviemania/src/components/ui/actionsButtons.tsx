@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { ActionButtonProps } from "@/src/types";
 
 const ActionButton: React.FC<ActionButtonProps> = ({ icon, onClick = () => {}, ariaLabel = "", isActive }) => {
-  console.log(isActive);
 	const [active, setActive] = useState(isActive);
 
 	const handleClick = () => {

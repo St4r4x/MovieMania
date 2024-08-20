@@ -1,25 +1,11 @@
-"use client";
-
 import React from "react";
 
-import ActionButton from "@/src/components/ui/actionsButtons";
 import Image from "next/image";
-import Modal from "@/src/components/ui/modal";
-import { useState } from "react";
 import { MovieDetailsProps } from "@/src/types";
 import { extractYear, convertMinutesToHours, formatDate } from "@/src/utils/common";
+import { ActionsButtonsGroups } from "./ActionsButtonsGroups";
 
 const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) => {
-	const [showPopup, setShowPopup] = useState(false);
-
-	const openPopup = () => {
-		setShowPopup(true);
-	};
-
-	const closePopup = () => {
-		setShowPopup(false);
-	};
-
 	// Filtre les crédits pour obtenir les acteurs, les réalisateurs et les scénaristes
 	const actors = movie.credits.filter((credit) => credit.job.title === "Acting").map((credit) => credit.people.name);
 	const directors = movie.credits.filter((credit) => credit.job.title === "Director").map((credit) => credit.people.name);
@@ -47,33 +33,12 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) =>
 							{movie.genres[0].name} - Films - {extractYear(movie.release_date)} - {convertMinutesToHours(movie.runtime)}
 						</p>
 
-						<div className="flex space-x-4 mb-4 justify-center sm:justify-start">
-							<ActionButton
-								icon="fa-heart"
-								ariaLabel="Like"
-								isActive={userMovieProps?.saved}
-							/>
-
-							<ActionButton
-								icon="fa-check"
-								ariaLabel="Check"
-								onClick={() => openPopup()}
-								isActive={userMovieProps?.note > 0}
-							/>
-							<ActionButton
-								icon="fa-thumbs-down"
-								ariaLabel="Dislike"
-							/>
-						</div>
+						<ActionsButtonsGroups
+							movie={movie}
+							userMovieProps={userMovieProps}
+						/>
 					</div>
 				</div>
-				{showPopup && (
-					<Modal
-						movie={movie}
-						userMovieProps={userMovieProps}
-						onClose={closePopup}
-					/>
-				)}
 			</header>
 			<section className="p-8">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-52">

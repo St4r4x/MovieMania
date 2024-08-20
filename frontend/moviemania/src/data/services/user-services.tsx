@@ -157,10 +157,13 @@ export const getMovieUserBy = async (session: any, id: number) => {
 				Authorization: `Bearer ${session?.access_token}`,
 			},
 		});
+		if (response.status !== 200) {
+			return { success: false };
+		}
 		return response.data;
 	} catch (error) {
 		console.error("Erreur lors de la récupération des films user:", error);
-		throw error;
+		return {};
 	}
 };
 

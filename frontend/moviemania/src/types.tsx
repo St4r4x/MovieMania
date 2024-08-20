@@ -75,7 +75,9 @@ export interface MovieDetailsProps {
 
 export interface ActionButtonProps {
 	icon: string;
-	onClick?: () => void; 
-	ariaLabel?: string; 
+	onClick?: () => void;
+	ariaLabel?: string;
 	isActive?: boolean;
-  }
+}
+
+export interface ActionButtonGroupsProps extends MovieDetailsProps {}

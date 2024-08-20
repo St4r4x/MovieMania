@@ -10,7 +10,7 @@ import { getServerSession } from "next-auth/next";
 export default async function Movie({ params: { id } }: { params: { id: number } }) {
 	const session = await getServerSession(authOptions);
 	const movie = await getMovieDetails(id);
-	const userMovieProps = await getMovieUserBy(session, id);
+	const userMovieProps = await getMovieUserBy(session, id) || {};
 
 	return (
 		<main className="min-h-screen text-white">
