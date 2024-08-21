@@ -42,7 +42,6 @@ services:
 
     users_api:
         container_name: users_api
-        # command: ./scripts/init-db.sh
         build:
             context: .
             dockerfile: ./docker/users_api/Dockerfile
@@ -61,7 +60,6 @@ services:
             - ENVIRONMENT=${ENVIRONMENT}
             - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
             - SECRET_KEY=${SECRET_KEY}
-            - ALGORITHM=${ALGORITHM}
             - FIRST_SUPERUSER=${FIRST_SUPERUSER}
             - FIRST_SUPERUSER_PASSWORD=${FIRST_SUPERUSER_PASSWORD}
             - USERS_OPEN_REGISTRATION=${USERS_OPEN_REGISTRATION}
@@ -90,6 +88,23 @@ services:
             - DATABASE_URL=mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_SERVER}:${MYSQL_PORT}/${MYSQL_DATABASE}
         depends_on:
             - mariadb
+        networks:
+            - moviemania
+
+    frontend:
+        container_name: nextjs_frontend
+        build:
+            context: .
+            dockerfile: ./docker/front/Dockerfile
+        ports:
+            - "3000:3000"
+        env_file:
+            - ./frontend/moviemania/.env # Pointage vers le fichier .env spécifique au frontend
+        environment:
+            - NODE_ENV=production
+        depends_on:
+            - users_api
+            - recos_api
         networks:
             - moviemania
 
