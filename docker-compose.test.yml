@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+    users_api_tests:
+        container_name: users_api_tests
+        build:
+            context: .
+            dockerfile: ./docker/users_api/Dockerfile
+            args:
+                INSTALL_DEV: ${INSTALL_DEV-true}
+        platform: linux/amd64 # Patch for M1 Mac
+        restart: "no"
+        env_file:
+            - .env
+        environment:
+            - DOMAIN=${DOMAIN}
+            - ENVIRONMENT=${ENVIRONMENT}
+            - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+            - SECRET_KEY=${SECRET_KEY}
+            - ALGORITHM=${ALGORITHM}
+            - FIRST_SUPERUSER=${FIRST_SUPERUSER}
+            - FIRST_SUPERUSER_PASSWORD=${FIRST_SUPERUSER_PASSWORD}
+            - USERS_OPEN_REGISTRATION=${USERS_OPEN_REGISTRATION}
+            - SMTP_HOST=${SMTP_HOST}
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - EMAILS_FROM_EMAIL=${EMAILS_FROM_EMAIL}
+            - MYSQL_SERVER=${MYSQL_SERVER}
+            - MYSQL_PORT=${MYSQL_PORT}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        command: pytest
