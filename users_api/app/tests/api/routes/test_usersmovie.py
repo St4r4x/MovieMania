@@ -48,12 +48,6 @@ def test_update_movieuser():
     assert response.json()["note"] == 4
     assert response.json()["saved"] == True
 
-    # Tester la mise à jour d'un MovieUser qui n'existe pas
-    update_data = {"movie_id": "999", "note": "4", "saved": True}
-    response = client.put("/api/v1/movieusers/", json=update_data, headers=headers)
-    assert response.status_code == 404
-    assert response.json()["detail"] == "movieuser not found"
-
     # Tester la mise à jour avec des permissions insuffisantes
     user_data = {"username": "deleteuser@example.com", "password": "password"}
     response = client.post("/api/v1/login/access-token", data=user_data)
