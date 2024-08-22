@@ -48,7 +48,7 @@ const MovieSearch = () => {
 				placeholder="Rechercher..."
 				onBlur={() => setHasFocus(false)}
 				onFocus={() => setHasFocus(true)}
-				className="w-96 p-2 rounded-lg border border-1 border-gray-600 outline-none bg-gray-700 text-white"
+				className="w-full lg:w-96 p-2 rounded-lg border border-1 border-gray-600 outline-none bg-gray-700 text-white"
 			/>
 			{movieResults.length > 0 && hasFocus && (
 				<MovieSearchResults
