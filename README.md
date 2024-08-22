@@ -19,40 +19,6 @@ Recherche et navigation: Le site web devrait proposer une fonction de recherche 
 Notes et avis: Les utilisateurs devraient pouvoir noter et commenter les films qu'ils ont vus.
 Partage de recommandations: Les utilisateurs devraient pouvoir partager leurs recommandations avec d'autres utilisateurs.
 
-## Technologies envisagées:
-
-Langages de programmation: Python, JavaScript
-Frameworks web: Django, React
-Bases de données: PostgreSQL, MongoDB
-Système de recommandation: Algolia, Taste.io
-
-# Plan de travail:
-
-## Recherche et analyse:
-
-Étudier les sites web de recommandation de films existants.
-Analyser les algorithmes de recommandation populaires.
-Identifier les besoins des utilisateurs.
-Conception:
-Concevoir l'architecture du site web.
-Créer des prototypes des interfaces utilisateur.
-Développement:
-Développer le backend du site web (API, base de données, algorithme de recommandation).
-Développer le frontend du site web (interface utilisateur, interactions).
-Tests et déploiement:
-Tester le site web pour détecter les bugs et les problèmes.
-Déployer le site web sur un serveur en ligne.
-
-## Calendrier:
-
-Semaine 1-2: Recherche et analyse
-Semaine 3-4: Conception
-Semaine 5-8: Développement
-Semaine 9-10: Tests et déploiement
-
-## MLD
-
-https://www.dbdiagram.io/d/6659fbb7b65d933879340213
 
 ## Usage
 
