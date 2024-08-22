@@ -15,21 +15,21 @@ import { extractYear, convertMinutesToHours, truncateText } from "@/src/utils/co
 function HomeContent({ movies, headliner }: { movies: MovieRecommendationsDictionary; headliner: Movie }) {
 	///////////////Décommenter pour activer le loader////////////////
 
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 
-	const promise = new Promise((resolve) => {
-		setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long
-	});
+	// const promise = new Promise((resolve) => {
+	// 	setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long
+	// });
 
-	useEffect(() => {
-		promise.then(() => {
-			setLoading(false);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	promise.then(() => {
+	// 		setLoading(false);
+	// 	});
+	// }, []);
 
-	if (loading) {
-		return <Loader />;
-	}
+	// if (loading) {
+	// 	return <Loader />;
+	// }
 
 	return (
 		<Suspense fallback={<Loader />}>
