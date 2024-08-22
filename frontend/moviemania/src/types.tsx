@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface MovieRecommendationsProps {
 	movie_id: number;
 	title: string;
@@ -33,6 +35,7 @@ export interface Credit {
 export interface Genre {
 	genre_id: number;
 	name: string;
+	image?: StaticImageData;
 }
 
 export interface Movie {
@@ -92,4 +95,8 @@ export interface patchUserProfileProps {
 	birthday?: string;
 	current_password?: string;
 	new_password?: string;
+}
+
+export interface ImageByGenre {
+	[key: string]: StaticImageData;
 }
