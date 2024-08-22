@@ -55,7 +55,7 @@ export async function loginUserService(userData: LoginUserProps) {
 	try {
 		const response = await axios.post(
 			`${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/login/access-token`,
-			userData, // Utilise directement l'objet
+			userData, 
 			{
 				headers: {
 					"Content-Type": "application/x-www-form-urlencoded",
