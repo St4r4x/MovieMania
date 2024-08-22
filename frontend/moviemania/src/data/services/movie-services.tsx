@@ -54,6 +54,24 @@ export const getMovieDetails = async (id: number) => {
 	}
 };
 
+export const getMovieDetailsByTitle = async (query: string) => {
+	try {
+		console.log("query", query);
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/search/?title=${query}`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+};
+
 export const getHydratedMedia = async (movies: MultipleMovieUserProps) => {
 	const mediaPromises = movies.data.map(async (movie) => {
 		const details = await getMovieDetails(movie.movie_id);

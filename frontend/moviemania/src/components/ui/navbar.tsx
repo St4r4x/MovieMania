@@ -3,6 +3,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Logo from "@/public/logo.png";
+import MovieSearch from "../movie-search/MovieSearch";
 
 export default function Navbar() {
    const [dropdownOpen, setDropdownOpen] = useState({
@@ -74,11 +75,12 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center space-x-4 ml-auto">
-               <input
+               {/* <input
                   type="text"
                   placeholder="Recherche..."
                   className="w-60 p-2 rounded-lg outline-none bg-gray-700 text-white"
-               />
+               /> */}
+               <MovieSearch />
 
                <div
                   className="relative"
