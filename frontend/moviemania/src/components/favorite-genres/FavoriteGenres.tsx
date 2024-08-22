@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { capitalizeFirstLetter } from "@/src/utils/common";
 import { getMovieGenres } from "@/app/api/movie-genres/getMovieGenres";
+import {getAllMovieGenres} from "@/src/data/services/movie-services";
 
 interface ImageByGenre {
 	[key: string]: {

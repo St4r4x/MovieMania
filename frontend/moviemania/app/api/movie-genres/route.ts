@@ -1,3 +1,5 @@
+"use server";
+
 import { NextRequest, NextResponse } from "next/server";
 import { getAllMovieGenres } from "@/src/data/services/movie-services";
 
@@ -10,6 +12,6 @@ export async function PUT(req: NextRequest) {
 	}
 }
 
-export function OPTIONS() {
+export async function OPTIONS() {
 	return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
 }
