@@ -3,7 +3,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAllMovieGenres } from "@/src/data/services/movie-services";
 
-export async function PUT(req: NextRequest) {
+export async function GET(req: NextRequest) {
 	try {
 		const response = await getAllMovieGenres();
 		return NextResponse.json(response, { status: 200 });
