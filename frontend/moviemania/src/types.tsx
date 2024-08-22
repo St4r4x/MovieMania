@@ -83,3 +83,13 @@ export interface ActionButtonProps {
 }
 
 export interface ActionButtonGroupsProps extends MovieDetailsProps {}
+
+export interface patchUserProfileProps {
+	email?: string;
+	nom?: string;
+	prenom?: string;
+	sexe?: string;
+	birthday?: string;
+	current_password?: string;
+	new_password?: string;
+}

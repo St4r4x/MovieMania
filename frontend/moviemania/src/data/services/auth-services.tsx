@@ -41,8 +41,8 @@ export async function registerUserService(userData: RegisterUserProps) {
 		});
 		return response.data;
 	} catch (axiosError) {
-		console.error("Erreur lors de l'enregistrement de l'utilisateur :", error);
-		throw error;
+		console.error("Erreur lors de l'enregistrement de l'utilisateur :", axiosError);
+		throw axiosError;
 	}
 }
 

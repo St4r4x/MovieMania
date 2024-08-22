@@ -5,7 +5,7 @@ import { MultipleMovieUserProps } from "@/src/types";
 export const getAllMovieGenres = async () => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres/`,
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
