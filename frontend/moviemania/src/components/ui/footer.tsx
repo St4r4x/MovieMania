@@ -33,15 +33,9 @@ const Footer = () => {
                   </Link>
                </div>
             </div>
-
-            {/* Footer Copyright Visible Only on Mobile */}
-            {/* <div className="md:hidden text-center mt-4">
-               <p>&copy; 2024 MovieMania. Tous droits réservés.</p>
-            </div> */}
          </div>
       </footer>
    );
 };
 
 export default Footer;
-

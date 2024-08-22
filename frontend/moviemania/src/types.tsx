@@ -100,3 +100,8 @@ export interface patchUserProfileProps {
 export interface ImageByGenre {
 	[key: string]: StaticImageData;
 }
+
+export interface MovieSearchResultsProps {
+	movieResults: Movie[];
+	onSelectMovie: () => void;
+}
