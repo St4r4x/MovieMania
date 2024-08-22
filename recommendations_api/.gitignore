@@ -1,0 +1,13 @@
+/mov_env/
+app.egg-info
+*.pyc
+.mypy_cache
+.coverage
+htmlcov
+.cache
+.venv
+__pycache__
+
+# local env files
+.env*.local
+.env
