@@ -21,19 +21,33 @@ export const getAllMovieGenres = async () => {
 
 export const getMoviesRecommendations = async (session: any) => {
 	try {
+		if (!session?.accessToken) {
+			throw new Error("Le token d'accès est manquant ou invalide.");
+		}
+
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/recommendations/`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `${session?.accessToken}`,
+				Authorization: `Bearer ${session.accessToken}`,
 			},
 		});
+
 		if (response.status === 200) {
 			return response.data;
+		} else {
+			console.error("Erreur lors de la récupération des recommandations :", response.statusText);
+			return null;
 		}
 	} catch (error) {
-		NextResponse.json({ error });
+		// Vérifiez si l'erreur est une instance d'Error avant d'accéder à error.message
+		if (error instanceof Error) {
+			console.error("Erreur dans getMoviesRecommendations :", error.message);
+		} else {
+			console.error("Erreur inconnue dans getMoviesRecommendations :", error);
+		}
+		return null;
 	}
 };
 
