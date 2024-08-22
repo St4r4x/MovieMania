@@ -17,19 +17,19 @@ function HomeContent({ movies, headliner }: { movies: MovieRecommendationsDictio
 
 	const [loading, setLoading] = useState(true);
 
-	// const promise = new Promise((resolve) => {
-	// 	setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long
-	// });
+	const promise = new Promise((resolve) => {
+		setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long
+	});
 
-	// useEffect(() => {
-	// 	promise.then(() => {
-	// 		setLoading(false);
-	// 	});
-	// }, []);
+	useEffect(() => {
+		promise.then(() => {
+			setLoading(false);
+		});
+	}, []);
 
-	// if (loading) {
-	// 	return <Loader />;
-	// }
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<Suspense fallback={<Loader />}>
