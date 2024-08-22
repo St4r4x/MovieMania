@@ -1,7 +1,7 @@
 import React from "react";
 import DeleteForm from "@/src/components/forms/DeleteForm";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import { getUserProfile } from "@/src/data/services/user-services";
 
 const SettingsDelete = async () => {

@@ -42,13 +42,14 @@ services:
 
     users_api:
         container_name: users_api
-        # command: ./scripts/init-db.sh
         build:
             context: .
             dockerfile: ./docker/users_api/Dockerfile
             args:
                 INSTALL_DEV: ${INSTALL_DEV-false}
         platform: linux/amd64 # Patch for M1 Mac
+        ports:
+            - "8888:8888"
         restart: always
         networks:
             - moviemania
@@ -92,6 +93,25 @@ services:
         networks:
             - moviemania
 
+    frontend:
+        container_name: nextjs_frontend
+        build:
+            context: .
+            dockerfile: ./docker/front/Dockerfile
+        ports:
+            - "3000:3000"
+        env_file:
+            - ./frontend/moviemania/.env # Pointage vers le fichier .env spécifique au frontend
+        environment:
+            - NODE_ENV=production
+        depends_on:
+            - users_api
+            - recos_api
+        networks:
+            - moviemania
+        volumes:
+            - nextjs_cache:/app/.next/cache
+
     redis:
         image: redis:latest
         container_name: redis
@@ -102,6 +122,7 @@ services:
             
 volumes:
     mariadb_data:
+    nextjs_cache:
 
 networks:
     moviemania:

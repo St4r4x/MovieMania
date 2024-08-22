@@ -3,35 +3,18 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { postMovieUser } from "@/src/data/services/user-services";
+import { updateMovieState } from "@/app/api/movie-actions/updateMovieState";
 import { useSession } from "next-auth/react";
+import { PopupProps } from "@/src/types";
 
-interface Movie {
-	id: number;
-	title: string;
-	description: string;
-	genre: string[];
-	releaseDate: string;
-	cast: string[];
-	directors: string[];
-	writers: string[];
-	poster_path: string;
-	rating: number;
-}
-
-interface PopupProps {
-	movie: Movie;
-	onClose: () => void;
-}
-
-const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
+const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 	const { data: session } = useSession();
-	const [rating, setRating] = useState<number | null>(movie?.rating);
+	const [rating, setRating] = useState<number | null>(userMovieProps?.note ?? null);
 	const [hover, setHover] = useState<number | null>(null);
 
-	const resetRating = () => {
+	const resetRating = async () => {
 		setRating(null);
-		// Ajouter la logique pour reset la note
+		await updateMovieState(session, { movie_id: movie.movie_id, note: 0, saved: false });
 	};
 
 	useEffect(() => {
@@ -43,8 +26,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 
 	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
-		console.log(ratingValue);
-		await postMovieUser(session, { movie_id: movie.id, note: ratingValue, saved: false });
+		await updateMovieState(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
 		onClose();
 	};
 
@@ -59,10 +41,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 			>
 				<i className="fas fa-times text-4xl"></i>
 			</button>
-			<div
-				onSubmit={handleSubmit}
-				className="flex flex-col gap-4 w-56"
-			>
+			<div className="flex flex-col gap-4 w-56">
 				<h2 className="text-xl text-gray-300 text-center">J'ai vu ça</h2>
 				<Link href={`/details-film/${movie.title}`}>
 					<div className="flex flex-col items-start">
@@ -92,7 +71,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 									/>
 									<i
 										className={`fas fa-star text-2xl cursor-pointer ${
-											ratingValue <= (hover ?? rating) ? "text-yellow-500" : "text-gray-300"
+											ratingValue <= (hover ?? rating ?? 0) ? "text-yellow-500" : "text-gray-300"
 										}`}
 										onMouseEnter={() => setHover(ratingValue)}
 										onMouseLeave={() => setHover(null)}
@@ -101,7 +80,7 @@ const Modal: React.FC<PopupProps> = ({ movie, onClose }) => {
 							);
 						})}
 					</div>
-					{rating > 0 && (
+					{(rating ?? 0) > 0 && (
 						<button
 							onClick={resetRating}
 							className="mt-2 bg-secondary text-white py-1 px-2 rounded-md"

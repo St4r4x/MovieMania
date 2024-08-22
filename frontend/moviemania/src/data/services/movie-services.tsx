@@ -1,25 +1,70 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
+import { MultipleMovieUserProps } from "@/src/types";
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjMxOTU5MzYsInN1YiI6IjEifQ.dEzxsfR8tUuyoV8J6_lxoe163xDv3zhJ1FKgrjzgA3s";
-
-export const getAllMovieGenres = async (genres: string[]) => {
+export const getAllMovieGenres = async () => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres/`,
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				//Authorization: `Bearer ${session?.access_token}`,
-				Authorization: `Bearer ${token}`,
 			},
 		});
 		if (response.status === 200) {
-			//router.push("/home");
-            console.log(response.data);
-            return response.data;
+			return response.data;
 		}
 	} catch (error) {
 		NextResponse.json({ error });
 	}
+};
+
+export const getMoviesRecommendations = async (session: any) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/recommendations/`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `${session?.accessToken}`,
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+};
+
+export const getMovieDetails = async (id: number) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/${id}`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+};
+
+export const getHydratedMedia = async (movies: MultipleMovieUserProps) => {
+	const mediaPromises = movies.data.map(async (movie) => {
+		const details = await getMovieDetails(movie.movie_id);
+		return {
+			...details,
+			note: movie.note,
+			saved: movie.saved,
+		};
+	});
+
+	const mediaList = await Promise.all(mediaPromises);
+
+	return mediaList;
 };

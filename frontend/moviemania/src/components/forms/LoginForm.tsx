@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 export function LoginForm() {
 	const router = useRouter();
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isHovered, setIsHovered] = useState(false);
 	// const [formState, formAction] = useFormState(loginUserAction, INITIAL_STATE);
 	// const [message, setMessage] = useState<string | null>(null);
 
@@ -45,7 +46,6 @@ export function LoginForm() {
 		setIsLoading(true);
 		// await formAction(new FormData(event.target as HTMLFormElement));
 		// setIsLoading(false);
-		console.log(data);
 		await signIn("credentials", {
 			...data,
 			redirect: false,
@@ -120,8 +120,18 @@ export function LoginForm() {
 				variant="outline"
 				type="button"
 				disabled={isLoading}
+				onMouseEnter={() => setIsHovered(true)}
+				onMouseLeave={() => setIsHovered(false)}
 			>
-				{isLoading ? <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> : <Icons.google className="mr-5 h-4 w-4" />} Google
+				{isLoading ? (
+					<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+				) : isHovered ? (
+					"Bientôt disponible"
+				) : (
+					<>
+						<Icons.google className="mr-5 h-4 w-4" /> Google
+					</>
+				)}
 			</Button>
 		</div>
 	);

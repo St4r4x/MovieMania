@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { Button } from "@/src/components/ui/button";
-import { patchUserProfile } from "@/src/data/services/user-services";
 import { useSession } from "next-auth/react";
+import { updateProfile } from "@/app/api/profile/updateProfile";
 
 function ProfileForm({ user }: any) {
 	const { data: session } = useSession();
@@ -24,7 +24,8 @@ function ProfileForm({ user }: any) {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		await patchUserProfile(session, formData);
+		await updateProfile("updateProfile", session, formData);
+		//toast.success("Profile updated successfully");
 		setIsLoading(false);
 	};
 	return (

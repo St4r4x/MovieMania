@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 interface patchUserProfileProps {
-	email?: string,
+	email?: string;
 	nom?: string;
 	prenom?: string;
 	sexe?: string;
@@ -12,11 +12,11 @@ interface patchUserProfileProps {
 export const getUserProfile = async (session: any) => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		return response.data;
@@ -32,7 +32,7 @@ export const postGenresUser = async (session: any, genres: string[]) => {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: JSON.stringify({
 				genre_id: genres,
@@ -53,14 +53,12 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			console.log("Informations users mise à jour avec succès !");
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
@@ -73,11 +71,11 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 export const deleteUserProfile = async (session: any) => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/`,
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		if (response.status === 200) {
@@ -100,21 +98,19 @@ interface updateUserPasswordProps {
 	new_password: string;
 }
 
-export const UpdateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
+export const updateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/password`,
 			method: "PUT",
 			headers: {
 				ContentType: "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			console.log("Informations users mise à jour avec succès !");
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
@@ -137,13 +133,33 @@ export const getMovieUser = async (session: any) => {
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 		});
 		return response.data;
 	} catch (error) {
 		console.error("Erreur lors de la récupération des films user:", error);
 		throw error;
+	}
+};
+
+export const getMovieUserBy = async (session: any, id: number) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/${id}`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${session?.accessToken}`,
+			},
+		});
+		if (response.status !== 200) {
+			return { success: false };
+		}
+		return response.data;
+	} catch (error) {
+		console.error("Erreur lors de la récupération des films user:", error);
+		return { movie_id: id, note: 0, saved: false };
 	}
 };
 
@@ -154,7 +170,7 @@ export const postMovieUser = async (session: any, userData: movieUserProps) => {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
 			data: userData,
 		});
@@ -171,19 +187,15 @@ export const updateMovieUser = async (session: any, userData: movieUserProps) =>
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/movieusers/`,
-			method: "PATCH",
+			method: "PUT",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${session?.access_token}`,
+				Authorization: `Bearer ${session?.accessToken}`,
 			},
-			data: JSON.stringify({
-				userData,
-			}),
+			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			return response.data;
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
