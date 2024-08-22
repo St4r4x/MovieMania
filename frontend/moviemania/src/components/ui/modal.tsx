@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { updateMovieUser } from "@/src/data/services/user-services";
+import { updateMovieState } from "@/app/api/movie-actions/updateMovieState";
 import { useSession } from "next-auth/react";
 import { PopupProps } from "@/src/types";
 
@@ -14,7 +14,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 
 	const resetRating = async () => {
 		setRating(null);
-		await updateMovieUser(session, { movie_id: movie.movie_id, note: 0, saved: false });
+		await updateMovieState(session, { movie_id: movie.movie_id, note: 0, saved: false });
 	};
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 
 	const handleSubmit = async (ratingValue: number) => {
 		setRating(ratingValue);
-		await updateMovieUser(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
+		await updateMovieState(session, { movie_id: movie.movie_id, note: ratingValue, saved: false });
 		onClose();
 	};
 
@@ -41,9 +41,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 			>
 				<i className="fas fa-times text-4xl"></i>
 			</button>
-			<div
-				className="flex flex-col gap-4 w-56"
-			>
+			<div className="flex flex-col gap-4 w-56">
 				<h2 className="text-xl text-gray-300 text-center">J'ai vu ça</h2>
 				<Link href={`/details-film/${movie.title}`}>
 					<div className="flex flex-col items-start">
@@ -73,7 +71,7 @@ const Modal: React.FC<PopupProps> = ({ movie, userMovieProps, onClose }) => {
 									/>
 									<i
 										className={`fas fa-star text-2xl cursor-pointer ${
-											ratingValue <= (hover ?? (rating ?? 0)) ? "text-yellow-500" : "text-gray-300"
+											ratingValue <= (hover ?? rating ?? 0) ? "text-yellow-500" : "text-gray-300"
 										}`}
 										onMouseEnter={() => setHover(ratingValue)}
 										onMouseLeave={() => setHover(null)}
