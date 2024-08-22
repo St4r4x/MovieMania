@@ -58,9 +58,7 @@ export const patchUserProfile = async (session: any, userData: patchUserProfileP
 			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			console.log("Informations users mise à jour avec succès !");
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
@@ -100,7 +98,7 @@ interface updateUserPasswordProps {
 	new_password: string;
 }
 
-export const UpdateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
+export const updateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/password`,
@@ -112,9 +110,7 @@ export const UpdateUserPassword = async (session: any, userData: updateUserPassw
 			data: userData,
 		});
 		if (response.status === 200) {
-			setTimeout(() => {
-				alert("Informations users mise à jour avec succès !");
-			}, 2000); // Délai de 2 secondes
+			console.log("Informations users mise à jour avec succès !");
 		}
 	} catch (error) {
 		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);

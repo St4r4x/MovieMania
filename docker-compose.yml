@@ -48,6 +48,8 @@ services:
             args:
                 INSTALL_DEV: ${INSTALL_DEV-false}
         platform: linux/amd64 # Patch for M1 Mac
+        ports:
+            - "8888:8888"
         restart: always
         networks:
             - moviemania
@@ -107,6 +109,8 @@ services:
             - recos_api
         networks:
             - moviemania
+        volumes:
+            - nextjs_cache:/app/.next/cache
 
     redis:
         image: redis:latest
@@ -118,6 +122,7 @@ services:
             
 volumes:
     mariadb_data:
+    nextjs_cache:
 
 networks:
     moviemania:

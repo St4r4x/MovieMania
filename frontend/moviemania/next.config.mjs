@@ -8,6 +8,7 @@ const nextConfig = {
             pathname: "/t/p/**",
          },
       ],
+      unoptimized: true, // Désactive l'optimisation des images
    },
 };
 

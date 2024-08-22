@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/src/components/ui/button";
-import { UpdateUserPassword } from "@/src/data/services/user-services";
+import { updateProfile } from "@/app/api/profile/updateProfile";
 import { useSession } from "next-auth/react";
 
 function ResetPasswordForm() {
@@ -26,7 +26,7 @@ function ResetPasswordForm() {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		await UpdateUserPassword(session, formData);
+		await updateProfile("updatePassword", session, formData);
 		setIsLoading(false);
 	};
 

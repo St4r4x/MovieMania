@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { capitalizeFirstLetter } from "@/src/utils/common";
-import { getAllMovieGenres } from "@/src/data/services/movie-services";
+import { getMovieGenres } from "@/app/api/movie-genres/getMovieGenres";
 
 interface ImageByGenre {
 	[key: string]: {
@@ -39,7 +39,7 @@ const SelectedGenres = () => {
 
 	useEffect(() => {
 		const fetchGenres = async () => {
-			let fetchedGenres: Genre[] = await getAllMovieGenres();
+			let fetchedGenres: Genre[] = await getMovieGenres();
 			fetchedGenres = fetchedGenres.filter((genre) => {
 				return genre.name.toLowerCase() !== "familial" && genre.name.toLowerCase() !== "mystère" && genre.name.toLowerCase() !== "téléfilm";
 			});

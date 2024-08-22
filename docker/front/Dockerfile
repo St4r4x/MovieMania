@@ -1,51 +1,52 @@
-# Étape de base
+# Étape de base : Installation des dépendances
 FROM node:18-alpine AS base
 
-# 1. Installation des dépendances uniquement si nécessaire
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
-
 WORKDIR /app
 
-# Copier les fichiers package.json et package-lock.json depuis le dossier frontend/moviemania
-COPY ../../frontend/moviemania/package.json ./
-COPY ../../frontend/moviemania/package-lock.json ./
+# Copier les fichiers package.json et package-lock.json pour installer les dépendances
+COPY ./frontend/moviemania/package.json .
+COPY ./frontend/moviemania/package-lock.json .
 
-# Installer les dépendances avec npm
+# Installer les dépendances
 RUN npm ci
 
-# 2. Rebuild the source code only when needed
+# Étape de construction de l'application
 FROM base AS builder
+
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 
-# Copier tous les fichiers nécessaires pour la build depuis le dossier frontend/moviemania
-COPY ../../frontend/moviemania .
+# Copier le reste du projet
+COPY ./frontend/moviemania .
 
-# Copier le fichier .env depuis le dossier frontend/moviemania
-COPY ../../frontend/moviemania/.env .env
+# Copier le fichier .env
+COPY ./frontend/moviemania/.env .env
 
-# Installer sharp pour l'optimisation des images
-RUN npm install sharp
-
-# Build de l'application
+# Construire l'application Next.js
 RUN npm run build
 
-# 3. Production image, copy all the files and run next
-FROM base AS runner
+# Créer manuellement le dossier cache et ajuster les permissions
+RUN mkdir -p /app/.next/cache/images && chown -R 1001:1001 /app/.next/cache && chmod -R 777 /app/.next/cache
+
+# Étape finale : Préparer l'image de production
+FROM node:18-alpine AS runner
+
 WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Créer un utilisateur non root pour des raisons de sécurité
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+# Créer un utilisateur non-root pour des raisons de sécurité
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
 
-# Copier les fichiers nécessaires pour exécuter l'application en production
+# Copier les fichiers nécessaires à l'exécution
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+
+# Réappliquer les permissions au dossier cache
+RUN mkdir -p /app/.next/cache/images && chown -R nextjs:nodejs /app/.next && chmod -R 777 /app/.next/cache
+
+RUN apk add --no-cache curl
 
 USER nextjs
 

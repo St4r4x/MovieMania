@@ -8,7 +8,6 @@ import { Button } from "@/src/components/ui/button";
 import { useRouter } from "next/navigation";
 import FavoriteGenres from "@/src/components/favorite-genres/FavoriteGenres";
 
-
 interface PreferencesFormProps {
 	onBackClick: () => void;
 	formData: FormData | null;

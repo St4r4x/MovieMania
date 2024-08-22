@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/src/components/ui/button";
-import { deleteUserProfile } from "@/src/data/services/user-services";
+import { deleteProfile } from "@/app/api/profile/updateProfile";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 
@@ -23,7 +23,7 @@ function DeleteForm({ user }: any) {
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		setIsLoading(true);
-		const result = await deleteUserProfile(session);
+		const result = await deleteProfile(session);
 		if (result?.success) {
 			signOut({ callbackUrl: "/signup" });
 		} else {
