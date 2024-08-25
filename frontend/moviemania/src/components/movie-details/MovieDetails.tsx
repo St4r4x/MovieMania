@@ -25,7 +25,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) =>
 
 				<div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#22272E]"></div>
 
-				<div className="absolute bottom-0 w-full p-8 text-white">
+				<div className="absolute bottom-0 w-full p-5 text-white">
 					<div className="max-w-2xl text-center sm:text-left">
 						<h1 className="text-4xl font-bold mb-2">{movie.title}</h1>
 
@@ -40,7 +40,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie, userMovieProps }) =>
 					</div>
 				</div>
 			</header>
-			<section className="p-8">
+			<section className="p-5">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-52">
 					{/* Colonne de gauche */}
 					<div className="space-y-4">

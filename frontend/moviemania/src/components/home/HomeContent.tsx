@@ -15,7 +15,7 @@ import { extractYear, convertMinutesToHours, truncateText } from "@/src/utils/co
 function HomeContent({ movies, headliner }: { movies: MovieRecommendationsDictionary; headliner: Movie }) {
 	///////////////Décommenter pour activer le loader////////////////
 
-	const [loading, setLoading] = useState(true);
+	// const [loading, setLoading] = useState(true);
 
 	// const promise = new Promise((resolve) => {
 	// 	setTimeout(resolve, 5000); // Temps aléatoire pour simuler un appel d'API plus ou moins long

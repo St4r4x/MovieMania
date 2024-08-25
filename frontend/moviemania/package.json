@@ -21,6 +21,7 @@
     "next": "14.2.5",
     "next-auth": "^4.24.7",
     "react": "^18",
+    "react-debounce-input": "^3.3.0",
     "react-dom": "^18",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.4.0",
