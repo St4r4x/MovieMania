@@ -3,7 +3,7 @@ sequenceDiagram
     actor Utilisateur
     participant Dashboard as Tableau de bord
     participant Dialogue as Page Détails film
-    participant Controleur as Backend/Prisma
+    participant Controleur as Backend
     participant Entite as Base de données
 
     Utilisateur ->> Dashboard: Sélectionner un film
