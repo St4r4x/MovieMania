@@ -1,51 +1,57 @@
 ```mermaid
-classDiagram
+usecaseDiagram
   direction TB
 
-  class Utilisateur {
-    <<acteur>>
-  }
+  actor Utilisateur
+  actor DataCrawler
+  actor APIRecommandation
+  actor APIUtilisateur
+  actor Redis
 
-  class DataWrangler {
-    <<acteur>>
-  }
+  usecase Inscription as "Inscription"
+  usecase Connexion as "Connexion"
+  usecase RechercherFilm as "Rechercher un Film"
+  usecase ConsulterDetailsFilm as "Consulter Détails Film"
+  usecase NoterFilm as "Noter un Film"
+  usecase LikerFilm as "Liker un Film"
+  usecase GererProfil as "Gérer le Profil"
+  usecase Deconnexion as "Déconnexion"
+  usecase AjouterFilm as "Ajouter un Film"
+  usecase ModifierFilm as "Modifier un Film"
+  usecase SupprimerFilm as "Supprimer un Film"
+  usecase EnrichirDonnees as "Enrichir les Données"
+  usecase GenererRecommandations as "Générer des Recommandations"
+  usecase StockerRecommandations as "Stocker les Recommandations"
 
-  class APIRecommandation {
-    <<acteur>>
-  }
+  Utilisateur --> Inscription
+  Utilisateur --> Connexion
+  Utilisateur --> RechercherFilm
+  Utilisateur --> ConsulterDetailsFilm
+  Utilisateur --> NoterFilm
+  Utilisateur --> LikerFilm
+  Utilisateur --> GererProfil
+  Utilisateur --> Deconnexion
 
-  Utilisateur -- Inscription
-  Utilisateur -- Connexion
-  Utilisateur -- RechercherFilm
-  Utilisateur -- ConsulterDetailsFilm
-  Utilisateur -- NoterFilm
-  Utilisateur -- LikerFilm
-  Utilisateur -- GererProfil
-  Utilisateur -- Deconnexion
+  DataCrawler --> AjouterFilm
+  DataCrawler --> ModifierFilm
+  DataCrawler --> SupprimerFilm
+  DataCrawler --> EnrichirDonnees
 
-  DataWrangler -- AjouterFilm
-  DataWrangler -- ModifierFilm
-  DataWrangler -- SupprimerFilm
-  DataWrangler -- EnrichirDonnees
+  APIRecommandation --> GenererRecommandations
+  APIUtilisateur --> Inscription
+  APIUtilisateur --> Connexion
+  APIUtilisateur --> GererProfil
+  APIUtilisateur --> Deconnexion
 
-  APIRecommandation -- GenererRecommandations
+  Redis --> StockerRecommandations
 
-  class Inscription {
-    <<include>> GererProfil
-  }
+  GenererRecommandations --> StockerRecommandations
 
-  class Connexion {
-    <<include>> RechercherFilm
-    <<include>> GererProfil
-  }
-
-  class RechercherFilm {
-    <<extend>> ConsulterDetailsFilm
-  }
-
-  class ConsulterDetailsFilm {
-    <<extend>> NoterFilm
-    <<extend>> LikerFilm
-      }
+  Connexion ..> RechercherFilm : <<include>>
+  Connexion ..> GererProfil : <<include>>
+  Inscription ..> GererProfil : <<include>>
+  RechercherFilm ..> ConsulterDetailsFilm : <<extend>>
+  ConsulterDetailsFilm ..> NoterFilm : <<extend>>
+  ConsulterDetailsFilm ..> LikerFilm : <<extend>>
 
 ```
