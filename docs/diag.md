@@ -22,19 +22,23 @@ classDiagram
     }
 
     class GenreBasedRecommendationFetcher {
-        +fetch(db: Session, user_id: int): dict
+        +fetch(db: Session, user_id: int, not_seen_movie_ids: list[int]): dict
     }
 
     class TrendingRecommendationFetcher {
-        +fetch(db: Session, user_id: int): dict
+        +fetch(db: Session, not_seen_movie_ids: list[int]): dict
     }
 
     class MovieBasedRecommendationFetcher {
-        +fetch(db: Session, user_id: int): dict
+        +fetch(movie_id: int, db: Session, not_seen_movie_ids: list[int]): dict
     }
 
     class Schema {
         +model_validate(data: dict): Movie
+    }
+
+    class RedisClient {
+        +save_recommendations_to_redis(client, user_id: int, recommendations: dict)
     }
 
     Database <|-- User
@@ -44,5 +48,5 @@ classDiagram
     RecommendationFetcher <|-- MovieBasedRecommendationFetcher
     Schema *-- Movie
     RecommendationFetcher *-- Schema
-
+    RedisClient <-- RecommendationFetcher : use for caching
 ```
