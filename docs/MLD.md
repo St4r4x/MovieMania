@@ -55,13 +55,13 @@ erDiagram
         bool is_superuser
     }
     UserMovieRatings {
-        int movie_id PK
-        int user_id PK
+        int movie_id FK
+        int user_id FK
         int note
     }
     UserGenrePreferences {
-        int genre_id PK
-        int user_id PK
+        int genre_id FK
+        int user_id FK
     }
 
     Movies 1--many(1) MovieGenreAssociations : "has"
