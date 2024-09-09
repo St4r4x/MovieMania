@@ -7,7 +7,7 @@ import { registerUserService } from "@/src/data/services/auth-services";
 import { Button } from "@/src/components/ui/button";
 import { useRouter } from "next/navigation";
 import FavoriteGenres from "@/src/components/favorite-genres/FavoriteGenres";
-
+import ChevronRight from "@/public/chevron-right.png";
 
 interface PreferencesFormProps {
 	onBackClick: () => void;
@@ -60,7 +60,7 @@ export default function PreferencesForm({ onBackClick, formData }: PreferencesFo
 				</Button>
 				<button className="hidden md:block">
 					<Image
-						src="/chevron-right.png"
+						src={ChevronRight}
 						alt="chevron-right"
 						width={100}
 						height={100}

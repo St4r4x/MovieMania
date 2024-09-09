@@ -31,16 +31,15 @@ const Carousel: React.FC<MovieRecommendationsDictionary> = ({ movies }) => {
 				{movies.map((movie: MovieRecommendationsProps, index) => (
 					<div
 						key={movie.movie_id}
-						className={`flex-shrink-0 w-[250px]  ${index === 0 ? "py-2 pe-2" : "p-2"}`}
+						className={`flex-shrink-0 w-[250px] ${index === 0 ? "py-2 pe-2" : "p-2"}`}
 					>
 						<Link href={`/movie/${movie.movie_id}`}>
-							<div className="relative rounded-lg md:hover:border-2 md:hover:border-white md:hover:scale-95 transition-transform duration-300 ease-in-out">
+							<div className="relative rounded-lg h-[150px] md:hover:border-2 md:hover:border-white md:hover:scale-95 transition-transform duration-300 ease-in-out">
 								<Image
 									src={`${process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_PATH}w300${movie.backdrop_path}`}
 									alt={`Image ${movie.title}`}
 									style={{ objectFit: "cover" }}
-									width={250}
-									height={375}
+									fill
 									className="rounded-lg"
 								/>
 								<div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-sm rounded-b-lg">{movie.title}</div>

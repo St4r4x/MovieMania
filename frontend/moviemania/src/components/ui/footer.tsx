@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
    return (
-      <footer className="text-white py-4 mt-8 px-7">
+      <footer className="text-white py-4 mt-8 px-5">
          <div className="mx-auto">
             {/* Footer Links Desktop */}
             <div className="hidden md:flex space-x-4 mb-4">
@@ -33,15 +33,9 @@ const Footer = () => {
                   </Link>
                </div>
             </div>
-
-            {/* Footer Copyright Visible Only on Mobile */}
-            {/* <div className="md:hidden text-center mt-4">
-               <p>&copy; 2024 MovieMania. Tous droits réservés.</p>
-            </div> */}
          </div>
       </footer>
    );
 };
 
 export default Footer;
-

@@ -1,56 +1,63 @@
-import React, { useEffect, useState } from "react";
+"use client";
 
-import { capitalizeFirstLetter } from "@/src/utils/common";
-import { getAllMovieGenres } from "@/src/data/services/movie-services";
+import React, { useEffect, useState, FC } from "react";
+import { getMovieGenres } from "@/app/api/movie-genres/getMovieGenres";
+import { Genre, ImageByGenre } from "@/src/types";
+import { GenreCard } from "@/src/components/favorite-genres/GenreCard";
 
-interface ImageByGenre {
-	[key: string]: {
-		image: string;
-	};
-}
+// Importation des images
+import actionImg from "@/public/action.png";
+import animationImg from "@/public/animation.webp";
+import aventureImg from "@/public/aventure.jpeg";
+import comedieImg from "@/public/comédie.jpg";
+import documentaireImg from "@/public/documentaire.jpg";
+import drameImg from "@/public/drame.jpg";
+import fantastiqueImg from "@/public/fantastique.jpg";
+import guerreImg from "@/public/guerre.jpg";
+import histoireImg from "@/public/histoire.jpg";
+import horreurImg from "@/public/horreur.jpg";
+import musiqueImg from "@/public/musique.jpeg";
+import romanceImg from "@/public/romance.webp";
+import scifiImg from "@/public/scifi.jpeg";
+import thrillerImg from "@/public/thriller.jpeg";
+import westernImg from "@/public/western.jpg";
+import crimeImg from "@/public/crime.jpg";
 
-interface Genre {
-	genre_id: number;
-	name: string;
-	image?: string;
-}
-
+// Mapping entre les genres et leurs images
 const imagesByGenresTable: ImageByGenre = {
-	action: { image: "action.png" },
-	animation: { image: "animation.webp" },
-	aventure: { image: "aventure.jpeg" },
-	comédie: { image: "comédie.jpg" },
-	documentaire: { image: "documentaire.jpg" },
-	drame: { image: "drame.jpg" },
-	fantastique: { image: "fantastique.jpg" },
-	guerre: { image: "guerre.jpg" },
-	histoire: { image: "histoire.jpg" },
-	horreur: { image: "horreur.jpg" },
-	musique: { image: "musique.jpeg" },
-	romance: { image: "romance.webp" },
-	"science-fiction": { image: "scifi.jpeg" },
-	thriller: { image: "thriller.jpeg" },
-	western: { image: "western.jpg" },
-	crime: { image: "crime.jpg" },
+	action: actionImg,
+	animation: animationImg,
+	aventure: aventureImg,
+	comédie: comedieImg,
+	documentaire: documentaireImg,
+	drame: drameImg,
+	fantastique: fantastiqueImg,
+	guerre: guerreImg,
+	histoire: histoireImg,
+	horreur: horreurImg,
+	musique: musiqueImg,
+	romance: romanceImg,
+	"science-fiction": scifiImg,
+	thriller: thrillerImg,
+	western: westernImg,
+	crime: crimeImg,
 };
 
-const SelectedGenres = () => {
+const SelectedGenres: FC = () => {
 	const [genres, setGenres] = useState<Genre[]>([]);
 
 	useEffect(() => {
 		const fetchGenres = async () => {
-			let fetchedGenres: Genre[] = await getAllMovieGenres();
-			fetchedGenres = fetchedGenres.filter((genre) => {
-				return genre.name.toLowerCase() !== "familial" && genre.name.toLowerCase() !== "mystère" && genre.name.toLowerCase() !== "téléfilm";
-			});
+			const fetchedGenres = await getMovieGenres();
+			const filteredGenres = fetchedGenres.filter((genre: Genre) => !["familial", "mystère", "téléfilm"].includes(genre.name.toLowerCase()));
 
 			// Associer les genres aux images correspondantes
-			fetchedGenres = fetchedGenres.map((genre) => ({
+			const genresWithImages = filteredGenres.map((genre: Genre) => ({
 				...genre,
-				image: imagesByGenresTable[genre.name.toLowerCase()]?.image,
+				image: imagesByGenresTable[genre.name.toLowerCase()],
 			}));
 
-			setGenres(fetchedGenres);
+			setGenres(genresWithImages);
 		};
 
 		fetchGenres();
@@ -58,24 +65,11 @@ const SelectedGenres = () => {
 
 	return (
 		<>
-			{genres.map(({ genre_id, name, image }) => (
-				<div
-					key={genre_id}
-					className="rounded-lg bg-no-repeat bg-cover bg-center cursor-pointer transition-transform transform hover:scale-105 flex justify-center items-center"
-					style={{ backgroundImage: `url(/${image})` }}
-				>
-					<label className="cursor-pointer flex flex-col items-center">
-						<input
-							type="checkbox"
-							className="checkbox absolute hidden peer"
-							name="genres"
-							value={genre_id}
-						/>
-						<span className="p-3 sm:p-6 md:p-14 font-bold bg-opacity-50 bg-black rounded-lg md:text-2xl text-center text-white w-40 sm:w-44 lg:w-72 border-transparent border-4 flex-wrap peer-checked:border-primary peer-checked:text-primary">
-							{capitalizeFirstLetter(name)}
-						</span>
-					</label>
-				</div>
+			{genres.map((genre) => (
+				<GenreCard
+					key={genre.genre_id}
+					genre={genre}
+				/>
 			))}
 		</>
 	);

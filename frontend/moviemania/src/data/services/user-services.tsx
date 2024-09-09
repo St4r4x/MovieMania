@@ -58,27 +58,25 @@ export const postGenresUser = async (session: any, genres: string[]) => {
 };
 
 export const patchUserProfile = async (session: any, userData: patchUserProfileProps) => {
-  try {
-    const response = await axios({
-      url: `${getBaseURL()}/api/v1/users/me`,
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-      data: userData,
-    });
-    if (response.status === 200) {
-      setTimeout(() => {
-        alert("Informations users mise à jour avec succès !");
-      }, 2000); // Délai de 2 secondes
-    }
-  } catch (error) {
-    console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
-    if (axios.isAxiosError(error)) {
-      console.error("Détails de l'erreur:", error.response?.data);
-    }
-  }
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me`,
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${session?.accessToken}`,
+			},
+			data: userData,
+		});
+		if (response.status === 200) {
+			console.log("Informations users mise à jour avec succès !");
+		}
+	} catch (error) {
+		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
+		if (axios.isAxiosError(error)) {
+			console.error("Détails de l'erreur:", error.response?.data);
+		}
+	}
 };
 
 export const deleteUserProfile = async (session: any) => {
@@ -111,28 +109,26 @@ interface updateUserPasswordProps {
   new_password: string;
 }
 
-export const UpdateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
-  try {
-    const response = await axios({
-      url: `${getBaseURL()}/api/v1/users/me/password`,
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-      data: userData,
-    });
-    if (response.status === 200) {
-      setTimeout(() => {
-        alert("Informations users mise à jour avec succès !");
-      }, 2000); // Délai de 2 secondes
-    }
-  } catch (error) {
-    console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
-    if (axios.isAxiosError(error)) {
-      console.error("Détails de l'erreur:", error.response?.data);
-    }
-  }
+export const updateUserPassword = async (session: any, userData: updateUserPasswordProps) => {
+	try {
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_USERS_API_URL}/api/v1/users/me/password`,
+			method: "PUT",
+			headers: {
+				ContentType: "application/json",
+				Authorization: `Bearer ${session?.accessToken}`,
+			},
+			data: userData,
+		});
+		if (response.status === 200) {
+			console.log("Informations users mise à jour avec succès !");
+		}
+	} catch (error) {
+		console.error("Erreur lors de la mise à jour du profil utilisateur:", error);
+		if (axios.isAxiosError(error)) {
+			console.error("Détails de l'erreur:", error.response?.data);
+		}
+	}
 };
 
 interface movieUserProps {

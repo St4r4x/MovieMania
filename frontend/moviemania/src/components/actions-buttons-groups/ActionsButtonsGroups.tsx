@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 
 import { ActionButtonGroupsProps } from "@/src/types";
 import ActionButton from "@/src/components/ui/actionsButtons";
-import { updateMovieUser } from "@/src/data/services/user-services";
+import { updateMovieState } from "@/app/api/movie-actions/updateMovieState";
 
 export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie, userMovieProps }) => {
 	const { data: session } = useSession();
@@ -26,7 +26,7 @@ export const ActionsButtonsGroups: React.FC<ActionButtonGroupsProps> = ({ movie,
 	};
 
 	const saveMovie = async () => {
-		const updatedMovieUser = await updateMovieUser(session, { movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
+		const updatedMovieUser = await updateMovieState(session, { movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
 		setUserMovie({ movie_id: movie.movie_id, note: userMovie.note, saved: !userMovie.saved });
 	};
 	return (

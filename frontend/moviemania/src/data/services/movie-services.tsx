@@ -5,7 +5,7 @@ import { MultipleMovieUserProps } from "@/src/types";
 export const getAllMovieGenres = async () => {
 	try {
 		const response = await axios({
-			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres/`,
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/genres`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
@@ -55,6 +55,24 @@ export const getMovieDetails = async (id: number) => {
 	try {
 		const response = await axios({
 			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/${id}`,
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+		if (response.status === 200) {
+			return response.data;
+		}
+	} catch (error) {
+		NextResponse.json({ error });
+	}
+};
+
+export const getMovieDetailsByTitle = async (query: string) => {
+	try {
+		console.log("query", query);
+		const response = await axios({
+			url: `${process.env.NEXT_PUBLIC_RECOS_API_URL}/movies/search/?title=${query}`,
 			method: "GET",
 			headers: {
 				"Content-Type": "application/json",
